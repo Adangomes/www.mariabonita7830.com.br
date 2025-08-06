@@ -86,34 +86,48 @@
     </div>
 
     <!-- SCRIPT JS -->
-    <script>
+   <script>
     function fazerLogin() {
         const usuario = document.getElementById("usuario").value;
         const senha = document.getElementById("senha").value;
 
         if (usuario === "mariabonita" && senha === "91453710") {
-            document.getElementById("login-container").style.display = "none";
-            document.getElementById("pagina").style.display = "block";
+            localStorage.setItem("logado", "true"); // salva login
+            mostrarPagina();
         } else {
             document.getElementById("erro").style.display = "block";
         }
     }
 
-    // Lógica do botão hambúrguer
+    function mostrarPagina() {
+        document.getElementById("login-container").style.display = "none";
+        document.getElementById("pagina").style.display = "block";
+    }
+
+    // Verifica se está logado ao carregar a página
     document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("logado") === "true") {
+            mostrarPagina();
+        }
+
+        // Lógica do menu mobile
         const hamburger = document.getElementById("hamburger");
         const mobileMenu = document.getElementById("mobile-menu");
 
-        hamburger.addEventListener("click", function () {
-            mobileMenu.classList.toggle("active");
-        });
+        if (hamburger) {
+            hamburger.addEventListener("click", function () {
+                mobileMenu.classList.toggle("active");
+            });
+        }
     });
 </script>
+
 
 </body>
 
 
 </html>
+
 
 
 
