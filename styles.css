@@ -241,19 +241,32 @@ body {
         background: #fff;
         border-top: 1px solid #eee;
         margin-top: 1rem;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 10px;
+        z-index: 1000;
     }
 
-    .menu.show {
+    .menu.active {
         display: flex;
     }
 
     .menu a {
         padding: 1rem;
         border-bottom: 1px solid #eee;
+        color: #333;
+        text-decoration: none;
     }
 
     .hamburger {
         display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #cc2e72;
     }
 
     .promo-bar {
@@ -264,51 +277,23 @@ body {
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .menu {
-    display: none;
-    flex-direction: column;
-    background-color: #fff;
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 10px;
-    z-index: 1000;
-}
-
-.menu a {
-    padding: 10px;
-    text-decoration: none;
-    color: #333;
-}
-
-.hamburger {
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.menu.active {
-    display: flex;
-}
-
-/* Responsivo */
-@media (min-width: 768px) {
-    .hamburger {
-        display: none;
-    }
-    .menu {
-        display: flex !important;
-        position: static;
-        flex-direction: row;
-        box-shadow: none;
-    }
-}
-    
 
     .product-card {
         font-size: 90%;
     }
 }
 
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
+    }
+
+    .menu {
+        display: flex !important;
+        position: static;
+        flex-direction: row;
+        box-shadow: none;
+        margin-top: 0;
+        padding: 0;
+    }
+}
