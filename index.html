@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>MARIA BONITA - Login</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
@@ -18,11 +17,9 @@
         <input type="password" id="senha" placeholder="Senha" required />
         <button onclick="fazerLogin()">Entrar</button>
         <p id="erro" style="color:red; display:none;">Usuário ou senha incorretos.</p>
-
-
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL (visível apenas após login) -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div id="pagina" style="display:none;">
         <!-- CABEÇALHO -->
         <header class="header">
@@ -33,7 +30,6 @@
                 <a href="blusas.html">Blusas</a>
                 <a href="acessorios.html">Acessórios</a>
                 <a href="contato.html">Contato</a>
-                <a href="index.html">HOME</a>
             </nav>
             <div class="cart">🛒</div>
         </header>
@@ -50,32 +46,14 @@
         <section class="destaques">
             <h2>Destaques ♡</h2>
             <div class="products-grid">
+                <!-- Cards repetidos -->
                 <div class="product-card">
                     <img src="imagem4.jpeg" alt="Casaco Parka">
                     <h3>Casaco Parka Térmica</h3>
                     <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
-                    <a href="https://w.app/mariabonita" class="btn">Comprar</a>
+                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20na%20Blusa%20Oversized%20Estampada.%20Está%20disponível?" class="btn">Comprar</a>
                 </div>
-
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Vestido Midi">
-                    <h3>Vestido Midi Floral</h3>
-                    <p class="price">R$130,00 <span class="pix">R$123,50 com Pix</span></p>
-                    <a href="https://w.app/mariabonita" class="btn">Comprar</a>
-                </div>
-
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Calça Wide Leg">
-                    <h3>Calça Wide Leg Jeans</h3>
-                    <p class="price">R$150,00 <span class="pix">R$142,50 com Pix</span></p>
-                    <a href="https://w.app/mariabonita" class="btn">Comprar</a>
-                </div>
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Calça Wide Leg">
-                    <h3>Calça Wide Leg Jeans</h3>
-                    <p class="price">R$150,00 <span class="pix">R$142,50 com Pix</span></p>
-                    <a href="https://w.app/mariabonita" class="btn">Comprar</a>
-                </div>
+                <!-- Adicione os outros produtos aqui -->
             </div>
         </section>
 
@@ -98,17 +76,18 @@
                 document.getElementById("erro").style.display = "block";
             }
         }
+
+        // SCRIPT PARA MENU MOBILE
+        document.addEventListener("DOMContentLoaded", function () {
+            const hamburger = document.getElementById("hamburger");
+            const menu = document.getElementById("mobile-menu");
+
+            hamburger.addEventListener("click", function () {
+                menu.classList.toggle("show");
+            });
+        });
     </script>
+
 </body>
 
-
 </html>
-
-
-
-
-
-
-
-
-
