@@ -1,5 +1,4 @@
 /* Reset básico */
-
 * {
     margin: 0;
     padding: 0;
@@ -13,9 +12,7 @@ body {
     line-height: 1.6;
 }
 
-
 /* Cabeçalho */
-
 .header {
     display: flex;
     flex-wrap: wrap;
@@ -29,7 +26,7 @@ body {
     z-index: 100;
 }
 
-.header .logo {
+.logo {
     font-size: 1.8rem;
     font-weight: bold;
     color: #cc2e72;
@@ -53,6 +50,7 @@ body {
     color: #cc2e72;
 }
 
+/* Submenu opcional */
 .submenu ul {
     display: none;
     position: absolute;
@@ -69,11 +67,20 @@ body {
 
 .cart {
     font-weight: bold;
+    font-size: 20px;
 }
 
+/* Hamburger */
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: #cc2e72;
+    cursor: pointer;
+}
 
 /* Barra de promoções */
-
 .promo-bar {
     display: flex;
     flex-wrap: wrap;
@@ -86,9 +93,11 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.promo-bar div {
+    margin: 5px 10px;
+}
 
 /* Seção de destaques */
-
 .destaques {
     padding: 2rem;
     text-align: center;
@@ -101,15 +110,16 @@ body {
     color: #cc2e72;
 }
 
+/* Grid de produtos */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-
 /* Card de produto */
-
 .product-card {
     background: #fff;
     border-radius: 10px;
@@ -159,9 +169,7 @@ body {
     background-color: #a71c59;
 }
 
-
 /* Rodapé */
-
 .footer {
     background: #222;
     color: #eee;
@@ -170,78 +178,7 @@ body {
     font-size: 0.95rem;
 }
 
-
-/* Responsivo */
-
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .menu {
-        flex-direction: column;
-        width: 100%;
-    }
-    .promo-bar {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .product-card {
-        font-size: 90%;
-    }
-}
-
-.hamburger {
-    display: none;
-    font-size: 1.8rem;
-    background: none;
-    border: none;
-    color: #cc2e72;
-    cursor: pointer;
-}
-
-@media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
-    .menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #eee;
-        margin-top: 1rem;
-    }
-    .menu.show {
-        display: flex;
-    }
-    .menu a {
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
-    }
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-@media (max-width: 1024px) {
-    .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        /* duas colunas no celular */
-    }
-}
-
+/* Login */
 #login-container {
     max-width: 300px;
     margin: 100px auto;
@@ -263,19 +200,6 @@ body {
 
 #login-container button {
     padding: 1rem 1.5rem;
-    background: #4f0fff;
-    color: white;
-    border: none;
-    border-radius: 10%;
-    cursor: pointer;
-}
-
-#login-container button:hover {
-    background: rgb(0, 0, 0);
-}
-
-#login-container button {
-    padding: 1rem 1.5rem;
     background: #eb4587;
     color: white;
     border: none;
@@ -283,6 +207,11 @@ body {
     cursor: pointer;
 }
 
+#login-container button:hover {
+    background: #000;
+}
+
+/* Botão personalizado */
 #CADASTRO button {
     padding: 1rem 1.5rem;
     background: #050102;
@@ -290,4 +219,53 @@ body {
     border: none;
     border-radius: 10%;
     cursor: pointer;
+}
+
+/* Responsivo: tablets e celulares */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #eee;
+        margin-top: 1rem;
+    }
+
+    .menu.show {
+        display: flex;
+    }
+
+    .menu a {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .promo-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-card {
+        font-size: 90%;
+    }
 }
