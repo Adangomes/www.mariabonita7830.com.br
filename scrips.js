@@ -1,11 +1,11 @@
-// === MENU MOBILE ===
+// === MENU MOBILE RESPONSIVO ===
 document.addEventListener('DOMContentLoaded', () => {
     const menu = document.getElementById('mobile-menu');
     const hamburger = document.getElementById('hamburger');
 
     if (hamburger && menu) {
         hamburger.addEventListener('click', () => {
-            menu.classList.toggle('show');
+            menu.classList.toggle('show'); // Mostra/oculta o menu no mobile
         });
     }
 });
@@ -19,24 +19,19 @@ function fazerLogin() {
         alert("Preencha todos os campos.");
         return false;
     }
-    document.getElementById("hamburger").addEventListener("click", () => {
-    const menu = document.getElementById("mobile-menu");
-    menu.classList.toggle("show");
-});
 
-
-    // Aqui usaremos o PHP futuramente
+    // Aqui usaremos o PHP futuramente (ajuste esse endpoint se necessário)
     fetch('login.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `usuario=${encodeURIComponent(usuario)}&senha=${encodeURIComponent(senha)}`
-        })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `usuario=${encodeURIComponent(usuario)}&senha=${encodeURIComponent(senha)}`
+    })
         .then(res => res.text())
         .then(res => {
             if (res === "ok") {
-                window.location.href = "painel.html"; // página protegida
+                window.location.href = "painel.html"; // Redireciona se login for bem-sucedido
             } else {
-                document.getElementById("erro").style.display = "block";
+                document.getElementById("erro").style.display = "block"; // Exibe erro
             }
         });
 
@@ -97,7 +92,7 @@ function validarCadastro() {
         return false;
     }
 
-    // Enviar para o PHP futuramente
+    // Enviar dados para o PHP futuramente
     alert("Cadastro validado com sucesso!");
     return true;
 }
@@ -114,5 +109,4 @@ function recuperarSenha() {
     // Enviar e-mail de recuperação via PHP futuramente
     alert("Um código de recuperação foi enviado para seu e-mail.");
     return true;
-
 }
