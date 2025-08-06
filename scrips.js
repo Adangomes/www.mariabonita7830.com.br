@@ -118,4 +118,10 @@ function recuperarSenha() {
         mobileMenu.classList.toggle('active');
     });
 </script>
+function logout() {
+    localStorage.removeItem("logado");
+    location.reload();
+}
+
+
 
