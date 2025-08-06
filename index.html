@@ -87,23 +87,34 @@
 
     <!-- SCRIPT JS -->
     <script>
-        function fazerLogin() {
-            const usuario = document.getElementById("usuario").value;
-            const senha = document.getElementById("senha").value;
+    function fazerLogin() {
+        const usuario = document.getElementById("usuario").value;
+        const senha = document.getElementById("senha").value;
 
-            if (usuario === "mariabonita" && senha === "91453710") {
-                document.getElementById("login-container").style.display = "none";
-                document.getElementById("pagina").style.display = "block";
-            } else {
-                document.getElementById("erro").style.display = "block";
-            }
+        if (usuario === "mariabonita" && senha === "91453710") {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("pagina").style.display = "block";
+        } else {
+            document.getElementById("erro").style.display = "block";
         }
-        
-    </script>
+    }
+
+    // Lógica do botão hambúrguer
+    document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        hamburger.addEventListener("click", function () {
+            mobileMenu.classList.toggle("active");
+        });
+    });
+</script>
+
 </body>
 
 
 </html>
+
 
 
 
