@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acessórios - Maria Bonita</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <div id="pagina">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <div class="logo">MARIA BONITA</div>
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <nav class="menu" id="mobile-menu">
+                <a href="novidades.html">Novidades da Semana</a>
+                <a href="blusas.html">Blusas</a>
+                <a href="acessorios.html">Acessórios</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+            <div class="cart">🛒</div>
+        </header>
+
+        <!-- Acessórios -->
+        <section class="destaques">
+            <h2>Acessórios</h2>
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <img src="imagem4.jpeg" alt="Brinco de Argola">
+                    <h3>Brinco de Argola Dourado</h3>
+                    <p class="price">R$39,90 <span class="pix">R$37,90 com Pix</span></p>
+                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20no%20Brinco%20de%20Argola%20Dourado.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
+                </div>
+
+                <div class="product-card">
+                    <img src="imagem4.jpeg" alt="Colar">
+                    <h3>Colar Minimalista Prata</h3>
+                    <p class="price">R$59,90 <span class="pix">R$56,90 com Pix</span></p>
+                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20no%20Colar%20Minimalista%20Prata.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
+                </div>
+
+                <div class="product-card">
+                    <img src="imagem4.jpeg" alt="Pulseira">
+                    <h3>Pulseira de Couro Trançada</h3>
+                    <p class="price">R$45,00 <span class="pix">R$42,75 com Pix</span></p>
+                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20na%20Pulseira%20de%20Couro%20Trançada.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Rodapé -->
+        <footer class="footer">
+            <p>Cadastre seu e-mail para ofertas e novidades.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('show');
+        });
+    </script>
+    <!-- SCRIPT JS -->
+    <script>
+        function fazerLogin() {
+            const usuario = document.getElementById("usuario").value;
+            const senha = document.getElementById("senha").value;
+
+            if (usuario === "mariabonita" && senha === "91453710") {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("pagina").style.display = "block";
+            } else {
+                document.getElementById("erro").style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
