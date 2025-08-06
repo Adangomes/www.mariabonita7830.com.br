@@ -19,6 +19,11 @@ function fazerLogin() {
         alert("Preencha todos os campos.");
         return false;
     }
+    document.getElementById("hamburger").addEventListener("click", () => {
+    const menu = document.getElementById("mobile-menu");
+    menu.classList.toggle("show");
+});
+
 
     // Aqui usaremos o PHP futuramente
     fetch('login.php', {
@@ -109,4 +114,5 @@ function recuperarSenha() {
     // Enviar e-mail de recuperação via PHP futuramente
     alert("Um código de recuperação foi enviado para seu e-mail.");
     return true;
+
 }
