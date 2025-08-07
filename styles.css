@@ -106,17 +106,30 @@ body {
 .promo-scroll {
   display: flex;
   width: max-content;
-  animation: marquee 30s linear infinite;
+  animation: marquee 60s linear infinite; /* velocidade mais lenta */
 }
 
 .promo-text {
-  margin-right: 50px;
+  margin-right: 0; /* sem espaço entre os textos */
+  padding-right: 50px; /* pequeno espaço para leitura, ajustável */
+  flex-shrink: 0;
 }
 
 .promo-text a {
   color: #fff;
   text-decoration: underline;
 }
+
+/* Animação de rolagem contínua */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 
 /* DESTAQUES */
 .destaques {
@@ -343,6 +356,7 @@ body {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
+
 
 
 
