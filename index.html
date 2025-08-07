@@ -33,13 +33,15 @@
         <button id="fecharButton">FECHAR</button>
       </nav>
 
-      <div class="cart">🛒</div>
+      <div class="cart" style="cursor:pointer;">🛒</div>
+
       <!-- Carrinho -->
-<div id="carrinho-container" style="display:none;" class="carrinho-popup">
-  <h3>Seu Carrinho</h3>
-  <ul id="lista-carrinho"></ul>
-  <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
-</div>
+      <div id="carrinho-container" style="display:none;" class="carrinho-popup">
+        <h3>Seu Carrinho</h3>
+        <ul id="lista-carrinho"></ul>
+        <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
+        <button onclick="fecharCarrinho()">Continuar Comprando</button>
+      </div>
 
     </header>
 
@@ -61,8 +63,7 @@
           <h3>Casaco Parka</h3>
           <h4>cod: 0001</h4>
           <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
-         <button class="btn" onclick="adicionarAoCarrinho('Casaco Parka', '0001', 'R$160,00')">Comprar</button>
-
+          <button class="btn" onclick="adicionarAoCarrinho('Casaco Parka', '0001', 'R$160,00')">Comprar</button>
         </div>
 
         <div class="product-card">
@@ -70,7 +71,7 @@
           <h3>Vestido Midi Floral</h3>
           <h4>cod: 0002</h4>
           <p class="price">R$130,00 <span class="pix">R$123,50 com Pix</span></p>
-         <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
+          <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
         </div>
 
         <div class="product-card">
@@ -97,8 +98,8 @@
     </footer>
   </div>
 
-  <!-- SCRIPT JS embutido -->
   <script>
+    // LOGIN
     function fazerLogin() {
       const usuario = document.getElementById("usuario").value.trim();
       const senha = document.getElementById("senha").value.trim();
@@ -116,73 +117,71 @@
       document.getElementById("menu").style.display = "block";
     }
 
+    // CONTROLES MENU MOBILE
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.getElementById("hamburger");
       const mobileMenu = document.getElementById("mobile-menu");
       const fecharBtn = document.getElementById("fecharButton");
 
-      // Reexibe conteúdo se usuário já estiver logado
       if (localStorage.getItem("logado") === "true") {
         mostrarPagina();
       }
 
-      // Abre/fecha o menu mobile
       hamburger.addEventListener("click", () => {
         mobileMenu.classList.toggle("active");
       });
 
-      // Fecha o menu ao clicar em "Fechar"
       fecharBtn.addEventListener("click", () => {
         mobileMenu.classList.remove("active");
       });
-    });
-    <script>
-  const carrinho = [];
 
-  function adicionarAoCarrinho(nome, codigo) {
-    carrinho.push({ nome, codigo });
-    alert(`${nome} adicionado ao carrinho!`);
-  }
-
-  function mostrarCarrinho() {
-    const container = document.getElementById("carrinho-container");
-    const lista = document.getElementById("lista-carrinho");
-
-    lista.innerHTML = ""; // Limpa carrinho antes de mostrar
-
-    carrinho.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.nome} (cod: ${item.codigo})`;
-      lista.appendChild(li);
+      // Clique no carrinho abre o carrinho
+      document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
     });
 
-    container.style.display = "block";
-  }
+    // CARRINHO
+    const carrinho = [];
 
-  function finalizarCompra() {
-    if (carrinho.length === 0) {
-      alert("Seu carrinho está vazio!");
-      return;
+    function adicionarAoCarrinho(nome, codigo, preco) {
+      carrinho.push({ nome, codigo, preco });
+      alert(`${nome} adicionado ao carrinho!`);
+      mostrarCarrinho();
     }
 
-    let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
-    carrinho.forEach((item, index) => {
-      mensagem += `• ${item.nome} (cod: ${item.codigo})%0A`;
-    });
+    function mostrarCarrinho() {
+      const container = document.getElementById("carrinho-container");
+      const lista = document.getElementById("lista-carrinho");
 
-    const numeroWhatsApp = "554789257740"; // seu número com DDI + DDD
-    const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-    window.open(url, "_blank");
-  }
+      lista.innerHTML = "";
 
-  // Clique no carrinho mostra os itens
-  document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
-</script>
+      carrinho.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nome} (cod: ${item.codigo}) - ${item.preco}`;
+        lista.appendChild(li);
+      });
 
+      container.style.display = "block";
+    }
+
+    function fecharCarrinho() {
+      document.getElementById("carrinho-container").style.display = "none";
+    }
+
+    function finalizarCompra() {
+      if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+      }
+
+      let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
+      carrinho.forEach((item) => {
+        mensagem += `• ${item.nome} (cod: ${item.codigo}) - ${item.preco}%0A`;
+      });
+
+      const numeroWhatsApp = "554789257740"; // coloque seu número aqui com DDI + DDD
+      const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+      window.open(url, "_blank");
+    }
   </script>
 </body>
 </html>
-
-
-
-
