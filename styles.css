@@ -278,3 +278,55 @@ body {
     gap: 8px;
   }
 }
+/* aqui estou estilizando a parte de envios para todo o brasil */
+.promo-bar {
+  background-color: #f8f8f8;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.promo-bar a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.promo-bar a:hover {
+  text-decoration: underline;
+}
+
+.promo-scroll {
+  display: inline-flex;
+  animation: scroll-left 20s linear infinite;
+}
+
+.promo-text {
+  padding-right: 50px; /* espaçamento entre os blocos repetidos */
+  display: inline-block;
+}
+
+/* Animação para rolar texto da direita para esquerda */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsivo para mobile */
+@media (max-width: 480px) {
+  .promo-bar {
+    font-size: 12px;
+    height: 25px;
+  }
+}
+
