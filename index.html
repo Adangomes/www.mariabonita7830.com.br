@@ -99,46 +99,30 @@
 
     <!-- SCRIPT JS -->
    <script>
-    function fazerLogin() {
-        const usuario = document.getElementById("usuario").value;
-        const senha = document.getElementById("senha").value;
+  document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const fecharBtn = document.getElementById('fecharButton');
 
-        if (usuario === "mariabonita" && senha === "91453710") {
-            localStorage.setItem("logado", "true"); // salva login
-            mostrarPagina();
-        } else {
-            document.getElementById("erro").style.display = "block";
-        }
-    }
-
-    function mostrarPagina() {
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("pagina").style.display = "block";
-    }
-
-    // Verifica se está logado ao carregar a página
-    document.addEventListener("DOMContentLoaded", function () {
-        if (localStorage.getItem("logado") === "true") {
-            mostrarPagina();
-        }
-
-        // Lógica do menu mobile
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobile-menu");
-
-        if (hamburger) {
-            hamburger.addEventListener("click", function () {
-                mobileMenu.classList.toggle("active");
-            });
-        }
+    // Abre ou fecha o menu
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
     });
+
+    // Fecha o menu
+    fecharBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+    });
+  });
 </script>
+
 
 
 </body>
 
 
 </html>
+
 
 
 
