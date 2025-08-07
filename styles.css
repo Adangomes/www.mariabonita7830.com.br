@@ -306,3 +306,12 @@ body {
         padding: 0;
     }
 }
+.menu {
+  display: none;
+  /* ... outras regras ... */
+}
+
+.menu.active {
+  display: flex;
+}
+
