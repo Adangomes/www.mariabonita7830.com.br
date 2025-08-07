@@ -75,7 +75,19 @@
           <h3>Casaco Parka</h3>
           <h4>cod: 0001</h4>
           <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
-          <button class="btn" onclick="adicionarAoCarrinho('Casaco Parka', '0001', 'R$160,00')">Comprar</button>
+          <div class="product-card">
+  <img src="imagem4.jpeg" alt="Casaco Parka" />
+  <h3>Casaco Parka</h3>
+  <h4>cod: 0001</h4>
+  <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
+  <button class="btn" onclick="abrirModal(
+    'Casaco Parka', 
+    '0001', 
+    'R$160,00',
+    ['imagem4.jpeg', 'imagem4_2.jpeg', 'imagem4_3.jpeg']
+  )">Comprar</button>
+</div>
+
 
         </div>
 
@@ -231,6 +243,7 @@
 
 </body>
 </html>
+
 
 
 
