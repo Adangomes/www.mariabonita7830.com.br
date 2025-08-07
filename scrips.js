@@ -120,8 +120,16 @@ function recuperarSenha() {
 </script>
 function logout() {
     localStorage.removeItem("logado");
+    
+    // Fecha o menu mobile se estiver aberto
+    const mobileMenu = document.getElementById("mobile-menu");
+    if (mobileMenu.classList.contains("active")) {
+        mobileMenu.classList.remove("active");
+    }
+
     location.reload();
 }
+
 
 
 
