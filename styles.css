@@ -32,14 +32,14 @@ body {
     color: #cc2e72;
 }
 
-/* Menu (padrão oculto em mobile) */
+/* Menu padrão */
 .menu {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-/* Ícones e links do menu */
+/* Links do menu */
 .menu a {
     color: #444;
     text-decoration: none;
@@ -50,21 +50,6 @@ body {
 
 .menu a:hover {
     color: #cc2e72;
-}
-
-/* Submenu opcional */
-.submenu ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    background: #fff;
-    padding: 0.5rem;
-    list-style: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.submenu:hover ul {
-    display: block;
 }
 
 /* Carrinho */
@@ -224,20 +209,17 @@ body {
     cursor: pointer;
 }
 
-/* RESPONSIVO */
-@media (max-width: 1024px) {
-    .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    }
-}
-
+/* ====== RESPONSIVO ====== */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    /* Esconde o menu por padrão no mobile */
+    .hamburger {
+        display: block;
+    }
+
     .menu {
         display: none;
         flex-direction: column;
@@ -253,7 +235,6 @@ body {
         z-index: 1000;
     }
 
-    /* Mostra o menu quando .active estiver presente */
     .menu.active {
         display: flex;
     }
@@ -267,15 +248,6 @@ body {
         text-align: left;
         border: none;
         width: 100%;
-    }
-
-    .hamburger {
-        display: block;
-        font-size: 30px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: #cc2e72;
     }
 
     .promo-bar {
@@ -292,11 +264,7 @@ body {
     }
 }
 
-@media (min-width: 768px) {
-    .hamburger {
-        display: none;
-    }
-
+@media (min-width: 769px) {
     .menu {
         display: flex !important;
         position: static;
@@ -305,71 +273,8 @@ body {
         margin-top: 0;
         padding: 0;
     }
+
+    .menu button {
+        display: none; /* Esconde o botão "Fechar" no desktop */
+    }
 }
-.menu {
-  display: none;
-  /* ... outras regras ... */
-}
-
-.menu.active {
-  display: flex;
-}
-.menu {
-  display: none;
-  flex-direction: column;
-  background-color: white;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 10px;
-  border-top: 1px solid #eee;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.menu.active {
-  display: flex;
-}
-
-.hamburger {
-  display: none;
-  font-size: 30px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #cc2e72;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  .menu a,
-  .menu button {
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
-    background: none;
-    color: #333;
-    text-align: left;
-    border: none;
-    width: 100%;
-  }
-}
-
-@media (min-width: 769px) {
-  .menu {
-    display: flex !important;
-    flex-direction: row;
-    position: static;
-    width: auto;
-    box-shadow: none;
-  }
-
-  .menu button {
-    display: none; /* Esconde o botão "Fechar" no desktop */
-  }
-}
-
-
