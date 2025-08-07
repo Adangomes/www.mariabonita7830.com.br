@@ -94,17 +94,28 @@ body {
 
 /* PROMO BAR */
 .promo-bar {
-  background-color: #ffe6e6;
-  display: flex;
-  justify-content: space-around;
+  background-color: #cc2e72;
+  color: #fff;
   padding: 10px 5px;
   font-size: 14px;
-  color: #333;
-  flex-wrap: wrap;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
 }
 
-.promo-bar div {
-  margin: 3px 5px;
+.promo-scroll {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.promo-text {
+  margin-right: 50px;
+}
+
+.promo-text a {
+  color: #fff;
+  text-decoration: underline;
 }
 
 /* DESTAQUES */
@@ -116,12 +127,13 @@ body {
   font-size: 28px;
   margin-bottom: 30px;
   color: #cc2e72;
+  text-align: center;
 }
 
 /* GRADE DE PRODUTOS */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
 }
@@ -129,7 +141,7 @@ body {
 .product-card {
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 10px 10px 15px;
+  padding: 15px;
   text-align: center;
   background: #fff;
   box-shadow: 0 0 5px #eee;
@@ -145,34 +157,33 @@ body {
 
 .product-card img {
   width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  max-height: 180px;
+  height: 200px;
   object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 15px;
 }
 
 .product-card h3 {
-  font-size: 17px;
-  margin-bottom: 4px;
+  font-size: 18px;
+  margin-bottom: 5px;
   color: #cc2e72;
 }
 
 .product-card h4 {
   font-weight: 400;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: #666;
 }
 
 .price {
-  font-size: 15px;
-  margin-bottom: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
   color: #333;
 }
 
 .pix {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   color: #888;
   margin-top: 4px;
 }
@@ -288,26 +299,15 @@ body {
     padding: 8px 0;
   }
 
-  .destaques h2 {
-    text-align: center;
-    color: #cc2e72;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .promo-bar {
     font-size: 12px;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
-  .promo-bar div {
-    display: inline-block;
-    padding-right: 50px;
+  .promo-scroll {
     animation: marquee 30s linear infinite;
   }
 }
