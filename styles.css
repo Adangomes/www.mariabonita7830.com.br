@@ -32,7 +32,7 @@ body {
 }
 
 #login-container button {
-  background-color: #e53935;
+  background-color: #cc2e72;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -42,7 +42,7 @@ body {
 }
 
 #login-container button:hover {
-  background-color: #c62f2b;
+  background-color: #a71c59;
 }
 
 /* HEADER */
@@ -59,7 +59,7 @@ body {
 .logo {
   font-size: 24px;
   font-weight: 700;
-  color: #e53935;
+  color: #cc2e72;
 }
 
 .hamburger {
@@ -67,7 +67,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  display: none; /* só aparece no mobile */
+  display: none;
 }
 
 .menu {
@@ -84,7 +84,7 @@ body {
 }
 
 .menu a:hover {
-  color: #e53935;
+  color: #cc2e72;
 }
 
 .cart {
@@ -115,7 +115,7 @@ body {
 .destaques h2 {
   font-size: 28px;
   margin-bottom: 30px;
-  color: #333;
+  color: #cc2e72;
 }
 
 /* GRADE DE PRODUTOS */
@@ -123,15 +123,24 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  padding: 20px;
 }
 
 .product-card {
   border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 10px 10px 15px;
   text-align: center;
   background: #fff;
   box-shadow: 0 0 5px #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
 }
 
 .product-card img {
@@ -139,36 +148,38 @@ body {
   height: auto;
   border-radius: 6px;
   margin-bottom: 10px;
+  max-height: 180px;
+  object-fit: cover;
 }
 
 .product-card h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: #e53935;
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: #cc2e72;
 }
 
 .product-card h4 {
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: #666;
 }
 
 .price {
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 15px;
+  margin-bottom: 8px;
   color: #333;
 }
 
 .pix {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   color: #888;
   margin-top: 4px;
 }
 
 /* BOTÃO COMPRAR */
 .btn {
-  background-color: #e53935;
+  background-color: #cc2e72;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -181,7 +192,7 @@ body {
 }
 
 .btn:hover {
-  background-color: #c62f2b;
+  background-color: #a71c59;
 }
 
 /* RODAPÉ */
@@ -212,7 +223,7 @@ body {
 
 .carrinho-popup h3 {
   margin-bottom: 10px;
-  color: #e53935;
+  color: #cc2e72;
 }
 
 .carrinho-popup ul {
@@ -231,7 +242,7 @@ body {
 
 .carrinho-popup button {
   width: 100%;
-  background-color: #e53935;
+  background-color: #cc2e72;
   color: white;
   border: none;
   padding: 10px 0;
@@ -241,18 +252,15 @@ body {
 }
 
 .carrinho-popup button:hover {
-  background-color: #c62f2b;
+  background-color: #a71c59;
 }
 
 /* RESPONSIVO */
-
-/* Mostrar hamburger só em telas pequenas */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
   }
 
-  /* Menu fica escondido inicialmente */
   .menu {
     display: none;
     flex-direction: column;
@@ -265,7 +273,6 @@ body {
     border-radius: 4px;
     padding: 10px;
     z-index: 200;
-
     align-items: center;
   }
 
@@ -273,29 +280,25 @@ body {
     display: flex;
   }
 
-  /* Links cor rosa no menu móvel e centralizados */
   .menu a {
-    color: #e53935;
+    color: #cc2e72;
     font-weight: 700;
     text-align: center;
     width: 100%;
     padding: 8px 0;
   }
 
-  /* Alinhamento central do título destaques e cor rosa */
   .destaques h2 {
     text-align: center;
-    color: #e53935;
+    color: #cc2e72;
     font-weight: 700;
     margin-bottom: 20px;
   }
 
-  /* Ajustar grade para 1 coluna no celular */
   .products-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Promo bar menor e marquee */
   .promo-bar {
     font-size: 12px;
     overflow: hidden;
@@ -305,7 +308,7 @@ body {
   .promo-bar div {
     display: inline-block;
     padding-right: 50px;
-    animation: marquee 15s linear infinite;
+    animation: marquee 30s linear infinite;
   }
 }
 
