@@ -10,6 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// === Função para fechar o menu mobile (botão "fechar")
+function fecharMenu() {
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    // Remove tanto "show" quanto "active" se estiverem aplicadas
+    mobileMenu.classList.remove("show");
+    mobileMenu.classList.remove("active");
+}
+
 // === LOGIN ===
 function fazerLogin() {
     const usuario = document.getElementById("usuario").value.trim();
@@ -20,7 +29,6 @@ function fazerLogin() {
         return false;
     }
 
-    // Aqui usaremos o PHP futuramente (ajuste esse endpoint se necessário)
     fetch('login.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -29,9 +37,9 @@ function fazerLogin() {
         .then(res => res.text())
         .then(res => {
             if (res === "ok") {
-                window.location.href = "painel.html"; // Redireciona se login for bem-sucedido
+                window.location.href = "painel.html";
             } else {
-                document.getElementById("erro").style.display = "block"; // Exibe erro
+                document.getElementById("erro").style.display = "block";
             }
         });
 
@@ -92,7 +100,6 @@ function validarCadastro() {
         return false;
     }
 
-    // Enviar dados para o PHP futuramente
     alert("Cadastro validado com sucesso!");
     return true;
 }
@@ -106,29 +113,19 @@ function recuperarSenha() {
         return false;
     }
 
-    // Enviar e-mail de recuperação via PHP futuramente
     alert("Um código de recuperação foi enviado para seu e-mail.");
     return true;
 }
-<script>
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
 
-    hamburger.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-    });
-</script>
+// === LOGOUT ===
 function logout() {
-    // Fecha o menu
+    // Fecha o menu caso esteja aberto
     const mobileMenu = document.getElementById("mobile-menu");
-    if (mobileMenu.classList.contains("active")) {
+    if (mobileMenu.classList.contains("show") || mobileMenu.classList.contains("active")) {
+        mobileMenu.classList.remove("show");
         mobileMenu.classList.remove("active");
     }
 
-    // Faz logout
     localStorage.removeItem("logado");
     location.reload();
 }
-
-
-
