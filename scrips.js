@@ -139,16 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fecharMenu() {
-  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenu = document.getElementById('fecharButton');
   mobileMenu.classList.remove('active'); // remove a classe 'active' pra esconder menu
 }
 
 function logout() {
-  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenu = document.getElementById('menu');
   mobileMenu.classList.remove('active'); // também remove no logout
 
   // lógica do logout, exemplo:
   localStorage.removeItem('logado');
   location.reload();
 }
+
 
