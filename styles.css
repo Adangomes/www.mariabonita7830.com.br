@@ -32,12 +32,14 @@ body {
     color: #cc2e72;
 }
 
+/* Menu (padrão oculto em mobile) */
 .menu {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
+/* Ícones e links do menu */
 .menu a {
     color: #444;
     text-decoration: none;
@@ -65,12 +67,13 @@ body {
     display: block;
 }
 
+/* Carrinho */
 .cart {
     font-weight: bold;
     font-size: 20px;
 }
 
-/* Hamburger */
+/* Botão hamburguer */
 .hamburger {
     display: none;
     font-size: 1.8rem;
@@ -221,7 +224,7 @@ body {
     cursor: pointer;
 }
 
-/* Responsivo: tablets e celulares */
+/* RESPONSIVO */
 @media (max-width: 1024px) {
     .products-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -234,6 +237,7 @@ body {
         align-items: flex-start;
     }
 
+    /* Esconde o menu por padrão no mobile */
     .menu {
         display: none;
         flex-direction: column;
@@ -243,26 +247,31 @@ body {
         margin-top: 1rem;
         position: absolute;
         top: 60px;
-        right: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        right: 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         padding: 10px;
         z-index: 1000;
     }
 
+    /* Mostra o menu quando .active estiver presente */
     .menu.active {
         display: flex;
     }
 
-    .menu a {
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
+    .menu a,
+    .menu button {
+        padding: 15px;
+        border-bottom: 1px solid #ccc;
+        background: none;
         color: #333;
-        text-decoration: none;
+        text-align: left;
+        border: none;
+        width: 100%;
     }
 
     .hamburger {
         display: block;
-        font-size: 24px;
+        font-size: 30px;
         background: none;
         border: none;
         cursor: pointer;
@@ -296,43 +305,4 @@ body {
         margin-top: 0;
         padding: 0;
     }
-} 
-/*  novoteste   */
-/* Menu escondido por padrão no mobile */
-.menu {
-    display: none;
-    flex-direction: column;
-    background-color: white;
-    position: absolute;
-    top: 60px; /* ajuste conforme sua altura do header */
-    right: 0;
-    width: 100%;
-    z-index: 1000;
 }
-
-/* Mostrar menu quando a classe .active for adicionada via JS */
-.menu.active {
-    display: flex;
-}
-
-/* Mostrar o botão hambúrguer apenas em telas pequenas */
-.hamburger {
-    display: none;
-    font-size: 30px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-/* Estilos para mobile */
-@media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
-
-    .menu a {
-        padding: 15px;
-        border-bottom: 1px solid #ccc;
-    }
-}
-
