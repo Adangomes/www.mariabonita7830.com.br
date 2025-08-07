@@ -2,253 +2,95 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MARIA BONITA - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MARIA BONITA - Loja</title>
   <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Moda feminina com estilo e conforto. Compre roupas e acessórios exclusivos na Maria Bonita.">
-<meta property="og:title" content="Maria Bonita - Moda Feminina">
-<meta property="og:image" content="URL_DE_UMA_IMAGEM_DO_SITE">
-<meta property="og:url" content="https://SEUSITE.github.io">
-
 </head>
-
 <body>
+
   <!-- TELA DE LOGIN -->
   <div id="login-container">
     <h2>Login</h2>
     <input type="text" id="usuario" placeholder="Usuário" required />
     <input type="password" id="senha" placeholder="Senha" required />
     <button onclick="fazerLogin()">Entrar</button>
-    <p id="erro" style="color:red; display:none;">Usuário ou senha incorretos.</p>
+    <p id="erro" style="display:none;">Usuário ou senha incorretos.</p>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL (visível apenas após login) -->
-  <div id="menu" style="display:none;">
-    <!-- CABEÇALHO -->
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div id="menu">
     <header class="header">
       <div class="logo">MARIA BONITA</div>
-      <button class="hamburger" id="hamburger">&#9776;</button>
-      
-
-
-      <nav class="menu" id="mobile-menu">
-        <a href="novidades.html">Novidades</a>
-        <a href="blusas.html">Blusas</a>
-        <a href="acessorios.html">Acessórios</a>
-        <a href="contato.html">Contato</a>
-        <a href="index.html">HOME</a>
-        <button id="fecharButton">FECHAR</button>
-      </nav>
-      
-      <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
-
-
-      <div class="cart">🛒</div>
-      <!-- Carrinho -->
-<div id="carrinho-container" style="display:none;" class="carrinho-popup">
-  <h3>Seu Carrinho</h3>
-  <ul id="lista-carrinho"></ul>
-  <div class="botoes-carrinho">
-  <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
-  <button onclick="fecharCarrinho()">Continuar comprando</button>
-</div>
-
-</div>
-
+      <div class="cart" onclick="mostrarCarrinho()">
+        🛒
+        <span class="cart-count" id="cart-count" style="display:none;">0</span>
+      </div>
     </header>
 
-    <!-- BARRA DE PROMOÇÕES -->
-    <section class="promo-bar">
-      <div>ENVIO PARA TODO BRASIL – Via Correios</div>
-      <div>10% OFF com cupom: <strong>MARIA BONITA</strong></div>
-      <div>NOVIDADES toda semana</div>
-      <div><a href="#">Precisa de ajuda? Fale conosco</a></div>
-    </section>
+    <section class="products-grid">
+      <div class="product-card">
+        <img src="imagem4.jpeg" alt="Casaco Parka" />
+        <h3>Casaco Parka</h3>
+        <h4>cod: 0001</h4>
+        <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
+        <button class="btn" onclick="abrirModal(
+          'Casaco Parka', 
+          '0001', 
+          'R$160,00',
+          ['imagem4.jpeg', 'imagem4_2.jpeg', 'imagem4_3.jpeg']
+        )">Comprar</button>
+      </div>
 
-    <!-- DESTAQUES -->
-    <section class="destaques">
-      <h2>Destaques ♡</h2>
-      <div class="products-grid">
-        <!-- PRODUTOS -->
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Casaco Parka" />
-          <h3>Casaco Parka</h3>
-          <h4>cod: 0001</h4>
-          <p class="price">R$160,00 <span class="pix">R$152,00 com Pix</span></p>
-          <div class="product-card">
-          <img src="imagem4.jpeg" alt="Vestido Midi" />
-          <h3>Vestido Midi Floral</h3>
-          <h4>cod: 0002</h4>
-          <p class="price">R$130,00 <span class="pix">R$123,50 com Pix</span></p>
-          <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
-        </div>
-         
-
-
-        </div>
-
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Vestido Midi" />
-          <h3>Vestido Midi Floral</h3>
-          <h4>cod: 0002</h4>
-          <p class="price">R$130,00 <span class="pix">R$123,50 com Pix</span></p>
-          <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
-        </div>
-
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-          <h3>Calça Wide Leg Jeans</h3>
-          <h4>cod: 0003</h4>
-          <p class="price">R$150,00 <span class="pix">R$142,50 com Pix</span></p>
-         <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0003', 'R$150,00')">Comprar</button>
-        </div>
-
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-          <h3>Calça Wide Leg Jeans</h3>
-          <h4>cod: 0004</h4>
-          <p class="price">R$150,00 <span class="pix">R$142,50 com Pix</span></p>
-          <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0004', 'R$150,00')">Comprar</button>
+      <div class="product-card">
+        <img src="imagem4.jpeg" alt="Vestido Midi Floral" />
+        <h3>Vestido Midi Floral</h3>
+        <h4>cod: 0002</h4>
+        <p class="price">R$130,00 <span class="pix">R$123,50 com Pix</span></p>
+        <button class="btn" onclick="abrirModal(
+          'Vestido Midi Floral', 
+          '0002', 
+          'R$130,00',
+          ['imagem4.jpeg', 'imagem4_2.jpeg', 'imagem4_3.jpeg']
+        )">Comprar</button>
       </div>
     </section>
-
-    <!-- RODAPÉ -->
-    <footer class="footer">
-      <p>Cadastre seu e-mail para ofertas e novidades.</p>
-    </footer>
   </div>
 
-  <!-- SCRIPT JS embutido -->
-  <script>
-    function fazerLogin() {
-      const usuario = document.getElementById("usuario").value.trim();
-      const senha = document.getElementById("senha").value.trim();
+  <!-- MODAL PRODUTO -->
+  <div id="produto-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <div id="modal-fotos"></div>
+      <h3 id="modal-nome"></h3>
+      <p id="modal-codigo"></p>
+      <p id="modal-preco"></p>
+      <p id="modal-estoque">Estoque: <span id="estoque-quantidade">5</span> unidades</p>
 
-      if (usuario === "mariabonita" && senha === "91453710") {
-        localStorage.setItem("logado", "true");
-        mostrarPagina();
-      } else {
-        document.getElementById("erro").style.display = "block";
-      }
-    }
+      <label for="tamanho">Tamanho:</label>
+      <select id="tamanho">
+        <option>P</option>
+        <option>M</option>
+        <option>G</option>
+        <option>GG</option>
+      </select>
 
-    function mostrarPagina() {
-      document.getElementById("login-container").style.display = "none";
-      document.getElementById("menu").style.display = "block";
-    }
+      <label for="cor">Cor:</label>
+      <select id="cor">
+        <option>Preto</option>
+        <option>Branco</option>
+        <option>Bege</option>
+      </select>
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const fecharBtn = document.getElementById("fecharButton");
+      <label for="mensagem">Mensagem adicional:</label>
+      <textarea id="mensagem" rows="3" placeholder="Ex: Quero retirar na loja."></textarea>
 
-      // Reexibe conteúdo se usuário já estiver logado
-      if (localStorage.getItem("logado") === "true") {
-        mostrarPagina();
-      }
-
-      // Abre/fecha o menu mobile
-      hamburger.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
-      });
-
-      // Fecha o menu ao clicar em "Fechar"
-      fecharBtn.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-      });
-    });
-  </script>
-  <script>
-  const carrinho = [];
-
-  function adicionarAoCarrinho(nome, codigo) {
-    carrinho.push({ nome, codigo });
-    alert(`${nome} adicionado ao carrinho!`);
-  }
-
-  function mostrarCarrinho() {
-    const container = document.getElementById("carrinho-container");
-    const lista = document.getElementById("lista-carrinho");
-
-    lista.innerHTML = ""; // Limpa carrinho antes de mostrar
-
-    carrinho.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.nome} (cod: ${item.codigo})`;
-      lista.appendChild(li);
-    });
-
-    container.style.display = "block";
-  }
-
-  function finalizarCompra() {
-    if (carrinho.length === 0) {
-      alert("Seu carrinho está vazio!");
-      return;
-    }
-
-    let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
-    carrinho.forEach((item, index) => {
-      mensagem += `• ${item.nome} (cod: ${item.codigo})%0A`;
-    });
-
-    const numeroWhatsApp = "554789257740"; // seu número com DDI + DDD
-    const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-    window.open(url, "_blank");
-  }
-
-  // Clique no carrinho mostra os itens
-  document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
-    function fecharCarrinho() {
-  document.getElementById("carrinho-container").style.display = "none";
-}
-
-</script>
-  <!-- MODAL DE DETALHE DO PRODUTO -->
-<div id="produto-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close" onclick="fecharModal()">&times;</span>
-    <div id="modal-fotos" class="modal-fotos"></div>
-    <h3 id="modal-nome"></h3>
-    <p id="modal-codigo"></p>
-    <p id="modal-preco"></p>
-    <p id="modal-estoque">Estoque: <span id="estoque-quantidade">5</span> unidades</p>
-
-    <label for="tamanho">Tamanho:</label>
-    <select id="tamanho">
-      <option>P</option>
-      <option>M</option>
-      <option>G</option>
-      <option>GG</option>
-    </select>
-
-    <label for="cor">Cor:</label>
-    <select id="cor">
-      <option>Preto</option>
-      <option>Branco</option>
-      <option>Bege</option>
-    </select>
-
-    <label for="mensagem">Mensagem adicional:</label>
-    <textarea id="mensagem" rows="3" placeholder="Ex: Quero retirar na loja."></textarea>
-
-    <button onclick="confirmarAdicao()">Adicionar ao carrinho</button>
+      <button onclick="confirmarAdicao()">Adicionar ao carrinho</button>
+    </div>
   </div>
-</div>
 
+  <!-- FEEDBACK -->
+  <p id="feedback-msg">Produto adicionado ao carrinho!</p>
 
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
