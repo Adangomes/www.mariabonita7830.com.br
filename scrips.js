@@ -54,3 +54,8 @@ function logout() {
     localStorage.removeItem("logado");
     location.reload();
 }
+document.getElementById("feedback-msg").style.display = "block";
+setTimeout(() => {
+  document.getElementById("feedback-msg").style.display = "none";
+}, 2000);
+
