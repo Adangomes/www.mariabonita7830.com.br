@@ -129,3 +129,26 @@ function logout() {
     localStorage.removeItem("logado");
     location.reload();
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active'); // usa 'active' pra bater com o CSS
+  });
+});
+
+function fecharMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.remove('active'); // remove a classe 'active' pra esconder menu
+}
+
+function logout() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.remove('active'); // também remove no logout
+
+  // lógica do logout, exemplo:
+  localStorage.removeItem('logado');
+  location.reload();
+}
+
