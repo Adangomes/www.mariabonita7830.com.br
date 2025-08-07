@@ -290,9 +290,9 @@ body {
     margin-bottom: 20px;
   }
 
-  /* Ajustar grade para 1 coluna no celular */
+  /* Ajustar grade para 2 colunas no celular */
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Promo bar menor e marquee */
@@ -314,6 +314,7 @@ body {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
+
 /*  alinhar os botões lado a lado com bom espaçamento: */
 .botoes-carrinho {
   display: flex;
@@ -339,4 +340,3 @@ body {
   background-color: #ccc;
   color: #333;
 }
-
