@@ -297,8 +297,37 @@ body {
   }
 
   .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 10px;
+}
+
+.product-card {
+  padding: 10px;
+}
+
+.product-card img {
+  height: 180px;
+}
+
+.product-card h3 {
+  font-size: 0.9rem;
+}
+
+.product-card h4 {
+  font-size: 0.75rem;
+  margin: 4px 0;
+  color: #777;
+}
+
+.price {
+  font-size: 0.85rem;
+}
+
+.pix {
+  font-size: 0.7rem;
+}
+
 
   .promo-bar {
     font-size: 12px;
@@ -314,6 +343,7 @@ body {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
+
 
 
 
