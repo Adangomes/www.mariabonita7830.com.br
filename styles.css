@@ -121,6 +121,9 @@ body {
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  border: 2px solid #cc2e72; /* borda rosa */
+  padding: 10px; /* para não colar na borda */
+  border-radius: 8px;
 }
 
 /* Card de produto */
@@ -128,15 +131,16 @@ body {
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 5px #eee;
-  transition: transform 0.3s ease;
+  box-shadow: 0 0 5px #cc2e72; /* sombra rosa */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 2px solid #cc2e72; /* borda rosa */
   padding: 10px;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 0 12px #cc2e72; /* sombra maior no hover */
 }
 
 .product-card img {
@@ -144,23 +148,24 @@ body {
   height: auto;
   border-radius: 6px;
   margin-bottom: 10px;
+  border: 2px solid #cc2e72; /* borda rosa na imagem */
 }
 
 .product-card h3 {
   font-size: 1.1rem;
   margin: 0.5rem 0;
-  color: #e53935; /* vermelho forte */
+  color: #cc2e72; /* título na cor rosa */
 }
 
 .product-card .price {
-  color: #333;
+  color: #cc2e72; /* preço rosa */
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 10px;
 }
 
 .product-card .pix {
-  color: #888;
+  color: #cc2e72; /* pix na cor rosa */
   font-size: 0.9rem;
   margin-top: 4px;
 }
