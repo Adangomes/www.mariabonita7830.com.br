@@ -278,3 +278,33 @@ body {
         display: none; /* Esconde o botão "Fechar" no desktop */
     }
 }
+.carrinho-popup {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+  z-index: 9999;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.carrinho-popup ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.carrinho-popup button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
