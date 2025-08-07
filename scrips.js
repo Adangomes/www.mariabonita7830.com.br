@@ -151,5 +151,8 @@ function logout() {
   localStorage.removeItem('logado');
   location.reload();
 }
+document.getElementById('fecharButton').addEventListener('click', function() {
+    document.getElementById('menu').style.display = 'none';
+});
 
 
