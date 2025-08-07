@@ -97,6 +97,14 @@
   </div>
 
   <script>
+    <script>
+  window.addEventListener('load', () => {
+    const scrollContainer = document.getElementById('promo-scroll');
+    const clone = scrollContainer.cloneNode(true);
+    scrollContainer.parentNode.appendChild(clone);
+  });
+</script>
+
     // Login
     function fazerLogin() {
       const usuario = document.getElementById("usuario").value.trim();
@@ -183,6 +191,7 @@
   </script>
 </body>
 </html>
+
 
 
 
