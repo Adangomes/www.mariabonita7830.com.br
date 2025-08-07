@@ -17,7 +17,7 @@
     <p id="erro" style="color:red; display:none;">Usuário ou senha incorretos.</p>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL (visível apenas após login) -->
+  <!-- CONTEÚDO PRINCIPAL -->
   <div id="menu" style="display:none;">
     <header class="header">
       <div class="logo">MARIA BONITA</div>
@@ -88,6 +88,90 @@
     </footer>
   </div>
 
-  <script src="scripts.js"></script>
+  <script>
+    // Login
+    function fazerLogin() {
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+
+      if (usuario === "mariabonita" && senha === "91453710") {
+        localStorage.setItem("logado", "true");
+        mostrarPagina();
+        document.getElementById("erro").style.display = "none";
+      } else {
+        document.getElementById("erro").style.display = "block";
+      }
+    }
+
+    // Mostrar conteúdo após login
+    function mostrarPagina() {
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("menu").style.display = "block";
+    }
+
+    // Verifica login ao carregar
+    document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("logado") === "true") {
+        mostrarPagina();
+      }
+
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const fecharBtn = document.getElementById("fecharButton");
+
+      hamburger.addEventListener("click", () => {
+        mobileMenu.classList.toggle("active");
+      });
+
+      fecharBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+      });
+
+      document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
+    });
+
+    // Carrinho
+    const carrinho = [];
+
+    function adicionarAoCarrinho(nome, codigo, preco) {
+      carrinho.push({ nome, codigo, preco });
+      alert(`${nome} adicionado ao carrinho!`);
+    }
+
+    function mostrarCarrinho() {
+      const container = document.getElementById("carrinho-container");
+      const lista = document.getElementById("lista-carrinho");
+
+      lista.innerHTML = "";
+
+      carrinho.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.nome} (cod: ${item.codigo}) - ${item.preco}`;
+        lista.appendChild(li);
+      });
+
+      container.style.display = "block";
+    }
+
+    function fecharCarrinho() {
+      document.getElementById("carrinho-container").style.display = "none";
+    }
+
+    function finalizarCompra() {
+      if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+      }
+
+      let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
+      carrinho.forEach(item => {
+        mensagem += `• ${item.nome} (cod: ${item.codigo}) - ${item.preco}%0A`;
+      });
+
+      const numeroWhatsApp = "554789257740"; 
+      const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+      window.open(url, "_blank");
+    }
+  </script>
 </body>
 </html>
