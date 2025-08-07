@@ -118,13 +118,16 @@ function recuperarSenha() {
         mobileMenu.classList.toggle('active');
     });
 </script>
-function fecharMenu() {
+function logout() {
+    // Fecha o menu
     const mobileMenu = document.getElementById("mobile-menu");
-
-    // Verifica se o menu está aberto
     if (mobileMenu.classList.contains("active")) {
         mobileMenu.classList.remove("active");
     }
+
+    // Faz logout
+    localStorage.removeItem("logado");
+    location.reload();
 }
 
 
