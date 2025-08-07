@@ -366,6 +366,16 @@ body {
   100% { transform: translateX(-100%); }
 }
 
+/* aumentar ou diminuir o tamanho desse loop */
+.promo-item {
+  padding: 0 40px; /* Aumente ou reduza o espaço lateral */
+  white-space: nowrap;
+}
+
+.promo-separator {
+  padding: 0 20px;
+}
+
 
 
 
