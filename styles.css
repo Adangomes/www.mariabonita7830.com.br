@@ -314,4 +314,62 @@ body {
 .menu.active {
   display: flex;
 }
+.menu {
+  display: none;
+  flex-direction: column;
+  background-color: white;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px;
+  border-top: 1px solid #eee;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.menu.active {
+  display: flex;
+}
+
+.hamburger {
+  display: none;
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cc2e72;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .menu a,
+  .menu button {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    background: none;
+    color: #333;
+    text-align: left;
+    border: none;
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    width: auto;
+    box-shadow: none;
+  }
+
+  .menu button {
+    display: none; /* Esconde o botão "Fechar" no desktop */
+  }
+}
+
 
