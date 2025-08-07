@@ -32,7 +32,7 @@ body {
 }
 
 #login-container button {
-  background-color: #e53935;
+  background-color: #cc2e72;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -42,7 +42,7 @@ body {
 }
 
 #login-container button:hover {
-  background-color: #c62f2b;
+  background-color: #cc2e72;
 }
 
 /* HEADER */
@@ -84,7 +84,7 @@ body {
 }
 
 .menu a:hover {
-  color: #e53935;
+  color: #cc2e72;
 }
 
 .cart {
@@ -94,7 +94,7 @@ body {
 
 /* PROMO BAR */
 .promo-bar {
-  background-color: #ffe6e6;
+  background-color: #cc2e72;
   display: flex;
   justify-content: space-around;
   padding: 10px 5px;
@@ -340,4 +340,5 @@ body {
   background-color: #ccc;
   color: #333;
 }
+
 
