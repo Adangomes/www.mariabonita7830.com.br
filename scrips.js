@@ -78,3 +78,10 @@ function finalizarCompra() {
 
 // Clique no carrinho mostra os itens
 document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
+
+// funcao fechar carrinho
+function fecharCarrinho() {
+  document.getElementById("carrinho-container").style.display = "none";
+}
+
+
