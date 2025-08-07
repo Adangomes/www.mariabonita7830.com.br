@@ -306,5 +306,30 @@ body {
   padding: 10px;
   cursor: pointer;
 }
+.botoes-carrinho {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.botoes-carrinho button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.botoes-carrinho button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.botoes-carrinho button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
 
 
