@@ -34,26 +34,14 @@
       <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
 
 
-     <div class="cart" id="cart" style="display:none;">
-  <div class="cart-header">
-    <h2>Meu Carrinho</h2>
-    <button class="close-btn" onclick="fecharCarrinho()">X</button>
-  </div>
+      <div class="cart" title="Ver carrinho">🛒</div>
 
-  <div id="cart-items"></div>
-
-  <div class="summary">
-    <p id="subtotal">Subtotal: R$0,00</p>
-    <p id="desconto">Desconto: R$0,00</p>
-    <p><strong id="total">Total: R$0,00</strong></p>
-  </div>
-
-  <div class="buttons">
-    <button class="continue-btn" onclick="fecharCarrinho()">Continuar comprando</button>
-    <button class="checkout-btn" onclick="finalizarCompra()">Finalizar compra</button>
-  </div>
-</div>
-
+      <div id="carrinho-container" style="display:none;" class="carrinho-popup">
+        <h3>Seu Carrinho</h3>
+        <ul id="lista-carrinho"></ul>
+        <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
+        <button onclick="fecharCarrinho()">Continuar comprando</button>
+      </div>
     </header>
 
     <section class="promo-bar">
@@ -166,7 +154,7 @@
 
     function adicionarAoCarrinho(nome, codigo, preco) {
       carrinho.push({ nome, codigo, preco });
-      alert(`${nome} adicionado ao carrinho!`);
+      alert(${nome} adicionado ao carrinho!);
     }
 
     function mostrarCarrinho() {
@@ -177,7 +165,7 @@
 
       carrinho.forEach(item => {
         const li = document.createElement("li");
-        li.textContent = `${item.nome} (cod: ${item.codigo}) - ${item.preco}`;
+        li.textContent = ${item.nome} (cod: ${item.codigo}) - ${item.preco};
         lista.appendChild(li);
       });
 
@@ -196,34 +184,14 @@
 
       let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
       carrinho.forEach(item => {
-        mensagem += `• ${item.nome} (cod: ${item.codigo}) - ${item.preco}%0A`;
+        mensagem += • ${item.nome} (cod: ${item.codigo}) - ${item.preco}%0A;
       });
 
       const numeroWhatsApp = "554789257740"; 
-      const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+      const url = https://wa.me/${numeroWhatsApp}?text=${mensagem};
       window.open(url, "_blank");
     }
    
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
