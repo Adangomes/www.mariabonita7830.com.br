@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: hsla(0, 0%, 0%, 0.178);
+    background-color: #f3c0d2;
     color: #333;
     padding: 0;
     margin: 0;
@@ -294,4 +294,5 @@ body {
         object-fit: cover;
     }
 }
+
 
