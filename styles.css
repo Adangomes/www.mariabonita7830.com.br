@@ -295,6 +295,12 @@ body {
         object-fit: cover;
     }
 }
+.menu {
+    position: relative;
+    z-index: 10;
+}
+
+
 
 
 
