@@ -296,9 +296,10 @@ body {
     }
 }
 .menu {
-    position: relative;
-    z-index: 10;
+    position: absolute;
+    z-index: 01;
 }
+
 
 
 
