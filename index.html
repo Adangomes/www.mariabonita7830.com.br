@@ -34,20 +34,26 @@
       <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
 
 
-      <div class="cart" title="Ver carrinho">🛒</div>
+     <div class="cart" id="cart" style="display:none;">
+  <div class="cart-header">
+    <h2>Meu Carrinho</h2>
+    <button class="close-btn" onclick="fecharCarrinho()">X</button>
+  </div>
 
-      <div id="carrinho-container" style="display:none;" class="carrinho-popup">
-        <h3>Seu Carrinho</h3>
-        <ul id="lista-carrinho"></ul>
-         <div class="summary">
+  <div id="cart-items"></div>
+
+  <div class="summary">
     <p id="subtotal">Subtotal: R$0,00</p>
     <p id="desconto">Desconto: R$0,00</p>
     <p><strong id="total">Total: R$0,00</strong></p>
   </div>
 
-        <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
-        <button onclick="fecharCarrinho()">Continuar comprando</button>
-      </div>
+  <div class="buttons">
+    <button class="continue-btn" onclick="fecharCarrinho()">Continuar comprando</button>
+    <button class="checkout-btn" onclick="finalizarCompra()">Finalizar compra</button>
+  </div>
+</div>
+
     </header>
 
     <section class="promo-bar">
@@ -201,6 +207,7 @@
   </script>
 </body>
 </html>
+
 
 
 
