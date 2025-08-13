@@ -295,6 +295,11 @@ body {
         object-fit: cover;
     }
 }
+.promo-scroll {
+    position: relative;
+    z-index: 1;
+}
+
 
 
 
