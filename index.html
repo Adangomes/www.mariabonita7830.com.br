@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <!-- TELA DE LOGIN -->
+  <!-- LOGIN -->
   <div id="login-container">
     <h2>Login</h2>
     <input type="text" id="usuario" placeholder="Usuário" required />
@@ -17,12 +17,11 @@
     <p id="erro" style="color:red; display:none;">Usuário ou senha incorretos.</p>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- CONTEÚDO -->
   <div id="menu" style="display:none;">
     <header class="header">
       <div class="logo">MARIA BONITA</div>
       <button class="hamburger" id="hamburger">&#9776;</button>
-
       <nav class="menu" id="mobile-menu">
         <a href="novidades.html">Novidades</a>
         <a href="blusas.html">Blusas</a>
@@ -31,43 +30,24 @@
         <a href="index.html">HOME</a>
         <button id="fecharButton">FECHAR</button>
       </nav>
-      <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
-
-
       <div class="cart" title="Ver carrinho">🛒</div>
-
-      <div id="carrinho-container" style="display:none;" class="carrinho-popup">
-        <h3>Seu Carrinho</h3>
-        <ul id="lista-carrinho"></ul>
-        <button onclick="finalizarCompra()">Finalizar no WhatsApp</button>
-        <button onclick="fecharCarrinho()">Continuar comprando</button>
-      </div>
     </header>
 
+    <!-- BARRA PROMO -->
     <section class="promo-bar">
- <div class="promo-bar">
-  <div class="promo-scroll" id="promo-scroll">
-    <h4>
-        <span class="promo-item">Jaraguá Do Sul</span>
-        <span class="promo-separator">|</span>
-        <span class="promo-item">Guaramirim</span>
-        <span class="promo-separator">|</span>
-        <span class="promo-item">Schroeder</span>
-        <span class="promo-separator">|</span>
-        <span class="promo-item">Jaraguá Do Sul</span>
-        <span class="promo-separator">|</span>
-        <span class="promo-item">Guaramirim</span>
-        <span class="promo-separator">|</span>
-        <span class="promo-item">Schroeder</span>
-        <!-- Repita mais se quiser -->
-      </h4>
-  </div>
-</div>
+      <div class="promo-scroll" id="promo-scroll">
+        <h4>
+          <span class="promo-item">Jaraguá Do Sul</span> |
+          <span class="promo-item">Guaramirim</span> |
+          <span class="promo-item">Schroeder</span> |
+          <span class="promo-item">Jaraguá Do Sul</span> |
+          <span class="promo-item">Guaramirim</span> |
+          <span class="promo-item">Schroeder</span>
+        </h4>
+      </div>
+    </section>
 
-
-</section>
-
-
+    <!-- PRODUTOS -->
     <section class="destaques">
       <h2>Destaques ♡</h2>
       <div class="products-grid">
@@ -85,113 +65,32 @@
           <p class="price">R$130,00</p>
           <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
         </div>
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-          <h3>Calça Wide Leg Jeans</h3>
-          <h4>cod: 0003</h4>
-          <p class="price">R$150,00</p>
-          <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0003', 'R$150,00')">Comprar</button>
-        </div>
-        <div class="product-card">
-          <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-          <h3>Calça Wide Leg Jeans</h3>
-          <h4>cod: 0004</h4>
-          <p class="price">R$150,0</p>
-          <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0004', 'R$150,00')">Comprar</button>
-        </div>
       </div>
     </section>
+
+    <!-- NOVO CARRINHO -->
+    <div class="cart-container" id="carrinho-container" style="display:none;">
+      <div class="cart-header">
+        <h2>Meu Carrinho</h2>
+        <button class="close-btn" onclick="fecharCarrinho()">X</button>
+      </div>
+      <ul id="lista-carrinho"></ul>
+      <div class="summary">
+        <p id="subtotal">Subtotal: R$0,00</p>
+        <p id="desconto">Desconto: R$0,00</p>
+        <p id="total"><strong>Total: R$0,00</strong></p>
+      </div>
+      <div class="buttons">
+        <button class="continue-btn" onclick="fecharCarrinho()">Continuar comprando</button>
+        <button class="checkout-btn" onclick="finalizarCompra()">Finalizar compra</button>
+      </div>
+    </div>
 
     <footer class="footer">
       <p>Cadastre seu e-mail para ofertas e novidades.</p>
     </footer>
   </div>
 
-  <script>
-    // Login
-    function fazerLogin() {
-      const usuario = document.getElementById("usuario").value.trim();
-      const senha = document.getElementById("senha").value.trim();
-
-      if (usuario === "mariabonita" && senha === "91453710") {
-        localStorage.setItem("logado", "true");
-        mostrarPagina();
-        document.getElementById("erro").style.display = "none";
-      } else {
-        document.getElementById("erro").style.display = "block";
-      }
-    }
-
-    // Mostrar conteúdo após login
-    function mostrarPagina() {
-      document.getElementById("login-container").style.display = "none";
-      document.getElementById("menu").style.display = "block";
-    }
-
-    // Verifica login ao carregar
-    document.addEventListener("DOMContentLoaded", () => {
-      if (localStorage.getItem("logado") === "true") {
-        mostrarPagina();
-      }
-
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const fecharBtn = document.getElementById("fecharButton");
-
-      hamburger.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
-      });
-
-      fecharBtn.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-      });
-
-      document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
-    });
-
-    // Carrinho
-    const carrinho = [];
-
-    function adicionarAoCarrinho(nome, codigo, preco) {
-      carrinho.push({ nome, codigo, preco });
-      alert(${nome} adicionado ao carrinho!);
-    }
-
-    function mostrarCarrinho() {
-      const container = document.getElementById("carrinho-container");
-      const lista = document.getElementById("lista-carrinho");
-
-      lista.innerHTML = "";
-
-      carrinho.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = ${item.nome} (cod: ${item.codigo}) - ${item.preco};
-        lista.appendChild(li);
-      });
-
-      container.style.display = "block";
-    }
-
-    function fecharCarrinho() {
-      document.getElementById("carrinho-container").style.display = "none";
-    }
-
-    function finalizarCompra() {
-      if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
-        return;
-      }
-
-      let mensagem = "Olá! Tenho interesse nos seguintes produtos:%0A";
-      carrinho.forEach(item => {
-        mensagem += • ${item.nome} (cod: ${item.codigo}) - ${item.preco}%0A;
-      });
-
-      const numeroWhatsApp = "554789257740"; 
-      const url = https://wa.me/${numeroWhatsApp}?text=${mensagem};
-      window.open(url, "_blank");
-    }
-   
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
