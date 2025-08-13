@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #f3c0d2;
+    background-color: heat;
     color: #333;
     padding: 0;
     margin: 0;
@@ -294,5 +294,6 @@ body {
         object-fit: cover;
     }
 }
+
 
 
