@@ -216,6 +216,30 @@ body {
     animation: fadeIn .3s ease;
     color: #111;
 }
+/* SPLASH */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #e50914; /* vermelho principal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000; /* acima de tudo */
+}
+
+.splash-text {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  animation: pulse 1.2s infinite;
+}
+
+/* animação */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
 
 /* Cabeçalho Carrinho */
@@ -398,3 +422,4 @@ body {
 .menu.active {
     display: flex;
 }
+
