@@ -1,25 +1,4 @@
 
-// Verifica login ao carregar
-document.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("logado") === "true") {
-        mostrarPagina();
-    }
-
-    const hamburger = document.getElementById("hamburger");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const fecharBtn = document.getElementById("fecharButton");
-
-    hamburger.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
-    });
-
-    fecharBtn.addEventListener("click", () => {
-        mobileMenu.classList.remove("active");
-    });
-
-    document.querySelector(".cart").addEventListener("click", mostrarCarrinho);
-});
-
 // CARRINHO DINÂMICO
 const carrinho = [];
 
@@ -103,8 +82,9 @@ function finalizarCompra() {
         mensagem += `• ${item.nome} (cod: ${item.codigo}) - ${item.preco} x ${item.quantidade}%0A`;
     });
 
-    const numeroWhatsApp = "554789257740"; // seu número
+    const numeroWhatsApp = "5547984196636"; // seu número
     const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
     window.open(url, "_blank");
 }
+
 
