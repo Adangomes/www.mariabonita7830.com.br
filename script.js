@@ -85,7 +85,7 @@ function adicionarAoCarrinho(nome, codigo, preco) {
         let bebidaOpcoes = BEBIDAS.map((b, i) =>
             `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : "Grátis"}`
         ).join("\n");
-        let bebidaEscolha = prompt("Escolha a bebida por número\n" + bebidaOpcoes);
+        let bebidaEscolha = prompt("Escolha a bebida:\n" + bebidaOpcoes);
         let bebidaIndex = parseInt(bebidaEscolha) - 1;
         if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("Bebida inválida!");
 
@@ -304,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
 
 
 
