@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acessórios - Maria Bonita</title>
+    <title>COMBOS</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -13,73 +13,159 @@
     <div id="pagina">
         <!-- Cabeçalho -->
         <header class="header">
-            <div class="logo">MARIA BONITA</div>
+            <div class="logo">MYDI DELIVERY</div>
             <button class="hamburger" id="hamburger">&#9776;</button>
             <nav class="menu" id="mobile-menu">
-                <a href="novidades.html">Novidades da Semana</a>
-                <a href="blusas.html">Blusas</a>
-                <a href="acessorios.html">Acessórios</a>
+                <a href="novidades.html">Pizzas Doce</a>
+                <a href="blusas.html">Bebidas</a>
+                <a href="acessorios.html">Combos</a>
+                <a href="bordas.html">Bordas</a>
                 <a href="contato.html">Contato</a>
                 <a href="index.html">HOME</a>
+
             </nav>
             <div class="cart">🛒</div>
         </header>
-
-        <!-- Acessórios -->
-        <section class="destaques">
-            <h2>Acessórios</h2>
-            <div class="products-grid">
-
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Brinco de Argola">
-                    <h3>Brinco de Argola Dourado</h3>
-                    <p class="price">R$39,90 <span class="pix">R$37,90 com Pix</span></p>
-                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20no%20Brinco%20de%20Argola%20Dourado.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
-                </div>
-
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Colar">
-                    <h3>Colar Minimalista Prata</h3>
-                    <p class="price">R$59,90 <span class="pix">R$56,90 com Pix</span></p>
-                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20no%20Colar%20Minimalista%20Prata.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
-                </div>
-
-                <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Pulseira">
-                    <h3>Pulseira de Couro Trançada</h3>
-                    <p class="price">R$45,00 <span class="pix">R$42,75 com Pix</span></p>
-                    <a href="https://wa.me/554789257740?text=Olá!%20Tenho%20interesse%20na%20Pulseira%20de%20Couro%20Trançada.%20Está%20disponível?" target="_blank" class="btn">Comprar</a>
-                </div>
-
+        <section class="promo-bar">
+            <div class="promo-scroll" id="promo-scroll">
+                <h1 class="pizzaria-nome">JS PIZZARIA</h1>
             </div>
         </section>
 
+        <!-- Acessórios -->
+        <section class="destaques">
+            <h2>COMBOS</h2>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Combo 2 Pizzas + Refri 600ml</h3>
+                    <p class="desc">Até 2 sabores por pizza no combo</p>
+                    <h4>cod: P025</h4>
+                    <p class="price">R$60,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Combo 2 Pizzas + Refri 600ml', 'P025', 'R$60,00')">Adicionar</button>
+                </div>
+
+                <div class="product-card">
+                    <h3>Pizza G 12 Fatias</h3>
+                    <p class="desc">Até 3 sabores</p>
+                    <h4>cod: P026</h4>
+                    <p class="price">R$90,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Pizza G 12 Fatias', 'P026', 'R$90,00')">Adicionar</button>
+                </div>
+
+                <div class="product-card">
+                    <h3>Pizza Meio a Meio</h3>
+                    <p class="desc">Escolha 2 sabores</p>
+                    <h4>cod: P027</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Pizza Meio a Meio', 'P027', 'R$25,00')">Adicionar</button>
+                </div>
+            </div>
+        </section>
+
+
         <!-- Rodapé -->
         <footer class="footer">
-            <p>Cadastre seu e-mail para ofertas e novidades.</p>
+            <p>Sistema Desenvolvido por Adalberto Gomes</p>
         </footer>
     </div>
+    <!-- MODAL DO CARRINHO -->
+    <div id="cart-modal" style="display:none;">
+        <div class="cart-box">
+            <div class="cart-header">
+                <h2>Meu Carrinho</h2>
+                <button onclick="fecharCarrinho()">X</button>
+            </div>
 
-    <script>
-        document.getElementById('hamburger').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('show');
-        });
-    </script>
-    <!-- SCRIPT JS -->
-    <script>
-        function fazerLogin() {
-            const usuario = document.getElementById("usuario").value;
-            const senha = document.getElementById("senha").value;
+            <div id="cart-items"></div>
 
-            if (usuario === "mariabonita" && senha === "91453710") {
-                document.getElementById("login-container").style.display = "none";
-                document.getElementById("pagina").style.display = "block";
-            } else {
-                document.getElementById("erro").style.display = "block";
-            }
-        }
-    </script>
+            <div class="summary">
+                <p id="subtotal">Subtotal: R$0,00</p>
+                <p><strong id="total">Total: R$0,00</strong></p>
+            </div>
 
+            <div class="buttons">
+                <button class="continue-btn" onclick="fecharCarrinho()">Continuar comprando</button>
+                <button class="checkout-btn" onclick="abrirDelivery()">Finalizar compra</button>
+                <button onclick="limparCarrinho()">🗑️ Limpar Carrinho</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ENTREGA -->
+    <div id="delivery-modal" style="display:none;">
+        <div class="delivery-box">
+            <h2>Informações de Entrega</h2>
+
+            <!-- Nome do cliente -->
+            <label>Nome:</label>
+            <input type="text" id="nomeCliente" required>
+
+            <!-- Seleção de cidade -->
+            <label>Cidade:</label>
+            <select id="cidade" onchange="carregarBairros()">
+                <option value="">Selecione</option>
+                <option value="jaragua">Jaraguá do Sul</option>
+                <option value="guaramirim">Guaramirim</option>
+            </select>
+
+            <!-- Bairros dinâmicos -->
+            <label>Bairro:</label>
+            <select id="bairro"></select>
+
+            <!-- Endereço -->
+            <label>Rua:</label>
+            <input type="text" id="rua">
+
+            <label>Número:</label>
+            <input type="text" id="numero">
+
+            <label>Ponto de Referência:</label>
+            <input type="text" id="referencia">
+
+            <!-- Observação extra -->
+            <label>Observações:</label>
+            <textarea id="observacao"></textarea>
+
+            <!-- Forma de pagamento -->
+            <label>Forma de Pagamento:</label>
+            <select id="pagamento" onchange="toggleTroco()">
+                <option value="">Selecione</option>
+                <option value="Credito">Crédito</option>
+                <option value="Debito">Débito</option>
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+            </select>
+
+            <!-- Troco -->
+            <div id="troco-box" style="display:none;">
+                <label>Precisa de troco para quanto?</label>
+                <input type="number" id="troco">
+            </div>
+
+            <!-- Etapa 1 -->
+            <div id="step1-buttons" class="buttons">
+                <button onclick="mostrarResumo()">Próximo</button>
+            </div>
+
+            <!-- Etapa 2: Resumo -->
+            <div id="resumo-pedido" style="display:none; margin-top:20px;">
+                <h3>Resumo do Pedido</h3>
+                <div id="resumo-itens"></div>
+                <p id="resumo-taxa"></p>
+                <p><strong>Tempo de entrega: 30 a 45 minutos</strong></p>
+                <p id="resumo-total"></p>
+
+                <div class="buttons">
+                    <button onclick="voltarFormulario()">Voltar</button>
+                    <button onclick="finalizarEntrega()">Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEU SCRIPT -->
+    <script src="script.js"></script>
 </body>
 
 </html>
