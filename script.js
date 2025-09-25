@@ -273,7 +273,7 @@ function finalizarEntrega() {
 
     mensagem += `%0A${resumo}`;
 
-    const numeroWhatsApp = "5547984196636";
+    const numeroWhatsApp = "5547992641324";
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
@@ -290,3 +290,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartIcon = document.querySelector(".cart");
     if (cartIcon) cartIcon.addEventListener("click", abrirCarrinho);
 });
+
