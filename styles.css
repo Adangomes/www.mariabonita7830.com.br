@@ -15,41 +15,6 @@ body {
 }
 
 
-/* LOGIN */
-
-#login-container {
-    max-width: 320px;
-    margin: 100px auto;
-    padding: 30px;
-    background-color: #ffe4ec;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-#login-container input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-#login-container button {
-    width: 100%;
-    padding: 12px;
-    background-color: #d6336c;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-#login-container button:hover {
-    background-color: #ff4f7a;
-}
-
 
 /* HEADER */
 
@@ -299,6 +264,7 @@ body {
     position: relative;
     z-index: 1;
 }
+
 
 
 
