@@ -97,14 +97,16 @@ if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inv
         preco = "R$" + (parseFloat(preco.replace("R$", "").replace(",", ".")) + bebida.preco).toFixed(2);
     }
 
-    // PRODUTOS NORMAIS
-    const itemExistente = carrinho.find(i => i.codigo === codigo && i.nome === nome);
-    if (itemExistente) itemExistente.quantidade += 1;
-    else carrinho.push({ nome, codigo, preco, quantidade: 1 });
+   // PRODUTOS NORMAIS
+const precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", ".")); 
+const itemExistente = carrinho.find(i => i.codigo === codigo && i.nome === nome);
 
-    atualizarCarrinho();
-    abrirCarrinho();
+if (itemExistente) {
+    itemExistente.quantidade += 1;
+} else {
+    carrinho.push({ nome, codigo, preco: precoNum, quantidade: 1 }); // <-- GUARDA SEM "R$"
 }
+
 
 // =============================
 // ATUALIZAR CARRINHO + SALVAR
@@ -230,8 +232,8 @@ function mostrarResumo() {
         resumoItens.appendChild(div);
     });
 
-    document.getElementById("resumo-taxa").innerText = `🚚 Taxa de entrega: R$${taxaEntrega},00`;
-    document.getElementById("resumo-total").innerText = `💰 Total: R$${(subtotal + taxaEntrega).toFixed(2).replace(".", ",")}`;
+    document.getElementById("resumo-taxa").innerText = `Taxa de entrega: R$${taxaEntrega},00`;
+    document.getElementById("resumo-total").innerText = `Total: R$${(subtotal + taxaEntrega).toFixed(2).replace(".", ",")}`;
 
     document.getElementById("step1-buttons").style.display = "none";
     document.getElementById("resumo-pedido").style.display = "block";
@@ -268,24 +270,25 @@ function finalizarEntrega() {
 
     // Lista de itens do carrinho
     let itensMsg = carrinho.map(item =>
-        `• ${item.nome} - R$${parseFloat(item.preco).toFixed(2)} x ${item.quantidade}`
-    ).join("\n");
+    `• ${item.nome} - R$${Number(item.preco).toFixed(2).replace(".", ",")} x ${item.quantidade}`
+).join("\n");
+
 
     // Mensagem final
     let mensagem =
-`🍕 Olá! Gostaria de fazer meu pedido:
+` Olá! Gostaria de fazer meu pedido:
 ${itensMsg}
 
-👤 Cliente: ${nome}
-📍 Entrega em ${cidade.toUpperCase()}
+Cliente: ${nome}
+Entrega em ${cidade.toUpperCase()}
 Bairro: ${bairro}
 Rua: ${rua}, Nº ${numero}
 Ref: ${referencia || "-"}
 Obs: ${observacao || "-"}
 
-💳 Pagamento: ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
-🚚 Taxa de entrega: ${taxaFormatada}
-⏰ Tempo de entrega: 30 a 45 minutos`;
+Pagamento: ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
+Taxa de entrega: ${taxaFormatada}
+Tempo de entrega: 30 a 45 minutos`;
 
     const numeroWhatsApp = "5547992641324"; // seu número
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
@@ -303,4 +306,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500); // 1.5s
   }
 });
+
 
