@@ -24,8 +24,8 @@ const PRECO_PIZZA_DOCE_M = 25.00;
 // BEBIDAS
 // =============================
 const BEBIDAS = [
-    { nome: "Laranjinha (600ml)", preco: 0 },
-    { nome: "Coca Cola 2L", preco: 18.00 },
+    { nome: "Guaraná (600ml)", preco: 0 },
+    { nome: "Coca Cola 1,5L", preco: 15.00 },
     { nome: "Kuat 2L", preco: 15.00 },
     { nome: "Coca Cola Lata", preco: 6.00 },
     { nome: "Guaraná Lata", preco: 6.00 }
@@ -304,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
 
 
 
