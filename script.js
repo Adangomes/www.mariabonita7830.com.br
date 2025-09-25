@@ -263,16 +263,15 @@ function finalizarEntrega() {
         return alert("Preencha todos os campos obrigatórios (nome, endereço e pagamento)!");
     }
 
-    // Calcula a taxa (mantendo sua função existente)
     let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
     let taxaFormatada = taxaEntrega > 0 ? `R$${taxaEntrega},00` : "Grátis";
 
-    // Montar itens do carrinho
+    // Lista de itens do carrinho
     let itensMsg = carrinho.map(item =>
         `• ${item.nome} - R$${parseFloat(item.preco).toFixed(2)} x ${item.quantidade}`
     ).join("\n");
 
-    // Montar resumo final
+    // Mensagem final
     let mensagem =
 `🍕 Olá! Gostaria de fazer meu pedido:
 ${itensMsg}
@@ -281,31 +280,14 @@ ${itensMsg}
 📍 Entrega em ${cidade.toUpperCase()}
 Bairro: ${bairro}
 Rua: ${rua}, Nº ${numero}
-Ref: ${referencia}
-Obs: ${observacao}
+Ref: ${referencia || "-"}
+Obs: ${observacao || "-"}
 
 💳 Pagamento: ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
 🚚 Taxa de entrega: ${taxaFormatada}
 ⏰ Tempo de entrega: 30 a 45 minutos`;
 
-    // Número do WhatsApp da pizzaria
-    const numeroWhatsApp = "5547992641324"; // <-- ajuste aqui
-
-    // Link já encodeado
+    const numeroWhatsApp = "5547992641324"; // seu número
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
