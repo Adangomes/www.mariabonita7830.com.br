@@ -83,7 +83,7 @@ function adicionarAoCarrinho(nome, codigo, preco) {
         if (!sabor1 || !sabor2) return alert("Você precisa escolher 2 sabores!");
 
         let bebidaOpcoes = BEBIDAS.map((b, i) =>
-            `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : ""}`
+            `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : "Grátis"}`
         ).join("\n");
         let bebidaEscolha = prompt("Escolha a bebida:\n" + bebidaOpcoes);
         let bebidaIndex = parseInt(bebidaEscolha) - 1;
@@ -304,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
 
 
 
