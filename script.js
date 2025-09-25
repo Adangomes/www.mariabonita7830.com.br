@@ -271,7 +271,8 @@ function finalizarEntrega() {
 
     let mensagem = "🍕 Olá! Gostaria de fazer meu pedido:%0A";
     carrinho.forEach(item => {
-        mensagem += `• ${item.nome} (cod: ${item.codigo}) - ${item.preco} x ${item.quantidade}%0A`;
+        mensagem += `• ${item.nome} - ${item.preco} x ${item.quantidade}\n`;
+
     });
 
     mensagem += `%0A${resumo}`;
@@ -307,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
 
 
 
