@@ -9,7 +9,6 @@
 
 body {
     background: #fafafa;
-    /* cor de fundo geral */
     color: #111;
     min-height: 100vh;
     display: flex;
@@ -72,22 +71,14 @@ body {
 
 /* PROMO BAR */
 
-
-/* PROMO BAR DESTACADA */
-
 .promo-bar {
     background: transparent;
-    /* sem cor de fundo */
     color: #e50914;
-    /* cor do texto em vermelho */
     padding: 15px 10px;
     text-align: center;
     border-top: 3px solid #e50914;
-    /* borda superior */
     border-bottom: 3px solid #e50914;
-    /* borda inferior */
     width: 100%;
-    /* ocupa largura total da tela */
 }
 
 .pizzaria-nome {
@@ -99,9 +90,6 @@ body {
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     animation: pulse 2.5s infinite;
 }
-
-
-/* Animação suave para dar destaque */
 
 @keyframes pulse {
     0%,
@@ -121,15 +109,14 @@ body {
     padding: 25px 15px;
     background: linear-gradient(to bottom, #fff, #fbe9eb);
     min-height: calc(100vh - 160px);
-    /* ocupa a tela inteira menos header/footer */
 }
 
 .destaques h2 {
     font-size: 22px;
-    color: #000000;
+    color: #000;
     font-weight: 700;
     margin-bottom: 15px;
-    border-bottom: 2px solid #e5091400;
+    border-bottom: 2px solid transparent;
     display: inline-block;
     padding-bottom: 5px;
 }
@@ -147,7 +134,6 @@ body {
     background: #fff;
     border: 1px solid #ddd;
     border-left: 6px solid #e50914;
-    /* faixa vermelha */
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -206,25 +192,22 @@ body {
 
 
 /* =======================
-   MODAL CARRINHO
+   MODAIS (Carrinho + Entrega)
 ======================= */
 
-#cart-modal {
-    display: none;
-    /* escondido até abrir */
+#cart-modal,
+#delivery-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 2000;
 }
 
-.cart-box {
+.cart-box,
+.delivery-box {
     background: #fff;
     padding: 20px;
     border-radius: 12px;
@@ -232,7 +215,11 @@ body {
     max-width: 400px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     animation: fadeIn .3s ease;
+    color: #111;
 }
+
+
+/* Cabeçalho Carrinho */
 
 .cart-header {
     display: flex;
@@ -247,6 +234,9 @@ body {
     color: #e50914;
     font-size: 20px;
 }
+
+
+/* Itens no carrinho */
 
 .cart-item {
     display: flex;
@@ -270,16 +260,15 @@ body {
     cursor: pointer;
 }
 
-.cart-item-actions button.remove {
-    background: #888;
-}
-
 .summary {
     margin-top: 15px;
     text-align: right;
     font-weight: bold;
     color: #111;
 }
+
+
+/* Botões gerais */
 
 .buttons {
     margin-top: 20px;
@@ -303,6 +292,67 @@ body {
     border-radius: 6px;
     border: none;
     cursor: pointer;
+}
+
+
+/* Delivery modal */
+
+.delivery-box h2 {
+    color: #e50914;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.delivery-box label {
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.delivery-box input,
+.delivery-box select,
+.delivery-box textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.delivery-box textarea {
+    resize: none;
+    height: 60px;
+}
+
+.delivery-box button {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.delivery-box .buttons button:first-child {
+    background: #ccc;
+}
+
+.delivery-box .buttons button:last-child {
+    background: #e50914;
+    color: #fff;
+}
+
+.delivery-box {
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    /* 👈 controla a altura do modal */
+    overflow-y: auto;
+    /* 👈 adiciona scroll quando o conteúdo passar do limite */
 }
 
 @keyframes fadeIn {
