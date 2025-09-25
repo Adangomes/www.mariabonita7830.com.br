@@ -86,7 +86,7 @@ function adicionarAoCarrinho(nome, codigo, preco) {
     `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : "Grátis"}`
 ).join("\n");
 
-let bebidaEscolha = prompt("🍹 Escolha a bebida DIGITANDO O NÚMERO correspondente:\n\n" + bebidaOpcoes);
+let bebidaEscolha = prompt(" Escolha a bebida DIGITANDO UM NÚMERO:\n\n" + bebidaOpcoes);
 
 let bebidaIndex = parseInt(bebidaEscolha) - 1;
 if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inválida! Digite apenas o número da lista.");
@@ -307,6 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
 
 
 
