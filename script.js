@@ -291,3 +291,16 @@ Obs: ${observacao || "-"}
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
+// =============================
+// SPLASH SCREEN
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+  const splash = document.getElementById("splash");
+  if (splash) {
+    setTimeout(() => {
+      splash.classList.add("hide");
+      setTimeout(() => splash.style.display = "none", 500);
+    }, 1500); // 1.5s
+  }
+});
+
