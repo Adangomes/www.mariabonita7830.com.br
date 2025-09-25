@@ -296,12 +296,16 @@ const mobileMenu = document.getElementById("mobile-menu");
 hamburger.addEventListener("click", () => {
   mobileMenu.classList.toggle("active");
 });
-// SPLASH - some após 1.5 segundos
+// SPLASH - fade out após 1.5s
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    document.getElementById("splash").style.display = "none";
+    const splash = document.getElementById("splash");
+    splash.classList.add("hide");
+    setTimeout(() => splash.style.display = "none", 500); // garante remoção
   }, 1500);
 });
+
+
 
 
 
