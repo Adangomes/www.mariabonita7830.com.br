@@ -296,6 +296,13 @@ const mobileMenu = document.getElementById("mobile-menu");
 hamburger.addEventListener("click", () => {
   mobileMenu.classList.toggle("active");
 });
+// SPLASH - some após 1.5 segundos
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.getElementById("splash").style.display = "none";
+  }, 1500);
+});
+
 
 
 
