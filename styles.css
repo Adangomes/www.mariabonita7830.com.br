@@ -422,4 +422,35 @@ body {
 .menu.active {
     display: flex;
 }
+/* SPLASH */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #e50914;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  transition: opacity 0.5s ease; /* animação para sumir */
+}
+
+#splash.hide {
+  opacity: 0;
+  pointer-events: none; /* evita bloquear cliques */
+}
+
+.splash-text {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+
 
