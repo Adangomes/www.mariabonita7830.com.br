@@ -46,12 +46,11 @@ body {
 }
 
 
-/* NAV LINKS */
-
+/* NAV LINKS
 .menu {
     display: flex;
     gap: 15px;
-}
+} */
 
 .menu a {
     text-decoration: none;
@@ -364,4 +363,38 @@ body {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+
+/* Esconde o menu por padrão */
+
+.menu {
+    display: none;
+    flex-direction: column;
+    background: #e50914;
+    position: absolute;
+    top: 60px;
+    /* abaixo do header */
+    right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 2000;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 0;
+    font-weight: 500;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+
+/* Quando ativo, aparece */
+
+.menu.active {
+    display: flex;
 }
