@@ -243,6 +243,7 @@ function voltarFormulario() {
 }
 
 // =============================
+// =============================
 // FINALIZAR ENTREGA (Etapa 2)
 // =============================
 function finalizarEntrega() {
@@ -262,52 +263,39 @@ function finalizarEntrega() {
         return alert("Preencha todos os campos obrigatórios (nome, endereço e pagamento)!");
     }
 
+    // Calcula a taxa (mantendo sua função existente)
     let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
+    let taxaFormatada = taxaEntrega > 0 ? `R$${taxaEntrega},00` : "Grátis";
 
-    let resumo = `👤 Cliente: ${nome}\n📍 *Entrega em ${cidade.toUpperCase()}*\nBairro: ${bairro}\nRua: ${rua}, Nº ${numero}\nRef: ${referencia}\nObs: ${observacao}\n`;
-    resumo += `💳 Pagamento: ${pagamento}`;
-    if (pagamento === "Dinheiro" && troco) resumo += ` (troco para R$${troco})`;
-    resumo += `\n🚚 Taxa de entrega: R$${taxaEntrega},00\n⏰ Tempo de entrega: 30 a 45 minutos\n`;
+    // Montar itens do carrinho
+    let itensMsg = carrinho.map(item =>
+        `• ${item.nome} - R$${parseFloat(item.preco).toFixed(2)} x ${item.quantidade}`
+    ).join("\n");
 
-    let mensagem = "🍕 Olá! Gostaria de fazer meu pedido:%0A";
-    carrinho.forEach(item => {
-        mensagem += `• ${item.nome} - ${item.preco} x ${item.quantidade}\n`;
+    // Montar resumo final
+    let mensagem =
+`🍕 Olá! Gostaria de fazer meu pedido:
+${itensMsg}
 
-    });
+👤 Cliente: ${nome}
+📍 Entrega em ${cidade.toUpperCase()}
+Bairro: ${bairro}
+Rua: ${rua}, Nº ${numero}
+Ref: ${referencia}
+Obs: ${observacao}
 
-    mensagem += `%0A${resumo}`;
+💳 Pagamento: ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
+🚚 Taxa de entrega: ${taxaFormatada}
+⏰ Tempo de entrega: 30 a 45 minutos`;
 
-    const numeroWhatsApp = "5547992641324";
+    // Número do WhatsApp da pizzaria
+    const numeroWhatsApp = "5547992641324"; // <-- ajuste aqui
+
+    // Link já encodeado
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
 
-// =============================
-// AO CARREGAR A PÁGINA
-// =============================
-document.addEventListener("DOMContentLoaded", () => {
-    const salvo = localStorage.getItem("meuCarrinho");
-    if (salvo) {
-        carrinho.push(...JSON.parse(salvo));
-        atualizarCarrinho();
-    }
-    const cartIcon = document.querySelector(".cart");
-    if (cartIcon) cartIcon.addEventListener("click", abrirCarrinho);
-});
-const hamburger = document.getElementById("hamburger");
-const mobileMenu = document.getElementById("mobile-menu");
-
-hamburger.addEventListener("click", () => {
-  mobileMenu.classList.toggle("active");
-});
-// SPLASH - fade out após 1.5s
-document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    const splash = document.getElementById("splash");
-    splash.classList.add("hide");
-    setTimeout(() => splash.style.display = "none", 500); // garante remoção
-  }, 1500);
-});
 
 
 
