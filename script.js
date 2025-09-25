@@ -1,21 +1,3 @@
-// LOGIN
-function fazerLogin() {
-    const usuario = document.getElementById("usuario").value.trim();
-    const senha = document.getElementById("senha").value.trim();
-
-    if (usuario === "mariabonita" && senha === "91453710") {
-        localStorage.setItem("logado", "true");
-        mostrarPagina();
-        document.getElementById("erro").style.display = "none";
-    } else {
-        document.getElementById("erro").style.display = "block";
-    }
-}
-
-function mostrarPagina() {
-    document.getElementById("login-container").style.display = "none";
-    document.getElementById("menu").style.display = "block";
-}
 
 // Verifica login ao carregar
 document.addEventListener("DOMContentLoaded", () => {
@@ -125,3 +107,4 @@ function finalizarCompra() {
     const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
     window.open(url, "_blank");
 }
+
