@@ -4,105 +4,148 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MARIA BONITA - Login</title>
+    <title>MYDI</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <!-- TELA DE LOGIN -->
-    <div id="login-container">
-        <h2>Login</h2>
-        <input type="text" id="usuario" placeholder="Usuário" required />
-        <input type="password" id="senha" placeholder="Senha" required />
-        <button onclick="fazerLogin()">Entrar</button>
-        <p id="erro" style="color:red; display:none;">Usuário ou senha incorretos.</p>
-    </div>
-
     <!-- CONTEÚDO PRINCIPAL -->
-    <div id="menu" style="display:none;">
+    <div id="menu">
+
         <header class="header">
             <div class="logo">MYDI DELIVERY</div>
             <button class="hamburger" id="hamburger">&#9776;</button>
 
             <nav class="menu" id="mobile-menu">
-                <a href="novidades.html">Novidades</a>
-                <a href="blusas.html">Blusas</a>
-                <a href="acessorios.html">Acessórios</a>
+                <a href="novidades.html">Pizzas Doce</a>
+                <a href="blusas.html">Bebidas</a>
+                <a href="acessorios.html">Combos</a>
+                <a href="bordas.html">Bordas</a>
                 <a href="contato.html">Contato</a>
                 <a href="index.html">HOME</a>
-                <button id="fecharButton">Fechar</button>
             </nav>
-            <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
 
+            <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
             <div class="cart" title="Ver carrinho">🛒</div>
         </header>
 
         <section class="promo-bar">
-            <div class="promo-bar">
-                <div class="promo-scroll" id="promo-scroll">
-                    <h4>
-                        <span class="promo-item">Jaraguá Do Sul</span>
-                        <span class="promo-separator">|</span>
-                        <span class="promo-item">Guaramirim</span>
-                        <span class="promo-separator">|</span>
-                        <span class="promo-item">Schroeder</span>
-                        <span class="promo-separator">|</span>
-                        <span class="promo-item">Jaraguá Do Sul</span>
-                        <span class="promo-separator">|</span>
-                        <span class="promo-item">Guaramirim</span>
-                        <span class="promo-separator">|</span>
-                        <span class="promo-item">Schroeder</span>
-                    </h4>
-                </div>
+            <div class="promo-scroll" id="promo-scroll">
+                <h1 class="pizzaria-nome">JS PIZZARIA</h1>
             </div>
         </section>
 
         <section class="destaques">
-            <h2>PIZZAS</h2>
+            <h2>PIZZAS SALGADAS</h2>
+
             <div class="products-grid">
                 <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Casaco Parka" />
-                    <h3>Casaco Parka</h3>
-                    <h4>cod: 0001</h4>
-                    <p class="price">R$200,00</p>
-                    <button class="btn" onclick="adicionarAoCarrinho('Casaco Parka', '0001', 'R$160,00')">Comprar</button>
+                    <h3>Frango Catupiry</h3>
+                    <h4>cod: P001</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Frango Catupiry', 'P001', 'R$25,00')">Adicionar</button>
                 </div>
                 <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Vestido Midi" />
-                    <h3>Vestido Midi Floral</h3>
-                    <h4>cod: 0002</h4>
-                    <p class="price">R$130,00</p>
-                    <button class="btn" onclick="adicionarAoCarrinho('Vestido Midi Floral', '0002', 'R$130,00')">Comprar</button>
+                    <h3>Calabresa</h3>
+                    <h4>cod: P002</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Calabresa', 'P002', 'R$25,00')">Adicionar</button>
                 </div>
                 <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-                    <h3>Calça Wide Leg Jeans</h3>
-                    <h4>cod: 0003</h4>
-                    <p class="price">R$150,00</p>
-                    <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0003', 'R$150,00')">Comprar</button>
+                    <h3>Toscana</h3>
+                    <h4>cod: P003</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Toscana', 'P003', 'R$25,00')">Adicionar</button>
                 </div>
                 <div class="product-card">
-                    <img src="imagem4.jpeg" alt="Calça Wide Leg" />
-                    <h3>Calça Wide Leg Jeans</h3>
-                    <h4>cod: 0004</h4>
-                    <p class="price">R$150,00</p>
-                    <button class="btn" onclick="adicionarAoCarrinho('Calça Wide Leg Jeans', '0004', 'R$150,00')">Comprar</button>
+                    <h3>Bacon</h3>
+                    <h4>cod: P004</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Bacon', 'P004', 'R$25,00')">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Kartoffel</h3>
+                    <h4>cod: P005</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Kartoffel', 'P005', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Portuguesa</h3>
+                    <h4>cod: P006</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Portuguesa', 'P006', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Bacon com Milho</h3>
+                    <h4>cod: P007</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Bacon com Milho', 'P007', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Marguerita</h3>
+                    <h4>cod: P008</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Marguerita', 'P008', 'R$25,00')">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Calabresa Acebolada</h3>
+                    <h4>cod: P009</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Calabresa Acebolada', 'P009', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Pizza de Fritas Cheddar e Bacon</h3>
+                    <h4>cod: P010</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Pizza de Fritas Cheddar e Bacon', 'P010', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Milho</h3>
+                    <h4>cod: P011</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Milho', 'P011', 'R$25,00')">Adicionar</button>
+                </div>
+                <div class="product-card">
+                    <h3>Napolitana</h3>
+                    <h4>cod: P012</h4>
+                    <p class="price">R$25,00</p>
+                    <button class="btn" onclick="adicionarAoCarrinho('Napolitana', 'P012', 'R$25,00')">Adicionar</button>
                 </div>
             </div>
         </section>
 
-        
+        <footer class="footer">
+            <p>Sistema Desenvolvido por Adalberto Gomes</p>
+        </footer>
     </div>
 
-    <!-- DIV PARA CARREGAR O HTML DO CARRINHO -->
-    <div class="cart-popup" id="cart-container"></div>
+    <!-- MODAL DO CARRINHO -->
+    <div id="cart-modal" style="display:none;">
+        <div class="cart-box">
+            <div class="cart-header">
+                <h2>Meu Carrinho</h2>
+                <button onclick="fecharCarrinho()">X</button>
+            </div>
+            <div id="cart-items"></div>
+            <div class="summary">
+                <p id="subtotal">Subtotal: R$0,00</p>
+                <p><strong id="total">Total: R$0,00</strong></p>
+            </div>
+            <div class="buttons">
+                <button class="continue-btn" onclick="fecharCarrinho()">Continuar comprando</button>
+                <button class="checkout-btn" onclick="finalizarCompra()">Finalizar compra</button>
+            </div>
+        </div>
+    </div>
 
-
+    <!-- SEU SCRIPT -->
     <script src="script.js"></script>
 </body>
 
 </html>
-
-
-
-
