@@ -142,6 +142,13 @@ function atualizarCarrinho() {
 
     document.getElementById("subtotal").innerText = `Subtotal: R$${subtotal.toFixed(2).replace(".", ",")}`;
     document.getElementById("total").innerText = `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
+    // Atualiza o mini-carrinho no topo
+const miniCartInfo = document.getElementById("mini-cart-info");
+if (miniCartInfo) {
+    let qtdItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+    miniCartInfo.innerText = `${qtdItens} itens - R$${subtotal.toFixed(2).replace(".", ",")}`;
+}
+
 
     localStorage.setItem("meuCarrinho", JSON.stringify(carrinho));
 }
@@ -304,6 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
 
 
