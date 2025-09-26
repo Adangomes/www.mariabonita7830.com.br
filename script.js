@@ -132,24 +132,20 @@ function atualizarCarrinho() {
         const div = document.createElement("div");
         div.classList.add("cart-item");
         div.innerHTML = `
-      <div class="cart-item-name">${item.nome}</div>
-      <div class="cart-item-actions">
-        Qtd: ${item.quantidade}
-        <button onclick="removerItem(${index})">Excluir</button>
-      </div>`;
+            <div class="cart-item-name">${item.nome}</div>
+            <div class="cart-item-actions">
+                Qtd: ${item.quantidade}
+                <button onclick="removerItem(${index})">Excluir</button>
+            </div>`;
         container.appendChild(div);
     });
 
-    document.getElementById("subtotal").innerText = `Subtotal: R$${subtotal.toFixed(2).replace(".", ",")}`;
-    document.getElementById("total").innerText = `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
+    document.getElementById("subtotal").innerText =
+        `Subtotal: R$${subtotal.toFixed(2).replace(".", ",")}`;
+    document.getElementById("total").innerText =
+        `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
 
-    // Atualiza o mini-carrinho no topo
-    const miniCartInfo = document.getElementById("mini-cart-info");
-    if (miniCartInfo) {
-        let qtdItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
-        miniCartInfo.innerText = `${qtdItens} itens - R$${subtotal.toFixed(2).replace(".", ",")}`;
-    }
-
+    // mantém os itens salvos
     localStorage.setItem("meuCarrinho", JSON.stringify(carrinho));
 }
 
@@ -342,6 +338,7 @@ function atualizarMiniCart() {
   totalDiv.textContent = `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
   miniCartList.appendChild(totalDiv);
 }
+
 
 
 
