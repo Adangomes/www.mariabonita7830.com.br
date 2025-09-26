@@ -90,27 +90,27 @@ function adicionarAoCarrinho(nome, codigo, preco) {
         let bebidaIndex = parseInt(bebidaEscolha) - 1;
         if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inválida! Digite apenas o número da lista.");
 
-       let bebida = BEBIDAS[bebidaIndex];
-nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
+        let bebida = BEBIDAS[bebidaIndex];
+        nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
 
-// garante que vira número mesmo que venha com "R$"
-let precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", "."));
-preco = precoNum + bebida.preco; // mantém só número
-
-    // PRODUTOS NORMAIS
-    let precoNum = 0;
-    if (typeof preco === "number") {
-        precoNum = preco;
-    } else if (typeof preco === "string") {
-        precoNum = parseFloat(preco.replace("R$", "").replace(",", "."));
+        // garante que o preco seja número puro
+        let precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", ".")) || 0;
+        preco = precoNum + bebida.preco;
     }
+
+    // =============================
+    // PRODUTOS NORMAIS
+    // =============================
+    let precoNum = (typeof preco === "number") 
+        ? preco 
+        : parseFloat(preco.toString().replace("R$", "").replace(",", ".")) || 0;
 
     const itemExistente = carrinho.find(i => i.codigo === codigo && i.nome === nome);
 
     if (itemExistente) {
         itemExistente.quantidade += 1;
     } else {
-        carrinho.push({ nome, codigo, preco: precoNum, quantidade: 1 }); // guarda só número
+        carrinho.push({ nome, codigo, preco: precoNum, quantidade: 1 }); // só número
     }
 
     atualizarCarrinho();
@@ -293,4 +293,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
