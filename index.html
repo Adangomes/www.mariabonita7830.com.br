@@ -236,9 +236,22 @@
 
     <!-- SEU SCRIPT -->
     <script src="script.js"></script>
+    <script>
+   // aqui cola o código do MENU HAMBURGUER
+   document.addEventListener("DOMContentLoaded", () => {
+     const hamburger = document.getElementById("hamburger");
+     const mobileMenu = document.getElementById("mobile-menu");
+     if (hamburger && mobileMenu) {
+       hamburger.addEventListener("click", () => {
+         mobileMenu.classList.toggle("active");
+       });
+     }
+   });
+   </script>
 </body>
 
 </html>
+
 
 
 
