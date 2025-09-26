@@ -34,13 +34,15 @@ const BEBIDAS = [
 // =============================
 // BAIRROS POR CIDADE
 // =============================
-const bairrosJaragua = ["Centro", "Amizade", "Baependi", "Barra do Rio Cerro", "Boa Vista",
+const bairrosJaragua = [
+  "Centro", "Amizade", "Baependi", "Barra do Rio Cerro", "Boa Vista",
   "Czerniewicz", "Ilha da Figueira", "Jaraguá 84", "Jaraguá Esquerdo", "João Pessoa",
   "Nova Brasília", "Nereu Ramos", "Rau", "Rio Cerro I", "Rio Cerro II",
   "Rio da Luz", "Tifa Martins", "Três Rios do Sul", "Vieira", "Vila Lenzi"
 ];
 
-const bairrosGuaramirim = ["Centro", "Amizade", "Avaí", "Bananal do Sul", "Corticeira",
+const bairrosGuaramirim = [
+  "Centro", "Amizade", "Avaí", "Bananal do Sul", "Corticeira",
   "Figueirinha", "Guamiranga", "Imigrantes", "João Pessoa", "Nova Esperança",
   "Recanto Feliz", "Rio Branco", "Rua Nova", "Seleção", "Escolinha"
 ];
@@ -100,7 +102,7 @@ function adicionarAoCarrinho(nome, codigo, preco) {
 }
 
 // =============================
-// ATUALIZAR CARRINHO
+// ATUALIZAR CARRINHO + SALVAR
 // =============================
 function atualizarCarrinho() {
   const container = document.getElementById("cart-items");
@@ -108,7 +110,7 @@ function atualizarCarrinho() {
 
   let subtotal = 0;
   carrinho.forEach((item, index) => {
-    subtotal += item.preco * item.quantidade;
+    subtotal += Number(item.preco) * item.quantidade;
 
     const div = document.createElement("div");
     div.classList.add("cart-item");
@@ -132,11 +134,49 @@ function atualizarCarrinho() {
 // =============================
 function abrirCarrinho() { document.getElementById("cart-modal").style.display = "flex"; }
 function fecharCarrinho() { document.getElementById("cart-modal").style.display = "none"; }
-function removerItem(index) { carrinho.splice(index, 1); atualizarCarrinho(); }
-function limparCarrinho() { carrinho.length = 0; localStorage.removeItem("meuCarrinho"); atualizarCarrinho(); }
+
+function removerItem(index) {
+  carrinho.splice(index, 1);
+  atualizarCarrinho();
+}
+
+function limparCarrinho() {
+  carrinho.length = 0;
+  localStorage.removeItem("meuCarrinho");
+  atualizarCarrinho();
+}
 
 // =============================
-// TAXA ENTREGA
+// MODAL DE ENTREGA
+// =============================
+function abrirDelivery() {
+  fecharCarrinho();
+  document.getElementById("delivery-modal").style.display = "flex";
+}
+function fecharDelivery() { document.getElementById("delivery-modal").style.display = "none"; }
+
+function carregarBairros() {
+  const cidade = document.getElementById("cidade").value;
+  const bairroSelect = document.getElementById("bairro");
+  bairroSelect.innerHTML = "";
+  let lista = [];
+  if (cidade === "jaragua") lista = bairrosJaragua;
+  if (cidade === "guaramirim") lista = bairrosGuaramirim;
+  lista.forEach(b => {
+    const opt = document.createElement("option");
+    opt.value = b;
+    opt.textContent = b;
+    bairroSelect.appendChild(opt);
+  });
+}
+
+function toggleTroco() {
+  const pagamento = document.getElementById("pagamento").value;
+  document.getElementById("troco-box").style.display = (pagamento === "Dinheiro") ? "block" : "none";
+}
+
+// =============================
+// CALCULAR TAXA DE ENTREGA
 // =============================
 function calcularTaxaEntrega(cidade, bairro) {
   if (cidade === "jaragua") return 20;
@@ -149,7 +189,7 @@ function calcularTaxaEntrega(cidade, bairro) {
 }
 
 // =============================
-// MOSTRAR RESUMO
+// ETAPA 1 → ETAPA 2 (Resumo)
 // =============================
 function mostrarResumo() {
   const nome = document.getElementById("nomeCliente").value;
@@ -163,14 +203,18 @@ function mostrarResumo() {
     return alert("Preencha todos os campos obrigatórios antes de continuar!");
   }
 
-  let subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+  let subtotal = 0;
+  carrinho.forEach(item => {
+    subtotal += Number(item.preco) * item.quantidade;
+  });
+
   let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
 
   const resumoItens = document.getElementById("resumo-itens");
   resumoItens.innerHTML = "";
   carrinho.forEach(item => {
     const div = document.createElement("div");
-    div.textContent = `${item.quantidade}x ${item.nome} - R$${item.preco.toFixed(2).replace(".", ",")}`;
+    div.textContent = `${item.quantidade}x ${item.nome} - R$${Number(item.preco).toFixed(2).replace(".", ",")}`;
     resumoItens.appendChild(div);
   });
 
@@ -181,8 +225,13 @@ function mostrarResumo() {
   document.getElementById("resumo-pedido").style.display = "block";
 }
 
+function voltarFormulario() {
+  document.getElementById("resumo-pedido").style.display = "none";
+  document.getElementById("step1-buttons").style.display = "block";
+}
+
 // =============================
-// FINALIZAR ENTREGA
+// FINALIZAR ENTREGA (Etapa 2)
 // =============================
 function finalizarEntrega() {
   if (carrinho.length === 0) return alert("Seu carrinho está vazio!");
@@ -197,27 +246,33 @@ function finalizarEntrega() {
   const pagamento = document.getElementById("pagamento").value;
   const troco = document.getElementById("troco").value;
 
+  if (!nome || !cidade || !bairro || !rua || !numero || !pagamento) {
+    return alert("Preencha todos os campos obrigatórios (nome, endereço e pagamento)!");
+  }
+
   let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
   let taxaFormatada = taxaEntrega > 0 ? `R$${taxaEntrega},00` : "Grátis";
 
+  // Lista de itens
   let itensMsg = carrinho.map(item =>
-    `• *${item.nome}* - R$${item.preco.toFixed(2).replace(".", ",")} x ${item.quantidade}`
+    `• *${item.nome}* - R$${Number(item.preco).toFixed(2).replace(".", ",")} x ${item.quantidade}`
   ).join("\n");
 
+  // Mensagem final
   let mensagem =
 `Olá! Gostaria de fazer meu pedido:
 ${itensMsg}
 
-Cliente: *${nome}*
-Cidade: *${cidade.toUpperCase()}*
-Bairro: *${bairro}*
-Rua: *${rua}, Nº ${numero}*
-Ref: ${referencia || "-"}
-Obs: ${observacao || "-"}
+*Cliente:* ${nome}
+*Cidade:* ${cidade.toUpperCase()}
+*Bairro:* ${bairro}
+*Rua:* ${rua}, Nº ${numero}
+*Ref:* ${referencia || "-"}
+*Obs:* ${observacao || "-"}
 
-Pagamento: *${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}*
-Taxa de entrega: *${taxaFormatada}*
-Tempo de entrega: *30 a 45 minutos*`;
+*Pagamento:* ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
+*Taxa de entrega:* ${taxaFormatada}
+*Tempo de entrega:* 30 a 45 minutos`;
 
   const numeroWhatsApp = "5547992641324";
   const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
