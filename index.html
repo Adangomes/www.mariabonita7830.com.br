@@ -31,9 +31,12 @@
             </nav>
 
             <p id="feedback-msg" style="display:none; color:green;">Produto adicionado ao carrinho!</p>
-            <div class="cart" id="mini-cart">
-  🛒 <span id="mini-cart-info">0 itens - R$0,00</span>
-  <button onclick="abrirCarrinho()" class="mini-cart-btn">Ver Carrinho</button>
+            <div class="cart" id="mini-cart" onclick="toggleMiniCart()">
+  🛒
+  <div id="mini-cart-list" class="mini-cart-list"></div>
+</div>
+
+           
 </div>
 
         </header>
@@ -238,6 +241,7 @@
 </body>
 
 </html>
+
 
 
 
