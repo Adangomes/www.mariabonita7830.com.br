@@ -255,14 +255,19 @@ function finalizarEntrega() {
         return alert("Preencha todos os campos obrigatórios (nome, endereço e pagamento)!");
     }
 
+    // 🔥 calcula subtotal
     let subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+
+    // 🔥 calcula taxa e total final
     let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
     let totalFinal = subtotal + taxaEntrega;
 
+    // 🔥 itens do carrinho
     let itensMsg = carrinho.map(item =>
         `• ${item.nome} - *R$${item.preco.toFixed(2).replace(".", ",")}* x *${item.quantidade}*`
     ).join("\n");
 
+    // 🔥 mensagem completa com subtotal/taxa/total
     let mensagem =
 `Olá! Gostaria de fazer meu pedido:
 ${itensMsg}
@@ -299,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
 
 
