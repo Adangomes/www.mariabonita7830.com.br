@@ -255,11 +255,12 @@ function finalizarEntrega() {
         return alert("Preencha todos os campos obrigatórios (nome, endereço e pagamento)!");
     }
 
+    let subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
     let taxaEntrega = calcularTaxaEntrega(cidade, bairro);
-    let taxaFormatada = taxaEntrega > 0 ? `R$${taxaEntrega},00` : "Grátis";
+    let totalFinal = subtotal + taxaEntrega;
 
     let itensMsg = carrinho.map(item =>
-        `• *${item.nome}* - R$${item.preco.toFixed(2).replace(".", ",")} x ${item.quantidade}`
+        `• ${item.nome} - *R$${item.preco.toFixed(2).replace(".", ",")}* x *${item.quantidade}*`
     ).join("\n");
 
     let mensagem =
@@ -274,7 +275,11 @@ Ref: *${referencia || "-"}*
 Obs: *${observacao || "-"}*
 
 Pagamento: *${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}*
-Taxa de entrega: *${taxaFormatada}*
+
+Subtotal: *R$${subtotal.toFixed(2).replace(".", ",")}*
+Taxa de entrega: *R$${taxaEntrega.toFixed(2).replace(".", ",")}*
+Total: *R$${totalFinal.toFixed(2).replace(".", ",")}*
+
 Tempo de entrega: *30 a 45 minutos*`;
 
     const numeroWhatsApp = "5547992641324";
@@ -294,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
 
 
