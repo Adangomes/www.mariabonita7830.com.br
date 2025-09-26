@@ -314,13 +314,35 @@ document.addEventListener("DOMContentLoaded", () => {
 // =============================
 // RECARREGAR CARRINHO SALVO
 // =============================
-document.addEventListener("DOMContentLoaded", () => {
-    const salvo = localStorage.getItem("meuCarrinho");
-    if (salvo) {
-        carrinho.push(...JSON.parse(salvo));
-        atualizarCarrinho();
-    }
-});
+function toggleMiniCart() {
+  document.getElementById("mini-cart").classList.toggle("open");
+}
+
+function atualizarMiniCart() {
+  const miniCartList = document.getElementById("mini-cart-list");
+  miniCartList.innerHTML = "";
+
+  if (carrinho.length === 0) {
+    miniCartList.innerHTML = "<p>Carrinho vazio</p>";
+    return;
+  }
+
+  carrinho.forEach(item => {
+    const div = document.createElement("div");
+    div.textContent = `${item.quantidade}x ${item.nome} - R$${(item.preco * item.quantidade).toFixed(2).replace(".", ",")}`;
+    miniCartList.appendChild(div);
+  });
+
+  // total no mini carrinho
+  let subtotal = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+  const totalDiv = document.createElement("div");
+  totalDiv.style.marginTop = "8px";
+  totalDiv.style.fontWeight = "bold";
+  totalDiv.textContent = `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
+  miniCartList.appendChild(totalDiv);
+}
+
+
 
 
 
