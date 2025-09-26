@@ -338,6 +338,21 @@ function atualizarMiniCart() {
   totalDiv.textContent = `Total: R$${subtotal.toFixed(2).replace(".", ",")}`;
   miniCartList.appendChild(totalDiv);
 }
+// =============================
+// MENU HAMBURGUER (abre/fecha os 3 pontinhos)
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+  
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+    });
+  }
+});
+
+
 
 
 
