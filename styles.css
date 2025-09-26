@@ -452,5 +452,34 @@ body {
   50% { transform: scale(1.1); }
 }
 
+/* MINI-CARRINHO (abre ao clicar no 🛒) */
+.mini-cart-list {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 120%; /* aparece logo abaixo do ícone */
+  background: #fff;
+  color: #111;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 220px;
+  z-index: 3000;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.cart.open .mini-cart-list {
+  display: block;
+}
+
+.mini-cart-list div {
+  margin-bottom: 6px;
+}
+
+.mini-cart-list div:last-child {
+  margin-bottom: 0;
+}
+
 
 
