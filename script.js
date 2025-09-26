@@ -77,26 +77,27 @@ function adicionarAoCarrinho(nome, codigo, preco) {
     }
 
     // P025: Combo 2 Pizzas + Bebida
-    else if (codigo === "P025") {
-        let sabor1 = prompt("Escolha o primeiro sabor:\n" + TODOS_SABORES.join(", "));
-        let sabor2 = prompt("Escolha o segundo sabor:\n" + TODOS_SABORES.join(", "));
-        if (!sabor1 || !sabor2) return alert("Você precisa escolher 2 sabores!");
+else if (codigo === "P025") {
+    let sabor1 = prompt("Escolha o primeiro sabor:\n" + TODOS_SABORES.join(", "));
+    let sabor2 = prompt("Escolha o segundo sabor:\n" + TODOS_SABORES.join(", "));
+    if (!sabor1 || !sabor2) return alert("Você precisa escolher 2 sabores!");
 
-        let bebidaOpcoes = BEBIDAS.map((b, i) =>
-            `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : "Grátis"}`
-        ).join("\n");
+    let bebidaOpcoes = BEBIDAS.map((b, i) =>
+        `${i + 1} - ${b.nome} ${b.preco > 0 ? "(+R$" + b.preco.toFixed(2) + ")" : "Grátis"}`
+    ).join("\n");
 
-        let bebidaEscolha = prompt("Escolha a bebida DIGITANDO UM NÚMERO:\n\n" + bebidaOpcoes);
-        let bebidaIndex = parseInt(bebidaEscolha) - 1;
-        if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inválida! Digite apenas o número da lista.");
+    let bebidaEscolha = prompt("Escolha a bebida DIGITANDO UM NÚMERO:\n\n" + bebidaOpcoes);
+    let bebidaIndex = parseInt(bebidaEscolha) - 1;
+    if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inválida! Digite apenas o número da lista.");
 
-        let bebida = BEBIDAS[bebidaIndex];
-        nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
+    let bebida = BEBIDAS[bebidaIndex];
+    nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
 
-        // garante que o preco seja número puro
-        let precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", ".")) || 0;
-        preco = precoNum + bebida.preco;
-    }
+    // garante que o preco seja número puro
+    let precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", ".")) || 0;
+    preco = precoNum + bebida.preco;
+} // <-- essa chave estava faltando
+
 
     // =============================
     // PRODUTOS NORMAIS
@@ -293,5 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
 
