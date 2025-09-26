@@ -90,10 +90,12 @@ function adicionarAoCarrinho(nome, codigo, preco) {
         let bebidaIndex = parseInt(bebidaEscolha) - 1;
         if (isNaN(bebidaIndex) || !BEBIDAS[bebidaIndex]) return alert("⚠️ Bebida inválida! Digite apenas o número da lista.");
 
-        let bebida = BEBIDAS[bebidaIndex];
-        nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
-        preco = Number(preco) + bebida.preco; // número puro
-    }
+       let bebida = BEBIDAS[bebidaIndex];
+nome += ` (${sabor1} + ${sabor2}) + ${bebida.nome}`;
+
+// garante que vira número mesmo que venha com "R$"
+let precoNum = parseFloat(preco.toString().replace("R$", "").replace(",", "."));
+preco = precoNum + bebida.preco; // mantém só número
 
     // PRODUTOS NORMAIS
     let precoNum = 0;
@@ -291,3 +293,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
