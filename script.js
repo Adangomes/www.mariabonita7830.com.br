@@ -263,19 +263,19 @@ function finalizarEntrega() {
     ).join("\n");
 
     let mensagem =
-`Olá! Gostaria de fazer meu pedido:
+*`Olá! Gostaria de fazer meu pedido:*
 ${itensMsg}
 
-*Cliente:* ${nome}
-*Entrega em:* ${cidade.toUpperCase()}
-*Bairro:* ${bairro}
-*Rua:* ${rua}, Nº ${numero}
-*Ref:* ${referencia || "-"}
-*Obs:* ${observacao || "-"}
+Cliente: *${nome}*
+Entrega em: *${cidade.toUpperCase()}*
+Bairro: *${bairro}*
+Rua: *${rua}, Nº ${numero}*
+Ref: *${referencia || "-"}*
+Obs: *${observacao || "-"}*
 
-*Pagamento:* ${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}
-*Taxa de entrega:* ${taxaFormatada}
-*Tempo de entrega:* 30 a 45 minutos`;
+Pagamento: *${pagamento}${pagamento === "Dinheiro" && troco ? " (troco para R$" + troco + ")" : ""}*
+Taxa de entrega: *${taxaFormatada}*
+Tempo de entrega: *30 a 45 minutos`;*
 
     const numeroWhatsApp = "5547992641324";
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
@@ -294,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+
 
 
 
