@@ -311,6 +311,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 });
+// =============================
+// RECARREGAR CARRINHO SALVO
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+    const salvo = localStorage.getItem("meuCarrinho");
+    if (salvo) {
+        carrinho.push(...JSON.parse(salvo));
+        atualizarCarrinho();
+    }
+});
+
 
 
 
