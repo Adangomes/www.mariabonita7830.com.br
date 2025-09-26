@@ -10,22 +10,32 @@
 
 <body>
 
-    <div id="pagina">
-        <!-- Cabeçalho -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div id="menu">
         <header class="header">
-            <div class="logo">MYDI DELIVERY</div>
-            <button class="hamburger" id="hamburger">&#9776;</button>
-            <nav class="menu" id="mobile-menu">
-                <a href="novidades.html">Pizzas Doce</a>
-                <a href="blusas.html">Bebidas</a>
-                <a href="acessorios.html">Combos</a>
-                <a href="bordas.html">Bordas</a>
-                <a href="contato.html">Contato</a>
-                <a href="index.html">HOME</a>
+    <div class="logo">MYDI DELIVERY</div>
 
-            </nav>
-            <div class="cart">🛒</div>
-        </header>
+    <!-- Botão menu hamburguer -->
+    <button class="hamburger" id="hamburger">&#9776;</button>
+
+    <!-- Menu mobile -->
+    <nav class="menu" id="mobile-menu">
+        <a href="novidades.html">Pizzas Doce</a>
+        <a href="blusas.html">Bebidas</a>
+        <a href="acessorios.html">Combos</a>
+        <a href="bordas.html">Bordas</a>
+        <a href="contato.html">Contato</a>
+        <a href="index.html">HOME</a>
+    </nav>
+
+    <!-- Carrinho -->
+    <div class="cart" title="Ver carrinho" onclick="abrirCarrinho()">🛒</div>
+
+    <!-- Mensagem feedback -->
+    <p id="feedback-msg" style="display:none; color:green;">
+        Produto adicionado ao carrinho!
+    </p>
+</header>
         <section class="promo-bar">
             <div class="promo-scroll" id="promo-scroll">
                 <h1 class="pizzaria-nome">JS PIZZARIA</h1>
@@ -201,5 +211,6 @@
 </body>
 
 </html>
+
 
 
