@@ -235,6 +235,9 @@ body {
   animation: pulse 1.2s infinite;
 }
 
+/* Deixa o sistema escondido*/
+
+
 /* animação */
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
@@ -480,6 +483,7 @@ body {
 .mini-cart-list div:last-child {
   margin-bottom: 0;
 }
+
 
 
 
