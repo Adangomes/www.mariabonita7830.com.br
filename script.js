@@ -303,8 +303,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
   if (splash) {
     setTimeout(() => {
-      splash.classList.add("hide");
-     setTimeout(() => splash.style.display = "none", 500);
+     //splash.classList.add("hide");
+     //setTimeout(() => splash.style.display = "none", 500);
     }, 1500);
   }
 });
@@ -361,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     atualizarCarrinho(); // atualiza a tela
   }
 });
+
 
 
 
