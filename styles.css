@@ -483,10 +483,11 @@ body {
 .mini-cart-list div:last-child {
   margin-bottom: 0;
 }
-/* Esconde tudo, menos o spalsh*/
+/* Esconde tudo, menos o spalsh
 body > *not(splash) {
     display: none;
-}
+}*/
+
 
 
 
