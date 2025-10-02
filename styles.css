@@ -46,11 +46,11 @@ body {
 }
 
 
-/* NAV LINKS
+/* NAV LINKS*/
 .menu {
     display: flex;
     gap: 15px;
-} */
+}
 
 .menu a {
     text-decoration: none;
@@ -487,6 +487,7 @@ body {
 body > *not(splash) {
     display: none;
 }*/
+
 
 
 
