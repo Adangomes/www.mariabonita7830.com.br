@@ -291,7 +291,7 @@ Total: *R$${totalFinal.toFixed(2).replace(".", ",")}*
 
 Tempo de entrega: *30 a 45 minutos*`;
 
-    const numeroWhatsApp = "5547991200727";
+    const numeroWhatsApp = "5555996929974";
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
@@ -361,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     atualizarCarrinho(); // atualiza a tela
   }
 });
+
 
 
 
