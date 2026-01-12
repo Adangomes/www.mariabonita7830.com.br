@@ -1,11 +1,11 @@
 {
   "produtos": [
     {
-      "title": "coxa",
-      "description": "top",
-      "codigo": "300",
-      "price": 28,
-      "image": "/images/whatsapp-image-2025-04-30-at-21.39.45.jpeg"
+      "title": "Frango Catupiry",
+      "description": "Pizza salgada deliciosa",
+      "codigo": "P001",
+      "price": 25,
+      "image": "frango-catupiry.jpg"
     }
   ]
 }
