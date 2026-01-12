@@ -362,6 +362,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// RECARREGA OS PRODUTOS JSON PARA A PÁGINA DO ADMIN
+
+// Função para carregar produtos do JSON
+async function carregarProdutos() {
+  try {
+    const res = await fetch('/content/produtos.json');
+    const data = await res.json();
+    const produtos = data.produtos.filter(p => p.categoria === 'salgada'); // só PIZZAS SALGADAS
+
+    const container = document.getElementById('pizzas-salgadas');
+    container.innerHTML = '';
+
+    produtos.forEach(prod => {
+      const div = document.createElement('div');
+      div.classList.add('product-card');
+      div.innerHTML = `
+        <h3>${prod.title}</h3>
+        <h4>cod: ${prod.codigo}</h4>
+        <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
+        <button class="btn" onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', '${prod.price}')">Adicionar</button>
+      `;
+      container.appendChild(div);
+    });
+
+  } catch (err) {
+    console.error('Erro ao carregar produtos:', err);
+  }
+}
+
+// Carrega os produtos ao abrir a página
+document.addEventListener('DOMContentLoaded', carregarProdutos);
+
+
+
 
 
 
