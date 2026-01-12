@@ -1,4 +1,3 @@
-
 backend:
   name: git-gateway
   branch: principal
@@ -16,12 +15,3 @@ collections:
       - { label: "Nome", name: "title", widget: "string" }
       - { label: "Preço", name: "price", widget: "string" }
       - { label: "Imagem", name: "image", widget: "image" }
-
-  - name: "textos"
-    label: "Textos do Site"
-    folder: "contente"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
