@@ -13,12 +13,12 @@ collections:
         label: "Produtos"
         name: "produtos"
         fields:
-          - label: "Produtos"
-            name: "produtos"
-            widget: "list"
-            fields:
-              - { label: "Nome do Produto", name: "title", widget: "string" }
-              - { label: "Descrição", name: "description", widget: "string" }
-              - { label: "Código", name: "codigo", widget: "string" }
-              - { label: "Preço", name: "price", widget: "number" }
-              - { label: "Imagem", name: "image", widget: "image" }
+          - { label: "Produtos", name: "produtos", widget: "list", fields:
+            [
+              { label: "Nome do Produto", name: "title", widget: "string" },
+              { label: "Descrição", name: "description", widget: "string" },
+              { label: "Código", name: "codigo", widget: "string" },
+              { label: "Preço", name: "price", widget: "number" },
+              { label: "Imagem", name: "image", widget: "image" }
+            ]
+          }
