@@ -1,3 +1,10 @@
+backend:
+  name: git-gateway
+  branch: main  # seu branch no GitHub
+
+media_folder: "images"
+public_folder: "/images"
+
 collections:
   - name: "produtos"
     label: "Produtos"
