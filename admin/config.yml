@@ -4,6 +4,10 @@ backend:
 
 media_folder: "images"
 public_folder: "/images"
+{
+  "produtos": []
+}
+
 
 collections:
   - name: "produtos"
@@ -22,5 +26,6 @@ collections:
               { label: "Imagem", name: "image", widget: "image" }
             ]
           }
+
 
 
