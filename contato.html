@@ -66,3 +66,33 @@
 </body>
 
 </html>
+
+<!-- aqui vai puchar os produtos para a pagina administrativa -->
+<div id="lista-produtos"></div>
+
+<script>
+fetch("/produtos.json")
+  .then(res => res.json())
+  .then(produtos => {
+    const container = document.getElementById("lista-produtos");
+
+    produtos.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "produto";
+
+      div.innerHTML = `
+        <img src="${p.image}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <p>R$ ${p.price.toFixed(2).replace(".", ",")}</p>
+        <button onclick="adicionarAoCarrinho(
+          '${p.title}',
+          '${p.codigo}',
+          ${p.price}
+        )">Adicionar</button>
+      `;
+
+      container.appendChild(div);
+    });
+  })
+  .catch(err => console.error("Erro ao carregar produtos:", err));
+</script>
