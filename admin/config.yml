@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: master
+
 
 media_folder: "images"
 public_folder: "/images"
@@ -14,4 +15,5 @@ collections:
     fields:
       - { label: "Nome do Produto", name: "title", widget: "string" }
       - { label: "Preço", name: "price", widget: "number" }
+
       - { label: "Imagem", name: "image", widget: "image" }
