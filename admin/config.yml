@@ -10,7 +10,6 @@ collections:
     label: "Produtos"
     folder: "contente"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Nome", name: "title", widget: "string" }
       - { label: "Preço", name: "price", widget: "string" }
