@@ -10,8 +10,11 @@ collections:
     label: "Produtos"
     folder: "content/produtos"
     create: true
+    format: "json"
+    extension: "json"
     slug: "{{slug}}"
     fields:
       - { label: "Nome do Produto", name: "title", widget: "string" }
-      - { label: "Preço", name: "price", widget: "string" }
+      - { label: "Código", name: "codigo", widget: "string" }
+      - { label: "Preço", name: "price", widget: "number" }
       - { label: "Imagem", name: "image", widget: "image" }
