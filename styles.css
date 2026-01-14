@@ -491,6 +491,22 @@ body > *not(splash) {
 }
 
 
+/* BOTÃO DE AÇÃO ABERTO-FECHADO*/
+.status {
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+}
+
+.status.fechado {
+  background: #c0392b;
+  color: white;
+}
+
+.status.aberto {
+  background: #27ae60;
+  color: white;
+}
 
 
 
