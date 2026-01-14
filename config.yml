@@ -11,7 +11,8 @@ collections:
     folder: "content/produtos"
     create: true
     slug: "{{slug}}"
-    fields:
-      - { label: "Nome do Produto", name: "title", widget: "string" }
-      - { label: "Preço", name: "price", widget: "number" }
-      - { label: "Imagem", name: "image", widget: "image" }
+   fields:
+  - { label: "Nome", name: "title", widget: "string" }
+  - { label: "Código", name: "codigo", widget: "string" }
+  - { label: "Preço", name: "price", widget: "number", value_type: "float", min: 0 }
+  - { label: "Categoria", name: "categoria", widget: "select", options: ["bebida", "pizza-salgada", "pizza-doce"] }
