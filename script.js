@@ -394,6 +394,38 @@ async function carregarProdutos() {
 // Carrega os produtos ao abrir a página
 document.addEventListener('DOMContentLoaded', carregarProdutos);
 
+// CARREGA OS PRODUTOS DE PIZZA SALGADAS
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('content/produtos.json')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('pizzas-salgadas');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      data.produtos
+        .filter(prod => prod.categoria === 'pizza-salgada')
+        .forEach(prod => {
+          const card = document.createElement('div');
+          card.classList.add('product-card');
+
+          card.innerHTML = `
+            <h3>${prod.title}</h3>
+            <h4>cod: ${prod.codigo}</h4>
+            <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
+            <button class="btn"
+              onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
+              Adicionar
+            </button>
+          `;
+          container.appendChild(card);
+        });
+    })
+    .catch(err => console.error('Erro ao carregar produtos:', err));
+});
+
+
 // CARREGA OS PRODUTOS DE PIZZA DOCE 
 <script>
 fetch('content/produtos.json')
@@ -427,36 +459,7 @@ fetch('content/produtos.json')
 </script>
 
 
-// CARREGA OS PRODUTOS DE PIZZA SALGADAS
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('content/produtos.json')
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById('pizzas-salgadas');
-      if (!container) return;
 
-      container.innerHTML = '';
-
-      data.produtos
-        .filter(prod => prod.categoria === 'pizza-salgada')
-        .forEach(prod => {
-          const card = document.createElement('div');
-          card.classList.add('product-card');
-
-          card.innerHTML = `
-            <h3>${prod.title}</h3>
-            <h4>cod: ${prod.codigo}</h4>
-            <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
-            <button class="btn"
-              onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
-              Adicionar
-            </button>
-          `;
-          container.appendChild(card);
-        });
-    })
-    .catch(err => console.error('Erro ao carregar produtos:', err));
-});
 
 
 
