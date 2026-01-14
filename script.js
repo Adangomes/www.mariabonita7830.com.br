@@ -365,116 +365,45 @@ document.addEventListener("DOMContentLoaded", () => {
 // RECARREGA OS PRODUTOS JSON PARA A PÁGINA DO ADMIN
 
 // Função para carregar produtos do JSON
-async function carregarProdutos() {
+async function carregarTodosProdutos() {
   try {
     const res = await fetch('/content/produtos.json');
     const data = await res.json();
-    const produtos = data.produtos.filter(p => p.categoria === 'salgada'); // só PIZZAS SALGADAS
 
-    const container = document.getElementById('pizzas-salgadas');
-    container.innerHTML = '';
+    const pizzasSalgadas = document.getElementById('pizzas-salgadas');
+    const pizzasDoces = document.getElementById('pizzas-doces');
+    const combos = document.getElementById('combos');
+    const bebidas = document.getElementById('bebidas');
 
-    produtos.forEach(prod => {
-      const div = document.createElement('div');
-      div.classList.add('product-card');
-      div.innerHTML = `
+    data.produtos.forEach(prod => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
+
+      card.innerHTML = `
         <h3>${prod.title}</h3>
+        ${prod.descricao ? `<p class="desc">${prod.descricao}</p>` : ''}
         <h4>cod: ${prod.codigo}</h4>
         <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
-        <button class="btn" onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', '${prod.price}')">Adicionar</button>
+        <button class="btn"
+          onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
+          Adicionar
+        </button>
       `;
-      container.appendChild(div);
+
+      if (prod.categoria === 'pizza-salgada' && pizzasSalgadas) pizzasSalgadas.appendChild(card);
+      if (prod.categoria === 'pizza-doce' && pizzasDoces) pizzasDoces.appendChild(card);
+      if (prod.categoria === 'combo' && combos) combos.appendChild(card);
+      if (prod.categoria === 'bebida' && bebidas) bebidas.appendChild(card);
     });
 
-  } catch (err) {
-    console.error('Erro ao carregar produtos:', err);
+  } catch (e) {
+    console.error('Erro ao carregar produtos:', e);
   }
 }
 
-// Carrega os produtos ao abrir a página
-document.addEventListener('DOMContentLoaded', carregarProdutos);
-
-// CARREGA OS PRODUTOS DE PIZZA SALGADAS
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('content/produtos.json')
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById('pizzas-salgadas');
-      if (!container) return;
-
-      container.innerHTML = '';
-
-      data.produtos
-        .filter(prod => prod.categoria === 'pizza-salgada')
-        .forEach(prod => {
-          const card = document.createElement('div');
-          card.classList.add('product-card');
-
-          card.innerHTML = `
-            <h3>${prod.title}</h3>
-            <h4>cod: ${prod.codigo}</h4>
-            <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
-            <button class="btn"
-              onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
-              Adicionar
-            </button>
-          `;
-          container.appendChild(card);
-        });
-    })
-    .catch(err => console.error('Erro ao carregar produtos:', err));
-});
+document.addEventListener('DOMContentLoaded', carregarTodosProdutos);
 
 
-// CARREGA OS PRODUTOS DE PIZZA DOCE 
-fetch('content/produtos.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('pizzas-doces');
-
-    data.produtos
-      .filter(prod => prod.categoria === 'pizza-doce')
-      .forEach(prod => {
-        const card = document.createElement('div');
-        card.classList.add('product-card');
-
-        card.innerHTML = `
-          <h3>${prod.title}</h3>
-          <h4>cod: ${prod.codigo}</h4>
-          <p class="price">R$${prod.price.toFixed(2)}</p>
-          <button class="btn"
-            onclick="adicionarAoCarrinho(
-              '${prod.title}',
-              '${prod.codigo}',
-              'R$${prod.price.toFixed(2)}'
-            )">
-            Adicionar
-          </button>
-        `;
-
-        container.appendChild(card);
-      });
-  });
-fetch("produtos.json")
-  .then(res => res.json())
-  .then(data => {
-    const combos = data.produtos.filter(p => p.categoria === "combo");
-
-    combos.forEach(produto => {
-      document.getElementById("combos").innerHTML += `
-        <div class="product-card">
-          <h3>${produto.title}</h3>
-          <p class="desc">${produto.descricao || ""}</p>
-          <h4>cod: ${produto.codigo}</h4>
-          <p class="price">R$${produto.price},00</p>
-          <button class="btn"
-            onclick="adicionarAoCarrinho('${produto.title}', '${produto.codigo}', 'R$${produto.price},00')">
-            Adicionar
-          </button>
-        </div>
-      `;
-    });
-  });
 
 
 
