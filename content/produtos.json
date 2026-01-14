@@ -230,6 +230,12 @@
       "codigo": "P039",
       "price": 6,
       "categoria": "adicionais"
+    },
+    {
+      "title": "FANTA UVA",
+      "codigo": "100",
+      "price": 10,
+      "categoria": "bebida"
     }
   ]
 }
