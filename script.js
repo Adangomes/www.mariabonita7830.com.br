@@ -363,17 +363,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // RECARREGA OS PRODUTOS JSON PARA A PÁGINA DO ADMIN
-
-// Função para carregar produtos do JSON
 async function carregarTodosProdutos() {
   try {
-    const res = await fetch('/content/produtos.json');
+    const res = await fetch('content/produtos.json');
     const data = await res.json();
 
     const pizzasSalgadas = document.getElementById('pizzas-salgadas');
     const pizzasDoces = document.getElementById('pizzas-doces');
     const combos = document.getElementById('combos');
     const bebidas = document.getElementById('bebidas');
+    const bordas = document.getElementById('bordas');
+    const adicionais = document.getElementById('adicionais');
 
     data.produtos.forEach(prod => {
       const card = document.createElement('div');
@@ -383,7 +383,7 @@ async function carregarTodosProdutos() {
         <h3>${prod.title}</h3>
         ${prod.descricao ? `<p class="desc">${prod.descricao}</p>` : ''}
         <h4>cod: ${prod.codigo}</h4>
-        <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
+        <p class="price">R$${Number(prod.price).toFixed(2).replace('.', ',')}</p>
         <button class="btn"
           onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
           Adicionar
@@ -392,11 +392,10 @@ async function carregarTodosProdutos() {
 
       if (prod.categoria === 'pizza-salgada' && pizzasSalgadas) pizzasSalgadas.appendChild(card);
       if (prod.categoria === 'pizza-doce' && pizzasDoces) pizzasDoces.appendChild(card);
-      if (prod.categoria === 'combos' && combos) combos.appendChild(card);
-      if (prod.categoria === 'bebidas' && bebidas) bebidas.appendChild(card);
+      if (prod.categoria === 'combo' && combos) combos.appendChild(card);
+      if (prod.categoria === 'bebida' && bebidas) bebidas.appendChild(card);
       if (prod.categoria === 'bordas' && bordas) bordas.appendChild(card);
-      
-    
+      if (prod.categoria === 'adicionais' && adicionais) adicionais.appendChild(card);
     });
 
   } catch (e) {
@@ -405,6 +404,7 @@ async function carregarTodosProdutos() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarTodosProdutos);
+
 
 
 
