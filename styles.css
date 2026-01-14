@@ -107,6 +107,8 @@ body {
     flex: 1;
     padding: 25px 15px;
     background: linear-gradient(to bottom, #fff, #fbe9eb);
+    min-height: calc(100vh - 160px);
+
     
 }
 
@@ -484,9 +486,10 @@ body {
   margin-bottom: 0;
 }
 /* Esconde tudo, menos o spalsh*/
-body > *:not(#splash) {
+body > *not(splash) {
     display: none;
 }
+
 
 
 
