@@ -1,4 +1,31 @@
 // =============================
+// STATUS DA LOJA
+// =============================
+let LOJA_ABERTA = true;
+let MENSAGEM_FECHADA = "Estamos fechados no momento 😔";
+
+async function carregarStatusLoja() {
+  try {
+    const res = await fetch('/content/status.json');
+    const data = await res.json();
+    LOJA_ABERTA = data.aberto;
+    MENSAGEM_FECHADA = data.mensagem || MENSAGEM_FECHADA;
+
+    // texto visível no site
+    const statusEl = document.getElementById("status-loja");
+    if (statusEl) {
+      statusEl.textContent = LOJA_ABERTA ? "🟢 ABERTO" : "🔴 FECHADO";
+      statusEl.className = LOJA_ABERTA ? "aberto" : "fechado";
+    }
+
+  } catch (e) {
+    console.error("Erro ao carregar status da loja", e);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", carregarStatusLoja);
+
+// =============================
 // ESTADO GLOBAL DO CARRINHO
 // =============================
 const carrinho = [];
@@ -52,6 +79,11 @@ const bairrosGuaramirim = [
 // =============================
 function adicionarAoCarrinho(nome, codigo, preco) {
     // P027: Pizza Meio a Meio
+    // ⛔ BLOQUEIO SE A LOJA ESTIVER FECHADA
+  if (!LOJA_ABERTA) {
+    alert(MENSAGEM_FECHADA);
+    return;
+  }
     if (codigo === "P027") {
         let sabor1 = prompt("Escolha o primeiro sabor:\n" + TODOS_SABORES.join(", "));
         let sabor2 = prompt("Escolha o segundo sabor:\n" + TODOS_SABORES.join(", "));
@@ -404,7 +436,6 @@ async function carregarTodosProdutos() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarTodosProdutos);
-
 
 
 
