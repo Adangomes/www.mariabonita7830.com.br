@@ -138,26 +138,5 @@
       "codigo": "SABOR ALEMAO DO SUL",
       "title": "PIZZA ALEMÃ"
     }
-    {
-      "title": "Combo 2 Pizzas + Refri 600ml",
-      "codigo": "P025",
-      "price": 60,
-      "categoria": "combo",
-      "descricao": "Até 2 sabores por pizza no combo"
-    },
-    {
-      "title": "Pizza G 12 Fatias",
-      "codigo": "P026",
-      "price": 90,
-      "categoria": "combo",
-      "descricao": "Até 3 sabores"
-    },
-    {
-      "title": "Pizza Meio a Meio",
-      "codigo": "P027",
-      "price": 25,
-      "categoria": "combo",
-      "descricao": "Escolha 2 sabores"
-    }
   ]
 }
