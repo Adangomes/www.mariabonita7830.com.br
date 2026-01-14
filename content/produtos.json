@@ -141,7 +141,6 @@
       "categoria": "pizza-salgada"
     },
 
-    
     {
       "title": "Combo 2 Pizzas + Refri 600ml",
       "codigo": "P025",
@@ -162,80 +161,79 @@
       "price": 25,
       "categoria": "combo",
       "descricao": "Escolha 2 sabores"
-    }
-    
-{
-  "title": "Milho",
-  "codigo": "P028",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Ervilha",
-  "codigo": "P029",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Cheddar",
-  "codigo": "P030",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Ovo",
-  "codigo": "P031",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Cebola",
-  "codigo": "P032",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Tomate",
-  "codigo": "P033",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Catupiry",
-  "codigo": "P034",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Morango",
-  "codigo": "P035",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Amendoim",
-  "codigo": "P036",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Azeitona",
-  "codigo": "P037",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Chocolate Cremoso Branco",
-  "codigo": "P038",
-  "price": 5,
-  "categoria": "adicionais"
-},
-{
-  "title": "Chocolate Cremoso Preto",
-  "codigo": "P039",
-  "price": 5,
-  "categoria": "adicionais"
-}
+    },
 
+    {
+      "title": "Milho",
+      "codigo": "P028",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Ervilha",
+      "codigo": "P029",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Cheddar",
+      "codigo": "P030",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Ovo",
+      "codigo": "P031",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Cebola",
+      "codigo": "P032",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Tomate",
+      "codigo": "P033",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Catupiry",
+      "codigo": "P034",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Morango",
+      "codigo": "P035",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Amendoim",
+      "codigo": "P036",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Azeitona",
+      "codigo": "P037",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Chocolate Cremoso Branco",
+      "codigo": "P038",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Chocolate Cremoso Preto",
+      "codigo": "P039",
+      "price": 5,
+      "categoria": "adicionais"
+    }
   ]
 }
