@@ -394,6 +394,37 @@ async function carregarProdutos() {
 // Carrega os produtos ao abrir a página
 document.addEventListener('DOMContentLoaded', carregarProdutos);
 
+// CARREGA OS PRODUTOS DE PIZZA DOCE 
+<script>
+fetch('content/produtos.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('pizzas-doces');
+
+    data.produtos
+      .filter(prod => prod.categoria === 'pizza-doce')
+      .forEach(prod => {
+        const card = document.createElement('div');
+        card.classList.add('product-card');
+
+        card.innerHTML = `
+          <h3>${prod.title}</h3>
+          <h4>cod: ${prod.codigo}</h4>
+          <p class="price">R$${prod.price.toFixed(2)}</p>
+          <button class="btn"
+            onclick="adicionarAoCarrinho(
+              '${prod.title}',
+              '${prod.codigo}',
+              'R$${prod.price.toFixed(2)}'
+            )">
+            Adicionar
+          </button>
+        `;
+
+        container.appendChild(card);
+      });
+  });
+</script>
 
 
 
