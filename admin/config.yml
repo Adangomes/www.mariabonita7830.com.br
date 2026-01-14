@@ -10,15 +10,19 @@ collections:
     label: "Produtos"
     files:
       - file: "content/produtos.json"
-        label: "Produtos"
+        label: "Lista de Produtos"
         name: "produtos"
         fields:
-          - { label: "Produtos", name: "produtos", widget: "list", fields:
-            [
-              { label: "Nome do Produto", name: "title", widget: "string" },
-              { label: "Descrição", name: "description", widget: "string" },
-              { label: "Código", name: "codigo", widget: "string" },
-              { label: "Preço", name: "price", widget: "number" },
-              { label: "Imagem", name: "image", widget: "image" }
-            ]
-          }
+          - label: "Produtos"
+            name: "produtos"
+            widget: "list"
+            fields:
+              - { label: "Nome", name: "title", widget: "string" }
+              - { label: "Código", name: "codigo", widget: "string" }
+              - { label: "Preço", name: "price", widget: "number", min: 0 }
+              - { 
+                  label: "Categoria",
+                  name: "categoria",
+                  widget: "select",
+                  options: ["bebida", "pizza-salgada", "pizza-doce"]
+                }
