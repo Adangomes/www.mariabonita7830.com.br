@@ -427,6 +427,40 @@ fetch('content/produtos.json')
 </script>
 
 
+// CARREGA OS PRODUTOS DE PIZZA SALGADAS
+<script>
+fetch('content/produtos.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('pizzas-salgada');
+
+    data.produtos
+      .filter(prod => prod.categoria === 'pizza-salgada')
+      .forEach(prod => {
+        const card = document.createElement('div');
+        card.classList.add('product-card');
+
+        card.innerHTML = `
+          <h3>${prod.title}</h3>
+          <h4>cod: ${prod.codigo}</h4>
+          <p class="price">R$${prod.price.toFixed(2)}</p>
+          <button class="btn"
+            onclick="adicionarAoCarrinho(
+              '${prod.title}',
+              '${prod.codigo}',
+              'R$${prod.price.toFixed(2)}'
+            )">
+            Adicionar
+          </button>
+        `;
+
+        container.appendChild(card);
+      });
+  });
+</script>
+
+
+
 
 
 
