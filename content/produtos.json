@@ -65,7 +65,10 @@
       "price": 25,
       "categoria": "pizza-doce"
     }
-    {
+
+  ]
+}
+  {
   "title": "Frango Catupiry",
   "codigo": "P001",
   "price": 25,
@@ -136,7 +139,4 @@
   "codigo": "P012",
   "price": 25,
   "categoria": "pizza-salgada"
-}
-
-  ]
 }
