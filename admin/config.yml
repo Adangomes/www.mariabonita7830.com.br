@@ -27,5 +27,21 @@ collections:
                   options: ["bebida", "pizza-salgada", "pizza-doce", "combo", "bordas", "adicionais"]
                 }
 
+  - name: "config"
+    label: "Configurações da Loja"
+    files:
+      - file: "content/status.json"
+        label: "Status da Loja"
+        name: "status"
+        fields:
+          - label: "Loja aberta?"
+            name: "aberto"
+            widget: "boolean"
+            default: true
+          - label: "Mensagem quando fechada"
+            name: "mensagem"
+            widget: "string"
+            default: "Estamos fechados no momento 😔"
+
 
 
