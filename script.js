@@ -427,7 +427,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // CARREGA OS PRODUTOS DE PIZZA DOCE 
-<script>
 fetch('content/produtos.json')
   .then(res => res.json())
   .then(data => {
@@ -456,7 +455,7 @@ fetch('content/produtos.json')
         container.appendChild(card);
       });
   });
-</script>
+
 
 
 
