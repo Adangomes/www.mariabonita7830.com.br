@@ -24,7 +24,8 @@ collections:
                   label: "Categoria",
                   name: "categoria",
                   widget: "select",
-                  options: ["bebida", "pizza-salgada", "pizza-doce", "combo", "borda", "adicionais"]
+                  options: ["bebida", "pizza-salgada", "pizza-doce", "combo", "bordas", "adicionais"]
                 }
+
 
 
