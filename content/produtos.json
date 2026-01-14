@@ -12,7 +12,6 @@
       "price": 10,
       "categoria": "bebida"
     },
-
     {
       "title": "Prestígio",
       "codigo": "P013",
@@ -61,7 +60,6 @@
       "price": 25,
       "categoria": "pizza-doce"
     },
-
     {
       "title": "Frango Catupiry",
       "codigo": "P001",
@@ -140,7 +138,6 @@
       "price": 30,
       "categoria": "pizza-salgada"
     },
-
     {
       "title": "Combo 2 Pizzas + Refri 600ml",
       "codigo": "P025",
@@ -162,7 +159,6 @@
       "categoria": "combo",
       "descricao": "Escolha 2 sabores"
     },
-
     {
       "title": "Milho",
       "codigo": "P028",
@@ -232,8 +228,8 @@
     {
       "title": "Chocolate Cremoso Preto",
       "codigo": "P039",
-      "price": 5,
-      "categoria": "adicionais"
+      "price": 6,
+      "categoria": "pizza-salgada"
     }
   ]
 }
