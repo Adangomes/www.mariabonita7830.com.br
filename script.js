@@ -428,36 +428,37 @@ fetch('content/produtos.json')
 
 
 // CARREGA OS PRODUTOS DE PIZZA SALGADAS
-<script>
-fetch('content/produtos.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('pizzas-salgada');
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('content/produtos.json')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('pizzas-salgadas');
+      if (!container) return;
 
-    data.produtos
-      .filter(prod => prod.categoria === 'pizza-salgada')
-      .forEach(prod => {
-        const card = document.createElement('div');
-        card.classList.add('product-card');
+      container.innerHTML = '';
 
-        card.innerHTML = `
-          <h3>${prod.title}</h3>
-          <h4>cod: ${prod.codigo}</h4>
-          <p class="price">R$${prod.price.toFixed(2)}</p>
-          <button class="btn"
-            onclick="adicionarAoCarrinho(
-              '${prod.title}',
-              '${prod.codigo}',
-              'R$${prod.price.toFixed(2)}'
-            )">
-            Adicionar
-          </button>
-        `;
+      data.produtos
+        .filter(prod => prod.categoria === 'pizza-salgada')
+        .forEach(prod => {
+          const card = document.createElement('div');
+          card.classList.add('product-card');
 
-        container.appendChild(card);
-      });
-  });
-</script>
+          card.innerHTML = `
+            <h3>${prod.title}</h3>
+            <h4>cod: ${prod.codigo}</h4>
+            <p class="price">R$${prod.price.toFixed(2).replace('.', ',')}</p>
+            <button class="btn"
+              onclick="adicionarAoCarrinho('${prod.title}', '${prod.codigo}', ${prod.price})">
+              Adicionar
+            </button>
+          `;
+          container.appendChild(card);
+        });
+    })
+    .catch(err => console.error('Erro ao carregar produtos:', err));
+});
+
+
 
 
 
