@@ -392,8 +392,11 @@ async function carregarTodosProdutos() {
 
       if (prod.categoria === 'pizza-salgada' && pizzasSalgadas) pizzasSalgadas.appendChild(card);
       if (prod.categoria === 'pizza-doce' && pizzasDoces) pizzasDoces.appendChild(card);
-      if (prod.categoria === 'combo' && combos) combos.appendChild(card);
-      if (prod.categoria === 'bebida' && bebidas) bebidas.appendChild(card);
+      if (prod.categoria === 'combos' && combos) combos.appendChild(card);
+      if (prod.categoria === 'bebidas' && bebidas) bebidas.appendChild(card);
+      if (prod.categoria === 'bordas' && bordas) bordas.appendChild(card);
+      
+    
     });
 
   } catch (e) {
@@ -402,6 +405,7 @@ async function carregarTodosProdutos() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarTodosProdutos);
+
 
 
 
