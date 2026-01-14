@@ -15,6 +15,55 @@
       "price": 10,
       "categoria": "bebida",
       "image": "coca15l.jpg"
+    },
+
+    {
+      "title": "Prestígio",
+      "codigo": "P013",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Chocolate com Morango",
+      "codigo": "P014",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Banana Nevada",
+      "codigo": "P015",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Charge",
+      "codigo": "P016",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Confete",
+      "codigo": "P017",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Chocolate Preto",
+      "codigo": "P018",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Chocolate Branco",
+      "codigo": "P019",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
+      "title": "Dois Amores",
+      "codigo": "P020",
+      "price": 25,
+      "categoria": "pizza-doce"
     }
   ]
 }
