@@ -131,6 +131,12 @@
       "codigo": "P012",
       "price": 25,
       "categoria": "pizza-salgada"
+    },
+    {
+      "categoria": "pizza-salgada",
+      "price": 30,
+      "codigo": "100",
+      "title": "PIZZA ALEMÃ"
     }
   ]
 }
