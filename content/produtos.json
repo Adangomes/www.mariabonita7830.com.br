@@ -12,6 +12,7 @@
       "price": 10,
       "categoria": "bebida"
     },
+
     {
       "title": "Prestígio",
       "codigo": "P013",
@@ -60,6 +61,7 @@
       "price": 25,
       "categoria": "pizza-doce"
     },
+
     {
       "title": "Frango Catupiry",
       "codigo": "P001",
@@ -133,10 +135,33 @@
       "categoria": "pizza-salgada"
     },
     {
-      "categoria": "pizza-salgada",
-      "price": 30,
+      "title": "PIZZA ALEMÃ",
       "codigo": "SABOR ALEMAO DO SUL",
-      "title": "PIZZA ALEMÃ"
+      "price": 30,
+      "categoria": "pizza-salgada"
+    },
+
+    // 🔥 COMBOS
+    {
+      "title": "Combo 2 Pizzas + Refri 600ml",
+      "codigo": "P025",
+      "price": 60,
+      "categoria": "combo",
+      "descricao": "Até 2 sabores por pizza no combo"
+    },
+    {
+      "title": "Pizza G 12 Fatias",
+      "codigo": "P026",
+      "price": 90,
+      "categoria": "combo",
+      "descricao": "Até 3 sabores"
+    },
+    {
+      "title": "Pizza Meio a Meio",
+      "codigo": "P027",
+      "price": 25,
+      "categoria": "combo",
+      "descricao": "Escolha 2 sabores"
     }
   ]
 }
