@@ -65,5 +65,78 @@
       "price": 25,
       "categoria": "pizza-doce"
     }
+    {
+  "title": "Frango Catupiry",
+  "codigo": "P001",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Calabresa",
+  "codigo": "P002",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Toscana",
+  "codigo": "P003",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Bacon",
+  "codigo": "P004",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Kartoffel",
+  "codigo": "P005",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Portuguesa",
+  "codigo": "P006",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Bacon com Milho",
+  "codigo": "P007",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Marguerita",
+  "codigo": "P008",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Calabresa Acebolada",
+  "codigo": "P009",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Pizza de Fritas Cheddar e Bacon",
+  "codigo": "P010",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Milho",
+  "codigo": "P011",
+  "price": 25,
+  "categoria": "pizza-salgada"
+},
+{
+  "title": "Napolitana",
+  "codigo": "P012",
+  "price": 25,
+  "categoria": "pizza-salgada"
+}
+
   ]
 }
