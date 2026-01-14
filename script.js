@@ -455,6 +455,28 @@ fetch('content/produtos.json')
         container.appendChild(card);
       });
   });
+fetch("produtos.json")
+  .then(res => res.json())
+  .then(data => {
+    const combos = data.produtos.filter(p => p.categoria === "combo");
+
+    combos.forEach(produto => {
+      document.getElementById("combos").innerHTML += `
+        <div class="product-card">
+          <h3>${produto.title}</h3>
+          <p class="desc">${produto.descricao || ""}</p>
+          <h4>cod: ${produto.codigo}</h4>
+          <p class="price">R$${produto.price},00</p>
+          <button class="btn"
+            onclick="adicionarAoCarrinho('${produto.title}', '${produto.codigo}', 'R$${produto.price},00')">
+            Adicionar
+          </button>
+        </div>
+      `;
+    });
+  });
+
+
 
 
 
