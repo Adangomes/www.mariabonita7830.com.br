@@ -184,14 +184,8 @@
       "categoria": "adicionais"
     },
     {
-      "title": "Tomate",
-      "codigo": "P033",
-      "price": 5,
-      "categoria": "adicionais"
-    },
-    {
-      "title": "Catupiry",
-      "codigo": "P034",
+      "title": "Amendoim",
+      "codigo": "P036",
       "price": 5,
       "categoria": "adicionais"
     },
@@ -202,8 +196,14 @@
       "categoria": "adicionais"
     },
     {
-      "title": "Amendoim",
-      "codigo": "P036",
+      "title": "Tomate",
+      "codigo": "P033",
+      "price": 5,
+      "categoria": "adicionais"
+    },
+    {
+      "title": "Catupiry",
+      "codigo": "P034",
       "price": 5,
       "categoria": "adicionais"
     },
@@ -230,6 +230,12 @@
       "codigo": "100",
       "price": 10,
       "categoria": "bebida"
+    },
+    {
+      "title": "Blusa Livia ",
+      "codigo": "15",
+      "price": 290,
+      "categoria": "pizza-doce"
     }
   ]
 }
