@@ -1,21 +1,21 @@
 {
   "produtos": [
     {
-      "title": "Guaraná Kuat 2L",
-      "codigo": "P021",
-      "price": 10,
-      "categoria": "bebida"
-    },
-    {
       "title": "Coca-Cola 1,5L",
       "codigo": "P022",
       "price": 10,
       "categoria": "bebida"
     },
     {
+      "title": "Charge",
+      "codigo": "P016",
+      "price": 25,
+      "categoria": "pizza-doce"
+    },
+    {
       "title": "Prestígio",
       "codigo": "P013",
-      "price": 25,
+      "price": 60,
       "categoria": "pizza-doce"
     },
     {
@@ -27,12 +27,6 @@
     {
       "title": "Banana Nevada",
       "codigo": "P015",
-      "price": 25,
-      "categoria": "pizza-doce"
-    },
-    {
-      "title": "Charge",
-      "codigo": "P016",
       "price": 25,
       "categoria": "pizza-doce"
     },
