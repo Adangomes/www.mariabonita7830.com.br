@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossos Restaurantes Parceiros</title>
+    <title>MYDI DELIVERY - Parceiros</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -16,78 +16,88 @@
     <script type="text/babel">
         const { useState } = React;
 
-        // LISTA DE RESTAURANTES (Troque os dados aqui!)
         const parceiros = [
-            { 
-                id: 1, 
-                nome: "Pizzaria do Bairro", 
-                url: "https://pizzaria.com", 
-                img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400",
-                tipo: "Italiana"
-            },
-            { 
-                id: 2, 
-                nome: "Sushi Zen", 
-                url: "https://sushizen.com", 
-                img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400",
-                tipo: "Japonesa"
-            },
-            { 
-                id: 3, 
-                nome: "Burger King do Zé", 
-                url: "https://burgerze.com", 
-                img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
-                tipo: "Lanches"
-            },
-            { 
-                id: 4, 
-                nome: "Churrascaria Gaúcha", 
-                url: "https://churrascaria.com", 
-                img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
-                tipo: "Carnes"
-            }
+            { id: 1, nome: "Snoop Lanche", url: "https://google.com", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES" },
+            { id: 2, nome: "Sushi Zen", url: "https://google.com", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400", tipo: "JAPONESA" },
+            { id: 3, nome: "Burger do Zé", url: "https://google.com", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400", tipo: "LANCHES" },
+            { id: 4, nome: "Churrascaria Gaúcha", url: "https://google.com", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400", tipo: "CARNES" },
+            { id: 5, nome: "Pizza Flash", url: "https://google.com", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400", tipo: "PIZZA" }
         ];
 
         function App() {
+            // Estado para saber qual filtro está ativo (null significa "Todos")
+            const [filtro, setFiltro] = useState(null);
+
+            // Filtragem inteligente
+            const restaurantesFiltrados = filtro 
+                ? parceiros.filter(p => p.tipo === filtro)
+                : parceiros;
+
+            // Pega as categorias únicas para criar os botões automaticamente
+            const categorias = ["LANCHES", "JAPONESA", "CARNES", "PIZZA"];
+
             return (
                 <div className="min-h-screen">
                     {/* Header */}
                     <header className="bg-red-600 py-10 text-center shadow-lg">
-                        <h1 className="text-4xl font-extrabold text-white mb-2">Restaurantes Parceiros</h1>
-                        <p className="text-red-100">Escolha onde deseja pedir hoje!</p>
+                        <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tight">MYDI DELIVERY</h1>
+                        <p className="text-red-100">Faça seu pedido com nossos parceiros</p>
                     </header>
 
-                    {/* Grid de Restaurantes */}
-                    <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {parceiros.map(restaurante => (
-                            <div 
-                                key={restaurante.id} 
-                                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl hover:scale-105 transition-all cursor-pointer group"
-                                onClick={() => window.open(restaurante.url, '_blank')}
+                    {/* Filtros */}
+                    <nav className="max-w-6xl mx-auto px-6 mt-8 flex flex-wrap justify-center gap-3">
+                        <button 
+                            onClick={() => setFiltro(null)}
+                            className={`px-6 py-2 rounded-full font-bold transition-all ${!filtro ? 'bg-red-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                        >
+                            TODOS
+                        </button>
+                        {categorias.map(cat => (
+                            <button 
+                                key={cat}
+                                onClick={() => setFiltro(cat)}
+                                className={`px-6 py-2 rounded-full font-bold transition-all ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
                             >
-                                <div className="h-48 overflow-hidden">
-                                    <img 
-                                        src={restaurante.img} 
-                                        alt={restaurante.nome} 
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <span className="text-xs font-bold text-red-500 uppercase">{restaurante.tipo}</span>
-                                    <h2 className="text-xl font-bold text-gray-800 mt-1">{restaurante.nome}</h2>
-                                    <div className="mt-4 flex items-center text-gray-600 font-medium group-hover:text-red-600 transition-colors">
-                                        Ver Cardápio 
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
+                                {cat}
+                            </button>
+                        ))}
+                    </nav>
+
+                    {/* Grid de Restaurantes */}
+                    <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+                        {restaurantesFiltrados.length > 0 ? (
+                            restaurantesFiltrados.map(restaurante => (
+                                <div 
+                                    key={restaurante.id} 
+                                    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl hover:scale-105 transition-all cursor-pointer group"
+                                    onClick={() => window.open(restaurante.url, '_blank')}
+                                >
+                                    <div className="h-48 overflow-hidden">
+                                        <img 
+                                            src={restaurante.img} 
+                                            alt={restaurante.nome} 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                        />
+                                    </div>
+                                    <div className="p-6">
+                                        <span className="text-xs font-bold text-red-500 uppercase tracking-widest">{restaurante.tipo}</span>
+                                        <h2 className="text-xl font-bold text-gray-800 mt-1">{restaurante.nome}</h2>
+                                        <div className="mt-4 flex items-center text-gray-600 font-medium group-hover:text-red-600 transition-colors">
+                                            Ver Cardápio 
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        ) : (
+                            <p className="col-span-full text-center text-gray-500 py-20">Nenhum restaurante encontrado nesta categoria.</p>
+                        )}
                     </main>
 
-                    <footer className="text-center py-10 text-gray-500 text-sm">
-                        &copy; 2026 - Sua Plataforma de Delivery
+                    <footer className="text-center py-10 text-gray-500 text-sm border-t mt-10">
+                        &copy; 2026 - MYDI DELIVERY - Todos os direitos reservados
                     </footer>
                 </div>
             );
