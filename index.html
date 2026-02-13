@@ -2,14 +2,20 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYDI DELIVERY - Parceiros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MYDI DELIVERY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* Esconde a barra de rolagem dos filtros para parecer app */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { -webkit-tap-highlight-color: transparent; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans">
+<body class="bg-gray-100 text-gray-900 font-sans antialiased">
 
     <div id="root"></div>
 
@@ -25,79 +31,69 @@
         ];
 
         function App() {
-            // Estado para saber qual filtro está ativo (null significa "Todos")
             const [filtro, setFiltro] = useState(null);
-
-            // Filtragem inteligente
-            const restaurantesFiltrados = filtro 
-                ? parceiros.filter(p => p.tipo === filtro)
-                : parceiros;
-
-            // Pega as categorias únicas para criar os botões automaticamente
             const categorias = ["LANCHES", "JAPONESA", "CARNES", "PIZZA"];
 
+            const filtrados = filtro ? parceiros.filter(p => p.tipo === filtro) : parceiros;
+
             return (
-                <div className="min-h-screen">
-                    {/* Header */}
-                    <header className="bg-red-600 py-10 text-center shadow-lg">
-                        <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tight">MYDI DELIVERY</h1>
-                        <p className="text-red-100">Faça seu pedido com nossos parceiros</p>
+                <div className="flex flex-col min-h-screen pb-10">
+                    {/* Header Fixo */}
+                    <header className="bg-red-600 pt-8 pb-4 px-6 sticky top-0 z-50 shadow-md">
+                        <h1 className="text-2xl font-black text-white tracking-tighter italic">MYDI DELIVERY</h1>
+                        <p className="text-red-100 text-xs">Os melhores parceiros na sua mão</p>
                     </header>
 
-                    {/* Filtros */}
-                    <nav className="max-w-6xl mx-auto px-6 mt-8 flex flex-wrap justify-center gap-3">
+                    {/* Filtros Estilo App (Scroll Lateral) */}
+                    <div className="bg-white py-4 sticky top-[84px] z-40 shadow-sm overflow-x-auto no-scrollbar flex px-4 gap-2 border-b">
                         <button 
                             onClick={() => setFiltro(null)}
-                            className={`px-6 py-2 rounded-full font-bold transition-all ${!filtro ? 'bg-red-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                            className={`flex-shrink-0 px-5 py-2 rounded-xl font-bold text-sm transition-all ${!filtro ? 'bg-red-600 text-white shadow-lg' : 'bg-gray-100 text-gray-500'}`}
                         >
-                            TODOS
+                            🔥 TODOS
                         </button>
                         {categorias.map(cat => (
                             <button 
                                 key={cat}
                                 onClick={() => setFiltro(cat)}
-                                className={`px-6 py-2 rounded-full font-bold transition-all ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
+                                className={`flex-shrink-0 px-5 py-2 rounded-xl font-bold text-sm transition-all ${filtro === cat ? 'bg-red-600 text-white shadow-lg' : 'bg-gray-100 text-gray-500'}`}
                             >
                                 {cat}
                             </button>
                         ))}
-                    </nav>
+                    </div>
 
-                    {/* Grid de Restaurantes */}
-                    <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-                        {restaurantesFiltrados.length > 0 ? (
-                            restaurantesFiltrados.map(restaurante => (
-                                <div 
-                                    key={restaurante.id} 
-                                    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl hover:scale-105 transition-all cursor-pointer group"
-                                    onClick={() => window.open(restaurante.url, '_blank')}
-                                >
-                                    <div className="h-48 overflow-hidden">
-                                        <img 
-                                            src={restaurante.img} 
-                                            alt={restaurante.nome} 
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                        />
-                                    </div>
-                                    <div className="p-6">
-                                        <span className="text-xs font-bold text-red-500 uppercase tracking-widest">{restaurante.tipo}</span>
-                                        <h2 className="text-xl font-bold text-gray-800 mt-1">{restaurante.nome}</h2>
-                                        <div className="mt-4 flex items-center text-gray-600 font-medium group-hover:text-red-600 transition-colors">
-                                            Ver Cardápio 
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                            </svg>
-                                        </div>
+                    {/* Conteúdo - Grid Vertical (1 coluna p/ celular) */}
+                    <main className="p-4 space-y-4 max-w-md mx-auto w-full">
+                        {filtrados.map(res => (
+                            <div 
+                                key={res.id} 
+                                onClick={() => window.open(res.url, '_blank')}
+                                className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden active:scale-95 transition-transform flex flex-col"
+                            >
+                                <div className="h-40 w-full overflow-hidden relative">
+                                    <img src={res.img} className="w-full h-full object-cover" alt={res.nome} />
+                                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg shadow text-[10px] font-bold text-red-600">
+                                        {res.tipo}
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <p className="col-span-full text-center text-gray-500 py-20">Nenhum restaurante encontrado nesta categoria.</p>
-                        )}
+                                <div className="p-4 flex justify-between items-center">
+                                    <div>
+                                        <h2 className="text-lg font-bold text-gray-800">{res.nome}</h2>
+                                        <p className="text-xs text-gray-500 italic">Toque para ver o cardápio</p>
+                                    </div>
+                                    <div className="bg-red-50 p-2 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </main>
 
-                    <footer className="text-center py-10 text-gray-500 text-sm border-t mt-10">
-                        &copy; 2026 - MYDI DELIVERY - Todos os direitos reservados
+                    <footer className="text-center py-6 text-gray-400 text-[10px] uppercase tracking-widest">
+                        MYDI DELIVERY &copy; 2026
                     </footer>
                 </div>
             );
