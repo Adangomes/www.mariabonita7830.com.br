@@ -12,8 +12,36 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         body { -webkit-tap-highlight-color: transparent; }
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Animação de entrada suave da lista */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Efeito de clique suave */
+        .card-active { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-active:active { 
+            transform: scale(0.96); 
+            filter: brightness(0.9);
+        }
+
+        /* Overlay de transição */
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .loader-active { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans antialiased">
@@ -21,7 +49,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect } = React;
 
         const parceiros = [
             { id: 1, nome: "SNOOP LANCHE", url: "https://snooplanche2.netlify.app/", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: true },
@@ -33,14 +61,25 @@
 
         function App() {
             const [filtro, setFiltro] = useState(null);
+            const [isTransitioning, setIsTransitioning] = useState(false);
             const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA", "DOG'S", "PIZZA"];
 
             const abrirCardapio = (url) => {
                 if (!url || url === "") {
-                    alert("🚀 AGUARDE: Este restaurante está sendo cadastrado em nossa plataforma!");
-                } else {
-                    window.open(url, '_blank');
+                    alert("🚀 AGUARDE: Este restaurante está sendo cadastrado!");
+                    return;
                 }
+                
+                // Ativa o efeito de transição suave
+                setIsTransitioning(true);
+                
+                // Pequeno delay para o usuário sentir o feedback visual do clique
+                setTimeout(() => {
+                    window.location.href = url;
+                    // Caso o link abra em nova aba, use window.open e desative o loader após 1s
+                    // window.open(url, '_blank');
+                    // setTimeout(() => setIsTransitioning(false), 1000);
+                }, 400); 
             };
 
             const filtrados = filtro === "PROMOÇÕES" 
@@ -52,7 +91,11 @@
             return (
                 <div className="flex flex-col min-h-screen pb-10">
                     
-                    {/* Header Ajustado - Mesma fonte das categorias */}
+                    {/* Loader de transição suave */}
+                    <div className={`loader-overlay ${isTransitioning ? 'loader-active' : ''}`}>
+                        <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+
                     <header className="bg-red-600 pt-10 pb-8 px-6 text-center shadow-sm">
                         <h1 className="text-2xl font-bold text-white uppercase tracking-tighter italic">
                             MYDI DELIVERY
@@ -62,7 +105,6 @@
                         </p>
                     </header>
 
-                    {/* Barra de Download Discreta */}
                     <div className="bg-white border-b border-gray-100 px-5 py-2.5 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className="text-gray-400">
@@ -72,55 +114,37 @@
                             </div>
                             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wide">App Oficial Android</span>
                         </div>
-                        <a 
-                            href="https://www.dropbox.com/scl/fi/z4o1mrqes0xur3vpgcpck/MydiApp.apk?rlkey=sjdgkfv12psv9qx3qi999nuxc&st=4kpth840&dl=1"
-                            className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
-                        >
-                            BAIXAR
-                        </a>
+                        <a href="https://www.dropbox.com/scl/fi/z4o1mrqes0xur3vpgcpck/MydiApp.apk?rlkey=sjdgkfv12psv9qx3qi999nuxc&st=4kpth840&dl=1" className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full">BAIXAR</a>
                     </div>
 
-                    {/* Filtros de Categorias */}
                     <div className="bg-gray-50 sticky top-0 z-40 py-4 overflow-x-auto no-scrollbar flex px-4 gap-2 border-b border-gray-100">
-                        <button 
-                            onClick={() => setFiltro(null)}
-                            className={`flex-shrink-0 px-4 py-2 rounded-xl font-bold text-xs transition-all ${!filtro ? 'bg-red-600 text-white shadow-sm' : 'bg-white text-gray-400 border border-gray-200'}`}
-                        >
-                            TODOS
-                        </button>
+                        <button onClick={() => setFiltro(null)} className={`flex-shrink-0 px-4 py-2 rounded-xl font-bold text-xs transition-all ${!filtro ? 'bg-red-600 text-white shadow-sm' : 'bg-white text-gray-400 border border-gray-200'}`}>TODOS</button>
                         {categorias.map(cat => (
-                            <button 
-                                key={cat}
-                                onClick={() => setFiltro(cat)}
-                                className={`flex-shrink-0 px-4 py-2 rounded-xl font-bold text-xs transition-all ${filtro === cat ? (cat === "PROMOÇÕES" ? 'bg-orange-500 text-white shadow-sm' : 'bg-red-600 text-white shadow-sm') : 'bg-white text-gray-400 border border-gray-200'}`}
-                            >
-                                {cat}
-                            </button>
+                            <button key={cat} onClick={() => setFiltro(cat)} className={`flex-shrink-0 px-4 py-2 rounded-xl font-bold text-xs transition-all ${filtro === cat ? (cat === "PROMOÇÕES" ? 'bg-orange-500 text-white shadow-sm' : 'bg-red-600 text-white shadow-sm') : 'bg-white text-gray-400 border border-gray-200'}`}>{cat}</button>
                         ))}
                     </div>
 
                     <main className="p-4 space-y-4 max-w-md mx-auto w-full">
-                        {filtrados.map(res => (
+                        {filtrados.map((res, index) => (
                             <div 
                                 key={res.id} 
                                 onClick={() => abrirCardapio(res.url)}
-                                className="fade-in bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden active:scale-95 transition-transform flex flex-col"
+                                style={{ animationDelay: `${index * 100}ms` }}
+                                className="fade-in card-active bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer flex flex-col"
                             >
                                 <div className="h-44 w-full overflow-hidden relative">
-                                    <img src={res.img} className="w-full h-full object-cover" alt={res.nome} />
+                                    <img src={res.img} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" alt={res.nome} />
                                     <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur text-white px-2 py-1 rounded-lg text-[8px] font-bold uppercase">
                                         {res.tipo}
                                     </div>
                                     {res.promo && (
-                                        <div className="absolute top-3 left-3 bg-orange-500 text-white text-[8px] font-bold px-2 py-1 rounded shadow-md">
-                                            PROMO %
-                                        </div>
+                                        <div className="absolute top-3 left-3 bg-orange-500 text-white text-[8px] font-bold px-2 py-1 rounded shadow-md">PROMO</div>
                                     )}
                                 </div>
                                 <div className="p-4 flex justify-between items-center">
                                     <h2 className="text-base font-bold text-gray-800 uppercase tracking-tight">{res.nome}</h2>
-                                    <div className="text-red-600">
-                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" /></svg>
+                                    <div className="text-red-600 bg-red-50 p-2 rounded-full">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path></svg>
                                     </div>
                                 </div>
                             </div>
