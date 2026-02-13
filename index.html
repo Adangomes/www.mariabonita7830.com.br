@@ -19,7 +19,7 @@
 <body class="bg-gray-100 text-gray-900 font-sans antialiased">
 
     <div id="root"></div>
-  
+
     <script type="text/babel">
         const { useState } = React;
 
@@ -60,6 +60,21 @@
                         </p>
                     </header>
 
+                    {/* SEÇÃO DE DOWNLOAD DO APP (SOMENTE ANDROID) */}
+                    <div className="bg-gray-900 p-4 text-center">
+                        <p className="text-gray-400 text-[11px] uppercase tracking-widest mb-3">Versão Mobile Disponível</p>
+                        <a 
+                            href="https://www.dropbox.com/scl/fi/z4o1mrqes0xur3vpgcpck/app-debug.apk?rlkey=sjdgkfv12psv9qx3qi999nuxc&st=604qnlih&dl=1"
+                            className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-2 rounded-full font-black text-xs shadow-xl active:scale-95 transition-transform"
+                        >
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.523 15.3414L20 9.11364L18.4091 8.5L16.2727 13.9091C14.8636 13.2273 13.2727 12.8636 11.6364 12.8636C10 12.8636 8.40909 13.2273 7 13.9091L4.86364 8.5L3.27273 9.11364L5.75 15.3414C4.13636 16.5909 3 18.5 3 20.6818V21.5H20.2727V20.6818C20.2727 18.5 19.1364 16.5909 17.523 15.3414ZM8.59091 18.4091C8.04545 18.4091 7.63636 18 7.63636 17.4545C7.63636 16.9091 8.04545 16.5 8.59091 16.5C9.13636 16.5 9.54545 16.9091 9.54545 17.4545C9.54545 18 9.13636 18.4091 8.59091 18.4091ZM14.7273 18.4091C14.1818 18.4091 13.7727 18 13.7727 17.4545C13.7727 16.9091 14.1818 16.5 14.7273 16.5C15.2727 16.5 15.6818 16.9091 15.6818 17.4545C15.6818 18 15.2727 18.4091 14.7273 18.4091Z"/>
+                            </svg>
+                            BAIXAR PARA ANDROID
+                        </a>
+                        <p className="text-white/40 text-[9px] mt-2 font-medium">Nota: Aplicativo compatível apenas com sistema Android no momento.</p>
+                    </div>
+
                     <div className="bg-white py-4 sticky top-[88px] z-40 shadow-sm overflow-x-auto no-scrollbar flex px-4 gap-2 border-b">
                         <button 
                             onClick={() => setFiltro(null)}
@@ -73,7 +88,7 @@
                                 onClick={() => setFiltro(cat)}
                                 className={`flex-shrink-0 px-5 py-2 rounded-xl font-bold text-sm transition-all ${filtro === cat ? (cat === "PROMOÇÕES" ? 'bg-orange-500 text-white shadow-lg' : 'bg-red-600 text-white shadow-lg') : 'bg-gray-100 text-gray-500'}`}
                             >
-                                {cat === "PROMOÇÕES" ? ` ${cat}` : cat}
+                                {cat === "PROMOÇÕES" ? `${cat}` : cat}
                             </button>
                         ))}
                     </div>
