@@ -32,13 +32,13 @@
             // OS OUTROS ESTÃO COMO FALSE (O SELO NÃO APARECE)
             { id: 2, nome: "Sushi", url: "", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400", tipo: "JAPONESA", promo: false },
             { id: 3, nome: "Burger", url: "", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400", tipo: "LANCHES", promo: false },
-            { id: 4, nome: "Dog's", url: "", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400", tipo: "CARNES", promo: false },
+            { id: 4, nome: "Dog's", url: "", img: "https://br.pinterest.com/pin/88101736455712756/", tipo: "DOG", promo: false },
             { id: 5, nome: "Pizza", url: "", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400", tipo: "PIZZA", promo: false }
         ];
 
         function App() {
             const [filtro, setFiltro] = useState(null);
-            const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA", "CARNES", "PIZZA"];
+            const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA", "DOG'S", "PIZZA"];
 
             const filtrados = filtro === "PROMOÇÕES" 
                 ? parceiros.filter(p => p.promo === true) 
@@ -111,7 +111,7 @@
                             ))
                         ) : (
                             <div className="text-center py-20">
-                                <p className="text-gray-400">Nenhuma promoção ativa no momento. ☹️</p>
+                                <p className="text-gray-400">Nenhuma promoção ativa no momento. </p>
                             </div>
                         )}
                     </main>
