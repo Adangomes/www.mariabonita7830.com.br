@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Restaurantes Parceiros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function App() {
+            const [url, setUrl] = useState('');
+
+            const abrirRestaurante = (e) => {
+                e.preventDefault();
+                if (!url) return alert("Digite uma URL!");
+                
+                // Ajusta a URL se o cara esquecer o https
+                const linkFinal = url.startsWith('http') ? url : `https://${url}`;
+                window.open(linkFinal, '_blank');
+            };
+
+            return (
+                <div class="min-h-screen flex items-center justify-center p-6">
+                    <div class="bg-gray-800 border border-gray-700 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+                        <h1 class="text-3xl font-extrabold text-orange-500 mb-2 text-center">
+                            Chef Connect
+                        </h1>
+                        <p class="text-gray-400 text-center mb-8">Acesse seus parceiros rapidamente</p>
+
+                        <form onSubmit={abrirRestaurante} class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-300">URL do Restaurante</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="ex: restaurante-abc.com" 
+                                    class="w-full p-4 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none transition-all text-white"
+                                    value={url}
+                                    onChange={(e) => setUrl(e.target.value)}
+                                />
+                            </div>
+
+                            <button 
+                                type="submit"
+                                class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-lg shadow-lg transform active:scale-95 transition-all"
+                            >
+                                ABRIR PAINEL
+                            </button>
+                        </form>
+
+                        <div class="mt-8 pt-6 border-t border-gray-700 text-center">
+                            <p class="text-xs text-gray-500 uppercase tracking-widest">Acesso Restrito a Parceiros</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Renderiza o componente na tela
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
