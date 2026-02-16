@@ -38,7 +38,7 @@
       const [deferredPrompt, setDeferredPrompt] = useState(null);
 
       const abrirCardapio = (url) => {
-        if (!url) return alert(" Em breve!");
+        if (!url) return alert("🚀 Em breve!");
         window.location.assign(url);
       };
 
@@ -87,12 +87,16 @@
             </button>
           </div>
 
-          {/* Filtro de categorias */}
-          <div className="sticky top-0 bg-gray-50 py-3 overflow-x-auto flex px-4 gap-3 no-scrollbar z-50">
-            <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-full text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
-            {categorias.map(cat => (
-              <button key={cat} onClick={() => setFiltro(cat)} className={`px-4 py-2 rounded-full text-xs font-bold ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>{cat}</button>
-            ))}
+          {/* Filtro de categorias com seta e gradiente */}
+          <div className="relative">
+            <div className="sticky top-0 bg-gray-50 py-3 overflow-x-auto flex px-4 gap-3 no-scrollbar z-50">
+              <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-full text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
+              {categorias.map(cat => (
+                <button key={cat} onClick={() => setFiltro(cat)} className={`px-4 py-2 rounded-full text-xs font-bold ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>{cat}</button>
+              ))}
+            </div>
+            {/* Gradiente direita para indicar scroll */}
+            <div className="absolute top-0 right-0 h-full w-6 pointer-events-none bg-gradient-to-l from-gray-50"></div>
           </div>
 
           {/* Lista de parceiros */}
