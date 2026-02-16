@@ -23,17 +23,21 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.9);
       border-radius: 9999px;
-      padding: 2px;
+      padding: 6px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
       z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    .arrow:hover { background: rgba(255,255,255,1); }
+    .arrow:hover { 
+      background: rgba(255,255,255,1);
+      transform: translateY(-50%) scale(1.1);
+    }
     .arrow-left { left: 4px; }
     .arrow-right { right: 4px; }
   </style>
@@ -67,7 +71,6 @@
       const [canScrollLeft, setCanScrollLeft] = useState(false);
       const [canScrollRight, setCanScrollRight] = useState(false);
 
-      // Checa se pode rolar as categorias
       const checkScroll = () => {
         const el = catRef.current;
         if (!el) return;
@@ -79,10 +82,7 @@
         const beforeInstall = (e) => { e.preventDefault(); setDeferredPrompt(e); };
         window.addEventListener("beforeinstallprompt", beforeInstall);
         window.addEventListener("resize", checkScroll);
-
-        // Verifica scroll logo após renderização
         setTimeout(checkScroll, 50);
-
         return () => { 
           window.removeEventListener("beforeinstallprompt", beforeInstall);
           window.removeEventListener("resize", checkScroll);
@@ -99,29 +99,28 @@
       };
 
       const scrollCategorias = (dir) => {
-        catRef.current.scrollBy({ left: dir * 120, behavior: 'smooth' });
+        catRef.current.scrollBy({ left: dir * 140, behavior: 'smooth' });
       };
 
-      // Função para abrir cardápio ou mostrar "em preparação"
       const abrirCardapio = (url, nome) => {
         if (url) {
           window.location.assign(url);
         } else {
-          alert(` Restaurante ${nome} em preparação!`);
+          alert(`Restaurante ${nome} em preparação!`);
         }
       };
 
       return (
         <div className="flex flex-col min-h-screen pb-10 relative">
-          {/* Header */}
-          <header className="bg-red-600 px-6 py-4 flex flex-col items-center shadow-sm">
-            <h1 className="text-red-100 text-[45px] font-bold">MYDI DELIVERY</h1>
-            <span className="text-red-100 text-[20px] font-bold uppercase tracking-[2px] mt-1 px-2 py-0.5 bg-red-700 rounded-full">Pediu, Chegou!</span>
+          {/* Header menor */}
+          <header className="bg-red-600 px-6 py-3 flex flex-col items-center shadow-sm">
+            <h1 className="text-red-100 text-3xl font-bold">MYDI DELIVERY</h1>
+            <span className="text-red-100 text-[12px] font-bold uppercase tracking-[1px] mt-1 px-2 py-0.5 bg-red-700 rounded-full">Pediu, Chegou!</span>
           </header>
 
           {/* Banner instalação */}
           <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
-            <span className="text-[10px] font-bold text-gray-500 uppercase">App Instalável</span>
+            <span className="text-[10px] font-bold text-gray-500 uppercase">App Android</span>
             <button 
               onClick={instalarApp}
               className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
@@ -139,17 +138,17 @@
               ))}
             </div>
 
-            {/* Setas scroll */}
+            {/* Setas scroll maiores e destacadas */}
             {canScrollLeft && (
               <div onClick={() => scrollCategorias(-1)} className="arrow arrow-left">
-                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
                 </svg>
               </div>
             )}
             {canScrollRight && (
               <div onClick={() => scrollCategorias(1)} className="arrow arrow-right">
-                <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
               </div>
