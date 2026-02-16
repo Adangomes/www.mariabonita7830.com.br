@@ -1,6 +1,6 @@
 {
   "name": "Mydi Delivery",
-  "short_name": "Mydi",
+  "short_name": "Mydi App",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
