@@ -4,15 +4,16 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#dc2626",
-  "orientation": "portrait-primary",
+  "background_color": "#dc2626",          // Fundo do splash e do app enquanto carrega
+  "theme_color": "#dc2626",               // Cor da barra superior (Android)
+  "orientation": "portrait-primary",      // Mantém em vertical
+  "description": "Pediu, Chegou! – Delivery de lanches e comida japonesa e pizzas",
   "icons": [
     {
       "src": "imagem/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any maskable"           // Permite que o Chrome use o ícone sem recortar a bolinha
     },
     {
       "src": "imagem/icon-512.png",
@@ -20,5 +21,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "prefer_related_applications": false      // Garantir que abra como PWA, não sugira Play Store
 }
