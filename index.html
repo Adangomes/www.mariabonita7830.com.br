@@ -1,160 +1,142 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>MYDI DELIVERY</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <meta name="theme-color" content="#dc2626"/>
-    <link rel="manifest" href="manifest.json">
+  <title>MYDI DELIVERY</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <meta name="theme-color" content="#dc2626"/>
+  <link rel="manifest" href="manifest.json">
 
-    <style>
-        body { -webkit-tap-highlight-color: transparent; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
 
 <body class="bg-gray-50 text-gray-900 font-sans antialiased">
-<div id="root"></div>
+  <div id="root"></div>
 
-<script type="text/babel">
-const { useState } = React;
+  <!-- React App -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-const parceiros = [
-    { id: 1, nome: "SNOOP LANCHE", url: "https://snooplanche2.netlify.app/", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: true },
-    { id: 3, nome: "KINGS BURGER", url: "https://kingsburger.netlify.app/", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
-    { id: 2, nome: "SUSHI", url: "", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400", tipo: "JAPONESA", promo: false }
-];
+    const parceiros = [
+      { id: 1, nome: "SNOOP LANCHE", url: "https://snooplanche2.netlify.app/", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: true },
+      { id: 3, nome: "KINGS BURGER", url: "https://kingsburger.netlify.app/", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
+      { id: 2, nome: "SUSHI", url: "", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400", tipo: "JAPONESA", promo: false }
+    ];
 
-function App() {
-    const [filtro, setFiltro] = useState(null);
+    function App() {
+      const [filtro, setFiltro] = useState(null);
+      const [deferredPrompt, setDeferredPrompt] = useState(null);
 
-    const abrirCardapio = (url) => {
+      const abrirCardapio = (url) => {
         if (!url) {
-            alert("🚀 Em breve!");
-            return;
+          alert("🚀 Em breve!");
+          return;
         }
         window.location.assign(url);
-    };
+      };
 
-    const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA"];
+      const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA"];
 
-    const filtrados = filtro === "PROMOÇÕES" 
-        ? parceiros.filter(p => p.promo) 
-        : filtro 
-            ? parceiros.filter(p => p.tipo === filtro) 
-            : parceiros;
+      const filtrados = filtro === "PROMOÇÕES" 
+          ? parceiros.filter(p => p.promo) 
+          : filtro 
+              ? parceiros.filter(p => p.tipo === filtro) 
+              : parceiros;
 
-    return (
+      // Captura evento PWA
+      useEffect(() => {
+        const beforeInstall = (e) => {
+          e.preventDefault();
+          setDeferredPrompt(e);
+          console.log("✅ PWA pronto para instalar!");
+        };
+        window.addEventListener("beforeinstallprompt", beforeInstall);
+
+        return () => window.removeEventListener("beforeinstallprompt", beforeInstall);
+      }, []);
+
+      const instalarApp = () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choice) => {
+            if (choice.outcome === 'accepted') console.log('Usuário aceitou a instalação');
+            setDeferredPrompt(null);
+          });
+        } else {
+          alert("Aguarde um momento... O navegador está validando a instalação. Se estiver no iPhone, use 'Adicionar à Tela de Início'.");
+        }
+      };
+
+      return (
         <div className="flex flex-col min-h-screen pb-10">
-            <header className="bg-red-600 pt-10 pb-8 px-6 text-center shadow-sm">
-                <h1 className="text-2xl font-bold text-white uppercase italic">
-                    MYDI DELIVERY
-                </h1>
-                <p className="text-red-100 text-[10px] font-bold uppercase tracking-[2px] mt-1">
-                    Pediu, Chegou!
-                </p>
-            </header>
+          <header className="bg-red-600 pt-10 pb-8 px-6 text-center shadow-sm">
+            <h1 className="text-2xl font-bold text-white uppercase italic">MYDI DELIVERY</h1>
+            <p className="text-red-100 text-[10px] font-bold uppercase tracking-[2px] mt-1">Pediu, Chegou!</p>
+          </header>
 
-            <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
-                <span className="text-[10px] font-bold text-gray-500 uppercase">
-                    App Instalável
-                </span>
+          <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
+            <span className="text-[10px] font-bold text-gray-500 uppercase">App Instalável</span>
+            <button 
+              onClick={instalarApp}
+              className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
+            >
+              INSTALAR
+            </button>
+          </div>
 
-                <button 
-                    onClick={() => window.instalarApp()}
-                    className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
-                >
-                    INSTALAR
-                </button>
-            </div>
+          <div className="sticky top-0 bg-gray-50 py-4 overflow-x-auto flex px-4 gap-2 no-scrollbar z-50">
+            <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-xl text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
+            {categorias.map(cat => (
+              <button key={cat} onClick={() => setFiltro(cat)} className={`px-4 py-2 rounded-xl text-xs font-bold ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>{cat}</button>
+            ))}
+          </div>
 
-            <div className="sticky top-0 bg-gray-50 py-4 overflow-x-auto flex px-4 gap-2 no-scrollbar z-50">
-                <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-xl text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
-                {categorias.map(cat => (
-                    <button key={cat} onClick={() => setFiltro(cat)} className={`px-4 py-2 rounded-xl text-xs font-bold ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>
-                        {cat}
-                    </button>
-                ))}
-            </div>
+          <main className="p-4 space-y-4 max-w-md mx-auto w-full">
+            {filtrados.map(res => (
+              <div 
+                key={res.id} 
+                onClick={() => abrirCardapio(res.url)}
+                className="bg-white rounded-2xl shadow-sm border overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+              >
+                <img src={res.img} className="h-44 w-full object-cover" alt={res.nome}/>
+                <div className="p-4 flex justify-between items-center">
+                  <h2 className="text-base font-bold uppercase">{res.nome}</h2>
+                </div>
+              </div>
+            ))}
+          </main>
 
-            <main className="p-4 space-y-4 max-w-md mx-auto w-full">
-                {filtrados.map(res => (
-                    <div 
-                        key={res.id} 
-                        onClick={() => abrirCardapio(res.url)}
-                        className="bg-white rounded-2xl shadow-sm border overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                    >
-                        <img src={res.img} className="h-44 w-full object-cover" alt={res.nome}/>
-                        <div className="p-4 flex justify-between items-center">
-                            <h2 className="text-base font-bold uppercase">{res.nome}</h2>
-                        </div>
-                    </div>
-                ))}
-            </main>
-
-            <footer className="text-center py-10 space-y-2">
-                <p className="text-gray-300 text-[8px] uppercase tracking-[4px] font-bold">
-                    MYDI DELIVERY • 2026
-                </p>
-                <a href="politica-de-privacy.html" className="text-gray-400 text-[10px] underline">
-                    Política de Privacidade
-                </a>
-            </footer>
+          <footer className="text-center py-10 space-y-2">
+            <p className="text-gray-300 text-[8px] uppercase tracking-[4px] font-bold">MYDI DELIVERY • 2026</p>
+            <a href="politica-de-privacy.html" className="text-gray-400 text-[10px] underline">Política de Privacidade</a>
+          </footer>
         </div>
-    );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-</script>
-
-<script>
-let deferredPrompt = null;
-
-// Captura o evento de instalação
-window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    console.log("✅ PWA pronto para instalar!");
-});
-
-// Função chamada pelo botão
-window.instalarApp = function() {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuário aceitou a instalação');
-            }
-            deferredPrompt = null;
-        });
-    } else {
-        alert("Aguarde um momento... O navegador está validando a instalação. Se estiver no iPhone, use 'Adicionar à Tela de Início' no menu de compartilhar.");
+      );
     }
-};
 
-// Log de sucesso
-window.addEventListener("appinstalled", () => {
-    console.log("🚀 App instalado com sucesso!");
-    deferredPrompt = null;
-});
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 
-// Registro do Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log("SW registrado com sucesso!", reg))
-            .catch(err => console.log("Erro ao registrar SW", err));
-    });
-}
-</script>
-
+          .then(reg => console.log("SW registrado com sucesso!", reg))
+          .catch(err => console.log("Erro ao registrar SW", err));
+      });
+    }
+  </script>
 </body>
 </html>
