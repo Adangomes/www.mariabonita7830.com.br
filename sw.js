@@ -1,4 +1,7 @@
+// Nome do cache
 const CACHE_NAME = 'mydi-cache-v1';
+
+// Arquivos essenciais para cache inicial
 const urlsToCache = [
   './',
   './index.html',
@@ -9,6 +12,7 @@ const urlsToCache = [
 
 // Evento de instalação
 self.addEventListener('install', (event) => {
+  console.log('[SW] Instalando Service Worker e cacheando arquivos...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(urlsToCache))
@@ -18,6 +22,7 @@ self.addEventListener('install', (event) => {
 
 // Evento de ativação
 self.addEventListener('activate', (event) => {
+  console.log('[SW] Ativando Service Worker e limpando caches antigos...');
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
@@ -40,6 +45,9 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
         return response;
       })
-      .catch(() => caches.match(event.request)) // Retorna do cache se offline
+      .catch(() => {
+        // Retorna do cache se offline
+        return caches.match(event.request);
+      })
   );
 });
