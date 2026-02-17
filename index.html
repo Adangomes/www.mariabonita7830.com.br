@@ -17,7 +17,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
-    // Configuração do seu Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
       authDomain: "myproject26-10f0e.firebaseapp.com",
@@ -28,7 +27,6 @@
       appId: "1:884850608032:web:79db6983346c3c20edc6c5"
     };
 
-    // Inicializa o Firebase apenas uma vez
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -74,7 +72,6 @@
     const { useState, useEffect, useRef } = React;
 
     function App() {
-      // 1. LISTA DE PARCEIROS COMO ESTADO
       const [parceiros, setParceiros] = useState([
         { id: 1, nome: "SNOOP LANCHE", url: "https://snooplanche2.netlify.app/", statusUrl: "https://snooplanche2.netlify.app/content/status.json", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
         { id: 3, nome: "KINGS BURGER", url: "https://kingsburger.netlify.app/", statusUrl: "https://kingsburger.netlify.app/content/status.json", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
@@ -105,14 +102,11 @@
       };
 
       useEffect(() => {
-        // --- FUNÇÃO PARA VERIFICAR PROMOÇÕES EM TEMPO REAL VIA FIREBASE ---
         const lojasRef = window.db.ref('lojas');
-        
         lojasRef.on('value', (snapshot) => {
           const dadosFirebase = snapshot.val();
           if (dadosFirebase) {
             setParceiros(prev => prev.map(p => {
-              // Transforma "SNOOP LANCHE" em "snoop_lanche" para buscar no banco
               const chave = p.nome.toLowerCase().replace(/\s+/g, '_');
               if (dadosFirebase[chave]) {
                 return { ...p, promo: dadosFirebase[chave].promo };
@@ -122,7 +116,6 @@
           }
         });
 
-        // --- FUNÇÕES DE PWA ---
         const beforeInstall = (e) => { 
           e.preventDefault(); 
           setDeferredPrompt(e); 
@@ -132,7 +125,7 @@
         setTimeout(checkScroll, 50);
 
         return () => { 
-          lojasRef.off(); // Desliga o ouvinte do Firebase
+          lojasRef.off();
           window.removeEventListener("beforeinstallprompt", beforeInstall);
           window.removeEventListener("resize", checkScroll);
         };
@@ -155,9 +148,20 @@
         catRef.current.scrollBy({ left: dir * 140, behavior: 'smooth' });
       };
 
-      const abrirCardapio = (url, nome) => {
-        if (url) { window.location.assign(url); } 
-        else { alert(`Restaurante ${nome} em preparação!`); }
+      // --- LÓGICA DE REDIRECIONAMENTO CORRIGIDA ---
+      const abrirCardapio = (url, nome, naAbaPromo) => {
+        if (!url) { 
+          alert(`Restaurante ${nome} em preparação!`); 
+          return;
+        } 
+        
+        if (naAbaPromo) {
+          // Redireciona para https://snooplanche2.netlify.app/promocao
+          window.location.assign(url + "promocao");
+        } else {
+          // Redireciona para a home normal da loja
+          window.location.assign(url);
+        }
       };
 
       return (
@@ -195,7 +199,11 @@
 
           <main className="p-4 space-y-4 max-w-md mx-auto w-full">
             {filtrados.map(res => (
-              <div key={res.id} onClick={() => abrirCardapio(res.url, res.nome)} className="relative bg-white rounded-3xl shadow-md overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-95 transition-all border border-gray-100">
+              <div 
+                key={res.id} 
+                onClick={() => abrirCardapio(res.url, res.nome, filtro === "PROMOÇÕES")} 
+                className="relative bg-white rounded-3xl shadow-md overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-95 transition-all border border-gray-100"
+              >
                 <img src={res.img} className="h-52 w-full object-cover" alt={res.nome}/>
                 {res.promo && (
                   <span className="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-lg pulse">PROMO</span>
