@@ -13,6 +13,28 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Configuração do seu Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
+      authDomain: "myproject26-10f0e.firebaseapp.com",
+      databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
+      projectId: "myproject26-10f0e",
+      storageBucket: "myproject26-10f0e.firebasestorage.app",
+      messagingSenderId: "884850608032",
+      appId: "1:884850608032:web:79db6983346c3c20edc6c5"
+    };
+
+    // Inicializa o Firebase apenas uma vez
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    window.db = firebase.database();
+  </script>
+
   <style>
     body { -webkit-tap-highlight-color: transparent; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -35,6 +57,13 @@
     }
     .arrow-left { left: 4px; }
     .arrow-right { right: 4px; }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .pulse { animation: pulse 2s infinite; }
   </style>
 </head>
 
@@ -76,22 +105,24 @@
       };
 
       useEffect(() => {
-        // --- FUNÇÃO PARA VERIFICAR PROMOÇÕES AUTOMÁTICAS ---
-        parceiros.forEach(async (p) => {
-          if (p.statusUrl) {
-            try {
-              const res = await fetch(p.statusUrl);
-              const data = await res.json();
-              // Se 'promocaoAtiva' for true no status.json do restaurante, ativa no Mydi
-              if (data.promocaoAtiva === true) {
-                setParceiros(prev => prev.map(item => 
-                  item.id === p.id ? { ...item, promo: true } : item
-                ));
+        // --- FUNÇÃO PARA VERIFICAR PROMOÇÕES EM TEMPO REAL VIA FIREBASE ---
+        const lojasRef = window.db.ref('lojas');
+        
+        lojasRef.on('value', (snapshot) => {
+          const dadosFirebase = snapshot.val();
+          if (dadosFirebase) {
+            setParceiros(prev => prev.map(p => {
+              // Transforma "SNOOP LANCHE" em "snoop_lanche" para buscar no banco
+              const chave = p.nome.toLowerCase().replace(/\s+/g, '_');
+              if (dadosFirebase[chave]) {
+                return { ...p, promo: dadosFirebase[chave].promo };
               }
-            } catch (e) { console.log("Erro ao buscar promo de " + p.nome); }
+              return p;
+            }));
           }
         });
 
+        // --- FUNÇÕES DE PWA ---
         const beforeInstall = (e) => { 
           e.preventDefault(); 
           setDeferredPrompt(e); 
@@ -99,7 +130,9 @@
         window.addEventListener("beforeinstallprompt", beforeInstall);
         window.addEventListener("resize", checkScroll);
         setTimeout(checkScroll, 50);
+
         return () => { 
+          lojasRef.off(); // Desliga o ouvinte do Firebase
           window.removeEventListener("beforeinstallprompt", beforeInstall);
           window.removeEventListener("resize", checkScroll);
         };
