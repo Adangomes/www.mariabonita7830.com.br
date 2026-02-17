@@ -18,7 +18,6 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Setas de rolagem das categorias */
     .arrow {
       position: absolute;
       top: 50%;
@@ -46,7 +45,6 @@
 <body class="bg-gray-50 text-gray-900 font-sans antialiased">
   <div id="root"></div>
 
-  <!-- React App -->
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
@@ -60,6 +58,7 @@
     function App() {
       const [filtro, setFiltro] = useState(null);
       const [deferredPrompt, setDeferredPrompt] = useState(null);
+      const [appInstalado, setAppInstalado] = useState(localStorage.getItem("app_instalado") === "true");
       const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA", "PIZZAS"];
       const filtrados = filtro === "PROMOÇÕES" 
           ? parceiros.filter(p => p.promo) 
@@ -79,7 +78,10 @@
       };
 
       useEffect(() => {
-        const beforeInstall = (e) => { e.preventDefault(); setDeferredPrompt(e); };
+        const beforeInstall = (e) => { 
+          e.preventDefault(); 
+          setDeferredPrompt(e); 
+        };
         window.addEventListener("beforeinstallprompt", beforeInstall);
         window.addEventListener("resize", checkScroll);
         setTimeout(checkScroll, 50);
@@ -92,7 +94,13 @@
       const instalarApp = () => {
         if (deferredPrompt) {
           deferredPrompt.prompt();
-          deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              localStorage.setItem("app_instalado", "true");
+              setAppInstalado(true);
+            }
+            setDeferredPrompt(null);
+          });
         } else {
           alert("Aguarde um momento... Se estiver no iPhone, use 'Adicionar à Tela de Início'.");
         }
@@ -112,24 +120,26 @@
 
       return (
         <div className="flex flex-col min-h-screen pb-10 relative">
-          {/* Header menor */}
+          {/* Header */}
           <header className="bg-red-600 px-6 py-3 flex flex-col items-center shadow-sm">
             <h1 className="text-red-100 text-3xl font-bold">MYDI DELIVERY</h1>
             <span className="text-red-100 text-[12px] font-bold uppercase tracking-[1px] mt-1 px-2 py-0.5 bg-red-700 rounded-full">Pediu, Chegou!</span>
           </header>
 
           {/* Banner instalação */}
-          <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
-            <span className="text-[10px] font-bold text-gray-500 uppercase">App Android</span>
-            <button 
-              onClick={instalarApp}
-              className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
-            >
-              INSTALAR
-            </button>
-          </div>
+          {!appInstalado && (
+            <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
+              <span className="text-[10px] font-bold text-gray-500 uppercase">App Android</span>
+              <button 
+                onClick={instalarApp}
+                className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform"
+              >
+                INSTALAR
+              </button>
+            </div>
+          )}
 
-          {/* Filtro de categorias */}
+          {/* Filtro categorias */}
           <div className="relative">
             <div ref={catRef} onScroll={checkScroll} className="sticky top-0 bg-gray-50 py-3 overflow-x-auto flex px-4 gap-3 no-scrollbar z-50">
               <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-full text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
@@ -138,7 +148,6 @@
               ))}
             </div>
 
-            {/* Setas scroll maiores e destacadas */}
             {canScrollLeft && (
               <div onClick={() => scrollCategorias(-1)} className="arrow arrow-left">
                 <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
@@ -155,7 +164,7 @@
             )}
           </div>
 
-          {/* Lista de parceiros */}
+          {/* Lista parceiros */}
           <main className="p-4 space-y-4 max-w-md mx-auto w-full">
             {filtrados.map(res => (
               <div 
