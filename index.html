@@ -34,13 +34,10 @@ window.db = firebase.database();
 </script>
 
 <style>
-.scroll-x {
-  display: flex;
-  overflow-x: auto;
-  gap: 12px;
-  padding-bottom: 10px;
-}
+.scroll-x { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; }
 .scroll-x::-webkit-scrollbar { display: none; }
+@keyframes bounce-short { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.animate-bounce-short { animation: bounce-short 1s ease-in-out; }
 </style>
 
 </head>
@@ -49,9 +46,9 @@ window.db = firebase.database();
 <div id="root"></div>
 
 <script type="text/babel">
+const { useState, useEffect, useCallback } = React;
 
-const { useState, useEffect } = React;
-
+// --- ÍCONES ---
 function IconHome(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 10l9-6 9 6v10a2 2 0 01-2 2h-4v-6H9v6H5a2 2 0 01-2-2z"/></svg>; }
 function IconBox(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v6H3z"/><path d="M3 9v12h18V9"/></svg>; }
 function IconUser(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>; }
@@ -60,13 +57,11 @@ function IconPlusBox(){ return <svg className="w-5 h-5 inline" fill="none" strok
 function IconDownload(){ return <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>; }
 
 function App(){
-
   const [tela, setTela] = useState("home");
   const [user, setUser] = useState(null);
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [pedidos, setPedidos] = useState([]);
-  
   const [showInstall, setShowInstall] = useState(false);
   const [platform, setPlatform] = useState(""); 
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -76,56 +71,117 @@ function App(){
     { id:2, nome:"KINGS BURGER", img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", mais:"Combo King" }
   ];
 
+  // --- LOGOUT POR INATIVIDADE (30 MIN) ---
+  const logout = useCallback(() => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("lastActivity");
+    setUser(null);
+    setTela("perfil");
+  }, []);
+
+  useEffect(() => {
+    const checkInactivity = () => {
+      const lastActivity = localStorage.getItem("lastActivity");
+      if (lastActivity && user) {
+        const diff = Date.now() - parseInt(lastActivity);
+        if (diff > 30 * 60 * 1000) { // 30 minutos
+          alert("Sessão expirada por inatividade.");
+          logout();
+        }
+      }
+    };
+
+    const updateActivity = () => localStorage.setItem("lastActivity", Date.now().toString());
+
+    window.addEventListener("click", updateActivity);
+    window.addEventListener("touchstart", updateActivity);
+    const interval = setInterval(checkInactivity, 60000); // Checa a cada minuto
+
+    return () => {
+      window.removeEventListener("click", updateActivity);
+      window.removeEventListener("touchstart", updateActivity);
+      clearInterval(interval);
+    };
+  }, [user, logout]);
+
+  // --- MODAL DE INSTALAÇÃO (ABRE AO ENTRAR) ---
   useEffect(() => {
     const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+    if (!isStandalone) {
+      if (isAndroid) {
+        setPlatform("android");
+        setShowInstall(true); // Força abrir no Android
+      } else if (isIOS) {
+        setPlatform("ios");
+        setShowInstall(true); // Força abrir no iOS
+      }
+    }
+
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      if (isAndroid && !window.matchMedia('(display-mode: standalone)').matches) {
-        setPlatform("android");
-        setShowInstall(true);
-      }
     };
     window.addEventListener("beforeinstallprompt", handler);
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
-  const abrirInstalacaoManual = (tipo) => {
-    setPlatform(tipo);
-    setShowInstall(true);
-  };
-
   const instalarAppAndroid = async () => {
-    if (!deferredPrompt) {
-      alert("O aplicativo ja esta instalado ou seu navegador nao suporta a instalacao automatica.");
-      return;
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice.outcome === "accepted") setDeferredPrompt(null);
+    } else {
+      alert("Para instalar, use o menu do navegador e selecione 'Instalar Aplicativo'.");
     }
-    deferredPrompt.prompt();
-    const choice = await deferredPrompt.userChoice;
-    if (choice.outcome === "accepted") { setDeferredPrompt(null); }
     setShowInstall(false);
   };
 
-  const salvarUser = () => {
-    if(!nome || !telefone) return alert("Preencha todos os campos");
-    const userData = { nome, telefone };
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+  // --- SISTEMA DE ENTRAR / LOGIN ---
+  const entrarOuCadastrar = () => {
+    if(!telefone) return alert("Digite seu telefone");
+    
+    db.ref("usuarios/" + telefone).once("value", (snap) => {
+      const dados = snap.val();
+      if (dados) {
+        // Já existe: Entra direto
+        const userData = { nome: dados.nome, telefone: telefone };
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("lastActivity", Date.now().toString());
+        setUser(userData);
+        setTela("home");
+      } else {
+        // Não existe: Pede nome para cadastrar
+        if (!nome) return alert("Telefone não encontrado. Digite seu nome para se cadastrar.");
+        const novoUser = { nome, telefone };
+        db.ref("usuarios/" + telefone).set(novoUser);
+        localStorage.setItem("user", JSON.stringify(novoUser));
+        localStorage.setItem("lastActivity", Date.now().toString());
+        setUser(novoUser);
+        setTela("home");
+      }
+    });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const u = localStorage.getItem("user");
-    if(u) setUser(JSON.parse(u));
-  },[]);
+    if(u) {
+      setUser(JSON.parse(u));
+      localStorage.setItem("lastActivity", Date.now().toString());
+    }
+  }, []);
 
-  useEffect(()=>{
+  // --- CARREGAR PEDIDOS ---
+  useEffect(() => {
     if(user){
-      db.ref("pedidos/"+user.telefone).on("value", snap=>{
+      db.ref("pedidos/"+user.telefone).on("value", snap => {
         const data = snap.val() || {};
-        setPedidos(Object.values(data));
+        setPedidos(Object.values(data).reverse());
       });
     }
-  },[user]);
+  }, [user]);
 
   const fazerPedido = (rest) => {
     if(!user) return setTela("perfil");
@@ -136,43 +192,42 @@ function App(){
       data: new Date().toLocaleString()
     };
     db.ref("pedidos/"+user.telefone).push(pedido);
-    alert("Pedido realizado");
+    alert("Pedido realizado!");
   };
 
   return(
-    <div className="max-w-md mx-auto pb-20">
-
-      <header className="bg-red-600 text-white text-center p-4 font-bold text-lg">
+    <div className="max-w-md mx-auto pb-20 min-h-screen">
+      <header className="bg-red-600 text-white text-center p-4 font-black text-xl shadow-lg italic">
         MYDI DELIVERY
       </header>
 
       {tela==="home" && (
         <div className="p-3">
-          <div className="bg-red-500 text-white px-3 py-1 rounded w-fit text-sm mb-3">Lanches</div>
-          <h2 className="font-bold mb-2 text-gray-800">Mais pedidos</h2>
+          <div className="bg-red-500 text-white px-3 py-1 rounded-full w-fit text-xs mb-3 font-bold uppercase">Cardápio do Dia</div>
+          <h2 className="font-black mb-2 text-gray-800 uppercase italic">Mais pedidos</h2>
           <div className="scroll-x">
             {restaurantes.map(r=>(
-              <div key={r.id} className="min-w-[140px] bg-white rounded-lg shadow">
-                <img src={r.img} className="h-24 w-full object-cover rounded-t-lg"/>
-                <div className="p-2">
-                  <p className="text-xs font-bold">{r.nome}</p>
-                  <p className="text-xs text-gray-500">{r.mais}</p>
-                  <button onClick={()=>fazerPedido(r)} className="mt-1 w-full bg-green-500 text-white text-xs p-1 rounded">Pedir</button>
+              <div key={r.id} className="min-w-[150px] bg-white rounded-2xl shadow-md border border-gray-100">
+                <img src={r.img} className="h-28 w-full object-cover rounded-t-2xl"/>
+                <div className="p-3">
+                  <p className="text-xs font-black text-gray-800">{r.nome}</p>
+                  <p className="text-[10px] text-gray-500 mb-2">{r.mais}</p>
+                  <button onClick={()=>fazerPedido(r)} className="w-full bg-green-500 text-white text-xs py-2 rounded-lg font-black uppercase">Pedir</button>
                 </div>
               </div>
             ))}
           </div>
-          <h2 className="font-bold mt-4 mb-2 text-gray-800">Todos restaurantes</h2>
+          
+          <h2 className="font-black mt-6 mb-3 text-gray-800 uppercase italic">Próximos de você</h2>
           <div className="space-y-3">
             {restaurantes.map(r=>(
-              <div key={r.id} className="bg-white rounded-xl shadow flex items-center p-2">
-                <img src={r.img} className="w-20 h-20 rounded-lg object-cover" />
+              <div key={r.id} className="bg-white rounded-2xl shadow-sm flex items-center p-3 border border-gray-50">
+                <img src={r.img} className="w-20 h-20 rounded-xl object-cover" />
                 <div className="ml-3 flex-1">
-                  <h3 className="font-bold text-sm">{r.nome}</h3>
-                  <p className="text-xs text-gray-500">Lanches - 30-40 min</p>
-                  <p className="text-xs text-gray-400">Nota 4.8 - Entrega R$ 5,00</p>
+                  <h3 className="font-black text-sm text-gray-800">{r.nome}</h3>
+                  <p className="text-[10px] text-gray-400">Entrega Grátis • 30 min</p>
+                  <button onClick={()=>fazerPedido(r)} className="mt-2 bg-red-600 text-white text-[10px] px-4 py-1.5 rounded-full font-black uppercase">Ver Menu</button>
                 </div>
-                <button onClick={()=>fazerPedido(r)} className="bg-green-500 text-white text-xs px-3 py-1 rounded">Pedir</button>
               </div>
             ))}
           </div>
@@ -180,42 +235,53 @@ function App(){
       )}
 
       {tela==="pedidos" && (
-        <div className="p-3">
-          <h2 className="font-bold mb-3 text-gray-800">Meus pedidos</h2>
+        <div className="p-4">
+          <h2 className="font-black mb-4 text-gray-800 uppercase italic">Meus Pedidos</h2>
           {pedidos.length > 0 ? pedidos.map((p,i)=>(
-            <div key={i} className="bg-white p-3 rounded mb-2 shadow border-l-4 border-red-500">
-              <p className="font-bold">{p.restaurante}</p>
-              <p className="text-sm text-gray-700">{p.item}</p>
-              <p className="text-xs text-gray-500 uppercase font-bold">{p.status}</p>
+            <div key={i} className="bg-white p-4 rounded-2xl mb-3 shadow-sm border-l-8 border-red-600">
+              <div className="flex justify-between items-center mb-1">
+                <p className="font-black text-gray-800">{p.restaurante}</p>
+                <span className="text-[9px] text-gray-400 font-bold">{p.data.split(",")[0]}</span>
+              </div>
+              <p className="text-xs text-gray-600">{p.item}</p>
+              <div className="mt-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <p className="text-[10px] text-red-600 uppercase font-black tracking-widest">{p.status}</p>
+              </div>
             </div>
-          )) : <p className="text-center text-gray-500 mt-10 text-sm">Nenhum pedido encontrado.</p>}
+          )) : <p className="text-center text-gray-400 mt-20 font-bold">Nenhum pedido realizado ainda.</p>}
         </div>
       )}
 
       {tela==="perfil" && (
         <div className="p-4">
           {!user ? (
-            <div className="bg-white p-4 rounded-xl shadow">
-              <input placeholder="Nome completo" className="w-full p-2 mb-2 border rounded" onChange={e=>setNome(e.target.value)} />
-              <input placeholder="Telefone" className="w-full p-2 mb-2 border rounded" onChange={e=>setTelefone(e.target.value)} />
-              <button onClick={salvarUser} className="w-full bg-red-500 text-white p-2 rounded font-bold">Salvar Dados</button>
+            <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 mt-10">
+              <h2 className="text-center font-black text-gray-800 mb-6 uppercase italic text-xl">Entrar no Mydi</h2>
+              <div className="space-y-4">
+                <input placeholder="Digite seu Telefone" className="w-full p-4 border-2 border-gray-100 rounded-2xl bg-gray-50 font-bold focus:border-red-500 outline-none transition-all" onChange={e=>setTelefone(e.target.value)} />
+                <input placeholder="Seu Nome (Para novos clientes)" className="w-full p-4 border-2 border-gray-100 rounded-2xl bg-gray-50 font-bold focus:border-red-500 outline-none transition-all" onChange={e=>setNome(e.target.value)} />
+                <button onClick={entrarOuCadastrar} className="w-full bg-red-600 text-white p-4 rounded-2xl font-black shadow-lg shadow-red-200 uppercase tracking-widest text-sm">Entrar Agora</button>
+              </div>
+              <p className="text-[10px] text-gray-400 text-center mt-6 px-4">Ao entrar, você concorda com nossos termos de uso e privacidade.</p>
             </div>
           ):(
             <div className="space-y-4">
-              <div className="bg-white p-4 rounded-xl shadow">
-                <h2 className="font-bold text-lg text-gray-800">Ola, {user.nome}</h2>
-                <p className="text-gray-600 text-sm">{user.telefone}</p>
+              <div className="bg-white p-6 rounded-3xl shadow-md border-b-8 border-red-600">
+                <p className="text-[10px] font-black text-red-600 uppercase tracking-widest mb-1">Cliente VIP</p>
+                <h2 className="font-black text-2xl text-gray-800">{user.nome}</h2>
+                <p className="text-gray-400 font-bold text-sm">{user.telefone}</p>
+                <button onClick={logout} className="mt-6 text-xs text-red-500 font-black uppercase underline">Sair da Conta</button>
               </div>
 
-              {/* BOTÕES DE BAIXAR APP NO PERFIL */}
-              <div className="bg-white p-4 rounded-xl shadow">
-                <h3 className="text-sm font-bold text-gray-700 mb-3">Aplicativo Mydi</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <button onClick={() => abrirInstalacaoManual("android")} className="flex items-center justify-center gap-2 bg-gray-800 text-white p-2 rounded-lg text-xs font-bold uppercase">
-                    <IconDownload/> Android
+              <div className="bg-gray-800 p-5 rounded-3xl shadow-lg text-white">
+                <h3 className="text-xs font-black uppercase mb-4 text-center tracking-widest">Baixar Aplicativo Mydi</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <button onClick={() => abrirInstalacaoManual("android")} className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                    <IconDownload/> <span className="text-[9px] font-black uppercase">Android</span>
                   </button>
-                  <button onClick={() => abrirInstalacaoManual("ios")} className="flex items-center justify-center gap-2 bg-gray-800 text-white p-2 rounded-lg text-xs font-bold uppercase">
-                    <IconDownload/> iPhone
+                  <button onClick={() => abrirInstalacaoManual("ios")} className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                    <IconDownload/> <span className="text-[9px] font-black uppercase">iPhone</span>
                   </button>
                 </div>
               </div>
@@ -224,42 +290,42 @@ function App(){
         </div>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-2">
-        <button onClick={()=>setTela("home")} className={tela==="home" ? "text-red-500" : "text-gray-400"}><IconHome/></button>
-        <button onClick={()=>setTela("pedidos")} className={tela==="pedidos" ? "text-red-500" : "text-gray-400"}><IconBox/></button>
-        <button onClick={()=>setTela("perfil")} className={tela==="perfil" ? "text-red-500" : "text-gray-400"}><IconUser/></button>
-      </div>
+      {/* --- BARRA DE NAVEGAÇÃO --- */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-100 flex justify-around p-4 z-50">
+        <button onClick={()=>setTela("home")} className={tela==="home" ? "text-red-600 scale-125 transition-transform" : "text-gray-300"}><IconHome/></button>
+        <button onClick={()=>setTela("pedidos")} className={tela==="pedidos" ? "text-red-600 scale-125 transition-transform" : "text-gray-300"}><IconBox/></button>
+        <button onClick={()=>setTela("perfil")} className={tela==="perfil" ? "text-red-600 scale-125 transition-transform" : "text-gray-300"}><IconUser/></button>
+      </nav>
 
-      {/* --- MODAL DE INSTALACAO --- */}
+      {/* --- MODAL DE INSTALAÇÃO FORÇADO --- */}
       {showInstall && (
-        <div className="fixed inset-0 bg-black/60 flex items-end justify-center z-[100] p-4">
-          <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-xl font-extrabold mb-2 text-gray-800 text-center uppercase">Instalar Mydi</h2>
-            <p className="text-sm text-gray-500 mb-6 text-center">Tenha uma melhor experiencia instalando nosso aplicativo.</p>
+        <div className="fixed inset-0 bg-black/80 flex items-end justify-center z-[100] p-4 backdrop-blur-sm">
+          <div className="bg-white w-full max-w-sm rounded-[40px] p-8 shadow-2xl animate-bounce-short">
+            <div className="w-16 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+            <h2 className="text-2xl font-black mb-2 text-gray-800 text-center uppercase italic">Baixe o App</h2>
+            <p className="text-sm text-gray-500 mb-8 text-center font-bold px-4">Instale agora para uma experiência mais rápida e sem travamentos.</p>
 
             {platform === "android" ? (
-              <button onClick={instalarAppAndroid} className="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-lg mb-3 shadow-lg shadow-red-200 uppercase">
-                Baixar Aplicativo
+              <button onClick={instalarAppAndroid} className="w-full bg-red-600 text-white py-5 rounded-3xl font-black text-lg mb-4 shadow-2xl shadow-red-200 uppercase tracking-tighter">
+                Instalar Agora
               </button>
             ) : (
-              <div className="space-y-4 text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4 text-sm">
-                <div className="flex items-center gap-3">
-                  <div className="bg-white p-1 rounded shadow"><IconShare/></div>
-                  <span>1. Clique no icone de compartilhar do Safari.</span>
+              <div className="space-y-4 text-gray-700 bg-gray-50 p-6 rounded-3xl border border-gray-100 mb-6 text-[11px] font-black">
+                <div className="flex items-center gap-4">
+                  <div className="bg-white p-2 rounded-xl shadow-sm"><IconShare/></div>
+                  <span>1. Toque no ícone de compartilhar (Safari).</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="bg-white p-1 rounded shadow"><IconPlusBox/></div>
-                  <span>2. Selecione Adicionar a Tela de Inicio.</span>
+                <div className="flex items-center gap-4">
+                  <div className="bg-white p-2 rounded-xl shadow-sm"><IconPlusBox/></div>
+                  <span>2. Escolha "Adicionar à Tela de Início".</span>
                 </div>
-                <div className="border-t pt-2 text-center font-bold text-red-600 uppercase">Pronto para uso.</div>
               </div>
             )}
 
-            <button onClick={()=>setShowInstall(false)} className="w-full text-gray-400 text-sm font-bold uppercase">Agora nao</button>
+            <button onClick={()=>setShowInstall(false)} className="w-full text-gray-300 text-[10px] font-black uppercase tracking-widest">Usar pelo Navegador</button>
           </div>
         </div>
       )}
-
     </div>
   );
 }
