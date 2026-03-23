@@ -1,5 +1,5 @@
 // Nome do cache
-const CACHE_NAME = 'mydi-cache-v3';
+const CACHE_NAME = 'mydi-cache-v4';
 
 // Arquivos essenciais para cache inicial
 const urlsToCache = [
@@ -38,16 +38,33 @@ self.addEventListener('activate', (event) => {
 // Intercepta requisições
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Atualiza cache com resposta nova
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
-        return response;
-      })
-      .catch(() => {
-        // Retorna do cache se offline
-        return caches.match(event.request);
-      })
+    caches.match(event.request).then((cachedResponse) => {
+
+      // Se tiver no cache, retorna rápido
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      // Senão, busca da internet
+      return fetch(event.request)
+        .then((response) => {
+
+          // Não cacheia coisas inválidas
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+
+          const responseClone = response.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+
+          return response;
+        })
+        .catch(() => {
+          return caches.match('./index.html');
+        });
+    })
   );
 });
