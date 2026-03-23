@@ -17,46 +17,42 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
-    authDomain: "myproject26-10f0e.firebaseapp.com",
-    databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
-    projectId: "myproject26-10f0e",
-    storageBucket: "myproject26-10f0e.firebasestorage.app",
-    messagingSenderId: "884850608032",
-    appId: "1:884850608032:web:79db6983346c3c20edc6c5"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
+  authDomain: "myproject26-10f0e.firebaseapp.com",
+  databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
+  projectId: "myproject26-10f0e"
+};
 
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-
-  window.db = firebase.database();
+firebase.initializeApp(firebaseConfig);
+window.db = firebase.database();
 </script>
 
-<style>
-body { background:#f3f4f6; }
-.card:hover { transform: scale(1.02); }
-</style>
 </head>
 
-<body>
+<body class="bg-gray-100">
 <div id="root"></div>
 
 <script type="text/babel">
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 function App(){
 
-  const [restaurantes] = useState([
+  const [tela, setTela] = useState("home");
+  const [user, setUser] = useState(null);
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [pedidos, setPedidos] = useState([]);
+
+  const restaurantes = [
     {
       id:1,
       nome:"SNOOP LANCHE",
       url:"https://mydiapp.shop/",
       img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
       tipo:"LANCHES",
-      promo:true
+      mais:"X-Burgão 🔥"
     },
     {
       id:2,
@@ -64,45 +60,158 @@ function App(){
       url:"https://loja.mydiapp.shop/",
       img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
       tipo:"LANCHES",
-      promo:false
+      mais:"Combo King 👑"
     }
-  ]);
+  ];
 
-  const abrir = (url)=> window.location.assign(url);
+  // SALVAR USUARIO
+  const salvarUser = () => {
+    if(!nome || !telefone) return alert("Preencha tudo");
+
+    const userData = { nome, telefone };
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  };
+
+  // CARREGAR USUARIO
+  useEffect(()=>{
+    const u = localStorage.getItem("user");
+    if(u) setUser(JSON.parse(u));
+  },[]);
+
+  // CARREGAR PEDIDOS
+  useEffect(()=>{
+    if(user){
+      db.ref("pedidos/"+user.telefone).on("value", snap=>{
+        const data = snap.val() || {};
+        setPedidos(Object.values(data));
+      });
+    }
+  },[user]);
+
+  // SIMULAR PEDIDO
+  const fazerPedido = (rest) => {
+    if(!user) return setTela("perfil");
+
+    const pedido = {
+      restaurante: rest.nome,
+      item: rest.mais,
+      status: "Preparando",
+      data: new Date().toLocaleString()
+    };
+
+    db.ref("pedidos/"+user.telefone).push(pedido);
+    alert("Pedido salvo 🔥");
+  };
 
   return(
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto pb-20">
 
+      {/* HEADER */}
       <header className="bg-red-600 text-white text-center p-4 font-bold text-xl">
         MYDI DELIVERY
       </header>
 
-      <div className="p-4 space-y-4">
-        {restaurantes.map(r=>(
-          <div key={r.id} onClick={()=>abrir(r.url)}
-            className="card bg-white rounded-xl shadow cursor-pointer overflow-hidden">
-
-            <img src={r.img} className="w-full h-40 object-cover"/>
-
-            <div className="p-3 flex justify-between">
-              <div>
-                <h2 className="font-bold">{r.nome}</h2>
-                <p className="text-xs text-gray-400">{r.tipo}</p>
-              </div>
-
-              {r.promo && (
-                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
-                  PROMO
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
+      {/* BOTAO INSTALAR */}
+      <div className="p-2 text-center">
+        <button onclick="alert('Use adicionar à tela inicial do navegador')" 
+          className="bg-black text-white px-3 py-1 rounded text-sm">
+          📲 Instalar App
+        </button>
       </div>
 
-      <footer className="text-center p-4 text-xs text-gray-400">
-        <a href="politica-de-privacidade.html">Política de Privacidade</a>
-      </footer>
+      {/* HOME */}
+      {tela==="home" && (
+        <div className="p-3 space-y-3">
+
+          {/* CATEGORIA */}
+          <div className="flex gap-2">
+            <div className="bg-red-500 text-white px-3 py-1 rounded">🍔 Lanches</div>
+          </div>
+
+          {/* MAIS PEDIDOS */}
+          <h2 className="font-bold mt-2">🔥 Mais pedidos</h2>
+
+          {restaurantes.map(r=>(
+            <div key={r.id} className="bg-white rounded-xl shadow overflow-hidden">
+
+              <img src={r.img} className="w-full h-32 object-cover"/>
+
+              <div className="p-3">
+                <h2 className="font-bold">{r.nome}</h2>
+                <p className="text-sm text-gray-500">{r.mais}</p>
+
+                <button 
+                  onClick={()=>fazerPedido(r)}
+                  className="mt-2 w-full bg-green-500 text-white p-2 rounded">
+                  Pedir agora
+                </button>
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+      )}
+
+      {/* PEDIDOS */}
+      {tela==="pedidos" && (
+        <div className="p-3">
+          <h2 className="font-bold mb-3">📦 Meus pedidos</h2>
+
+          {pedidos.length===0 && <p>Nenhum pedido ainda</p>}
+
+          {pedidos.map((p,i)=>(
+            <div key={i} className="bg-white p-3 rounded mb-2 shadow">
+              <h3 className="font-bold">{p.restaurante}</h3>
+              <p>{p.item}</p>
+              <p className="text-sm text-gray-500">{p.status}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* PERFIL */}
+      {tela==="perfil" && (
+        <div className="p-4">
+
+          {!user ? (
+            <>
+              <h2 className="font-bold mb-3">👤 Cadastro</h2>
+
+              <input placeholder="Nome"
+                className="w-full p-2 mb-2 border rounded"
+                onChange={e=>setNome(e.target.value)}
+              />
+
+              <input placeholder="Telefone"
+                className="w-full p-2 mb-2 border rounded"
+                onChange={e=>setTelefone(e.target.value)}
+              />
+
+              <button onClick={salvarUser}
+                className="w-full bg-red-500 text-white p-2 rounded">
+                Salvar
+              </button>
+            </>
+          ):(
+            <>
+              <h2 className="font-bold">Olá, {user.nome}</h2>
+              <p>{user.telefone}</p>
+            </>
+          )}
+
+        </div>
+      )}
+
+      {/* MENU INFERIOR */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-2">
+
+        <button onClick={()=>setTela("home")}>🏠</button>
+        <button onClick={()=>setTela("pedidos")}>📦</button>
+        <button onClick={()=>setTela("perfil")}>👤</button>
+
+      </div>
 
     </div>
   );
