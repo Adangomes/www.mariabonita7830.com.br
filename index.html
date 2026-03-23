@@ -118,40 +118,77 @@ function App(){
       </header>
 
       {/* HOME */}
-      {tela==="home" && (
-        <div className="p-3">
+   {tela==="home" && (
+  <div className="p-3">
 
-          {/* CATEGORIA */}
-          <div className="bg-red-500 text-white px-3 py-1 rounded w-fit text-sm mb-3">
-            Lanches
-          </div>
+    {/* CATEGORIA */}
+    <div className="bg-red-500 text-white px-3 py-1 rounded w-fit text-sm mb-3">
+      Lanches
+    </div>
 
-          {/* MAIS PEDIDOS */}
-          <h2 className="font-bold mb-2">Mais pedidos</h2>
+    {/* MAIS PEDIDOS (CARROSSEL) */}
+    <h2 className="font-bold mb-2">Mais pedidos</h2>
 
-          <div className="scroll-x">
-            {restaurantes.map(r=>(
-              <div key={r.id} className="min-w-[140px] bg-white rounded-lg shadow">
+    <div className="scroll-x">
+      {restaurantes.map(r=>(
+        <div key={r.id} className="min-w-[140px] bg-white rounded-lg shadow">
 
-                <img src={r.img} className="h-24 w-full object-cover rounded-t-lg"/>
+          <img src={r.img} className="h-24 w-full object-cover rounded-t-lg"/>
 
-                <div className="p-2">
-                  <p className="text-xs font-bold">{r.nome}</p>
-                  <p className="text-xs text-gray-500">{r.mais}</p>
+          <div className="p-2">
+            <p className="text-xs font-bold">{r.nome}</p>
+            <p className="text-xs text-gray-500">{r.mais}</p>
 
-                  <button 
-                    onClick={()=>fazerPedido(r)}
-                    className="mt-1 w-full bg-green-500 text-white text-xs p-1 rounded">
-                    Pedir
-                  </button>
-                </div>
-
-              </div>
-            ))}
+            <button 
+              onClick={()=>fazerPedido(r)}
+              className="mt-1 w-full bg-green-500 text-white text-xs p-1 rounded">
+              Pedir
+            </button>
           </div>
 
         </div>
-      )}
+      ))}
+    </div>
+
+    {/* LISTA DE RESTAURANTES (ESTILO IFOOD) */}
+    <h2 className="font-bold mt-4 mb-2">Todos restaurantes</h2>
+
+    <div className="space-y-3">
+      {restaurantes.map(r=>(
+        <div key={r.id} className="bg-white rounded-xl shadow flex items-center p-2">
+
+          {/* IMAGEM */}
+          <img 
+            src={r.img}
+            className="w-20 h-20 rounded-lg object-cover"
+          />
+
+          {/* INFO */}
+          <div className="ml-3 flex-1">
+            <h3 className="font-bold text-sm">{r.nome}</h3>
+
+            <p className="text-xs text-gray-500">
+              Lanches • 30-40 min
+            </p>
+
+            <p className="text-xs text-gray-400">
+              ⭐ 4.8 • R$ 5,00 entrega
+            </p>
+          </div>
+
+          {/* BOTÃO */}
+          <button 
+            onClick={()=>fazerPedido(r)}
+            className="bg-green-500 text-white text-xs px-3 py-1 rounded">
+            Pedir
+          </button>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+)}
 
       {/* PEDIDOS */}
       {tela==="pedidos" && (
