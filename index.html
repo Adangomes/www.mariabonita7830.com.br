@@ -1,234 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MYDI DELIVERY</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MYDI DELIVERY</title>
 
-  <meta name="theme-color" content="#dc2626"/>
-  <link rel="manifest" href="manifest.json?v=3">
+<meta name="theme-color" content="#dc2626"/>
+<link rel="manifest" href="manifest.json">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
-      authDomain: "myproject26-10f0e.firebaseapp.com",
-      databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
-      projectId: "myproject26-10f0e",
-      storageBucket: "myproject26-10f0e.firebasestorage.app",
-      messagingSenderId: "884850608032",
-      appId: "1:884850608032:web:79db6983346c3c20edc6c5"
-    };
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
+    authDomain: "myproject26-10f0e.firebaseapp.com",
+    databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
+    projectId: "myproject26-10f0e",
+    storageBucket: "myproject26-10f0e.firebasestorage.app",
+    messagingSenderId: "884850608032",
+    appId: "1:884850608032:web:79db6983346c3c20edc6c5"
+  };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    window.db = firebase.database();
-  </script>
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
 
-  <style>
-    body { -webkit-tap-highlight-color: transparent; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  window.db = firebase.database();
+</script>
 
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.9);
-      border-radius: 9999px;
-      padding: 6px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 100;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .arrow-left { left: 4px; }
-    .arrow-right { right: 4px; }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .pulse { animation: pulse 2s infinite; }
-  </style>
+<style>
+body { background:#f3f4f6; }
+.card:hover { transform: scale(1.02); }
+</style>
 </head>
 
-<body class="bg-gray-50 text-gray-900 font-sans antialiased">
-  <div id="root"></div>
+<body>
+<div id="root"></div>
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+<script type="text/babel">
 
-    function App() {
-      const [parceiros, setParceiros] = useState([
-        { id: 1, nome: "SNOOP LANCHE", url: "https://mydiapp.shop/", statusUrl: "https://mydiapp.shop//content/status.json", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
-        { id: 3, nome: "KINGS BURGER", url: "https://loja.mydiapp.shop/", statusUrl: "https://loja.mydiapp.shop/content/status.json", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", tipo: "LANCHES", promo: false },
-        { id: 2, nome: "SUSHI", url: "", statusUrl: "", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400", tipo: "JAPONESA", promo: false },
-        { id: 4, nome: "PIZZA HOUSE", url: "", statusUrl: "", img: "imagem/pizza.jpg", tipo: "PIZZAS", promo: false }
-      ]);
+const { useState } = React;
 
-      const [filtro, setFiltro] = useState(null);
-      const [deferredPrompt, setDeferredPrompt] = useState(null);
-      const [appInstalado, setAppInstalado] = useState(localStorage.getItem("app_instalado") === "true");
-      
-      const categorias = ["PROMOÇÕES", "LANCHES", "JAPONESA", "PIZZAS"];
-      const filtrados = filtro === "PROMOÇÕES" 
-          ? parceiros.filter(p => p.promo) 
-          : filtro 
-              ? parceiros.filter(p => p.tipo === filtro) 
-              : parceiros;
+function App(){
 
-      const catRef = useRef(null);
-      const [canScrollLeft, setCanScrollLeft] = useState(false);
-      const [canScrollRight, setCanScrollRight] = useState(false);
-
-      const checkScroll = () => {
-        const el = catRef.current;
-        if (!el) return;
-        setCanScrollLeft(el.scrollLeft > 0);
-        setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth);
-      };
-
-      useEffect(() => {
-        const lojasRef = window.db.ref('lojas');
-        lojasRef.on('value', (snapshot) => {
-          const dadosFirebase = snapshot.val();
-          if (dadosFirebase) {
-            setParceiros(prev => prev.map(p => {
-              const chave = p.nome.toLowerCase().replace(/\s+/g, '_');
-              if (dadosFirebase[chave]) {
-                return { ...p, promo: dadosFirebase[chave].promo };
-              }
-              return p;
-            }));
-          }
-        });
-
-        const beforeInstall = (e) => { 
-          e.preventDefault(); 
-          setDeferredPrompt(e); 
-        };
-        window.addEventListener("beforeinstallprompt", beforeInstall);
-        window.addEventListener("resize", checkScroll);
-        setTimeout(checkScroll, 50);
-
-        return () => { 
-          lojasRef.off();
-          window.removeEventListener("beforeinstallprompt", beforeInstall);
-          window.removeEventListener("resize", checkScroll);
-        };
-      }, []);
-
-      const instalarApp = () => {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              localStorage.setItem("app_instalado", "true");
-              setAppInstalado(true);
-            }
-            setDeferredPrompt(null);
-          });
-        }
-      };
-
-      const scrollCategorias = (dir) => {
-        catRef.current.scrollBy({ left: dir * 140, behavior: 'smooth' });
-      };
-
-      // --- LÓGICA DE REDIRECIONAMENTO CORRIGIDA ---
-      const abrirCardapio = (url, nome, naAbaPromo) => {
-        if (!url) { 
-          alert(`Restaurante ${nome} em preparação!`); 
-          return;
-        } 
-        
-        if (naAbaPromo) {
-          // Redireciona para https://snooplanche2.netlify.app/promocao
-          window.location.assign(url + "promocao");
-        } else {
-          // Redireciona para a home normal da loja
-          window.location.assign(url);
-        }
-      };
-
-      return (
-        <div className="flex flex-col min-h-screen pb-10 relative">
-          <header className="bg-red-600 px-6 py-3 flex flex-col items-center shadow-sm">
-            <h1 className="text-red-100 text-3xl font-bold">MYDI DELIVERY</h1>
-            <span className="text-red-100 text-[12px] font-bold uppercase tracking-[1px] mt-1 px-2 py-0.5 bg-red-700 rounded-full">Pediu, Chegou!</span>
-          </header>
-
-          {!appInstalado && (
-            <div className="bg-white border-b px-5 py-2.5 flex justify-between items-center">
-              <span className="text-[10px] font-bold text-gray-500 uppercase">App Android</span>
-              <button onClick={instalarApp} className="bg-gray-900 text-white text-[9px] font-bold px-4 py-1.5 rounded-full active:scale-95 transition-transform">INSTALAR</button>
-            </div>
-          )}
-
-          <div className="relative">
-            <div ref={catRef} onScroll={checkScroll} className="sticky top-0 bg-gray-50 py-3 overflow-x-auto flex px-4 gap-3 no-scrollbar z-50">
-              <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-full text-xs font-bold ${!filtro ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>TODOS</button>
-              {categorias.map(cat => (
-                <button key={cat} onClick={() => setFiltro(cat)} className={`px-4 py-2 rounded-full text-xs font-bold ${filtro === cat ? 'bg-red-600 text-white' : 'bg-white border text-gray-400'}`}>{cat}</button>
-              ))}
-            </div>
-            {canScrollLeft && (
-              <div onClick={() => scrollCategorias(-1)} className="arrow arrow-left">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-              </div>
-            )}
-            {canScrollRight && (
-              <div onClick={() => scrollCategorias(1)} className="arrow arrow-right">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-              </div>
-            )}
-          </div>
-
-          <main className="p-4 space-y-4 max-w-md mx-auto w-full">
-            {filtrados.map(res => (
-              <div 
-                key={res.id} 
-                onClick={() => abrirCardapio(res.url, res.nome, filtro === "PROMOÇÕES")} 
-                className="relative bg-white rounded-3xl shadow-md overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-95 transition-all border border-gray-100"
-              >
-                <img src={res.img} className="h-52 w-full object-cover" alt={res.nome}/>
-                {res.promo && (
-                  <span className="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-lg pulse">PROMO</span>
-                )}
-                <div className="p-4 flex justify-between items-center">
-                  <div>
-                    <h2 className="text-base font-bold uppercase text-gray-800">{res.nome}</h2>
-                    <p className="text-[10px] text-gray-400 font-medium">{res.tipo}</p>
-                  </div>
-                  <div className="flex items-center gap-1 bg-red-50 px-3 py-2 rounded-xl group">
-                    <span className="text-[10px] font-bold text-red-600">ACESSAR CARDÁPIO</span>
-                    <svg className="w-4 h-4 text-red-600 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </main>
-
-          <footer className="text-center py-4 border-t bg-white">
-            <p className="text-gray-400 text-[8px] uppercase tracking-[2px] font-bold">MYDI DELIVERY • 2026</p>
-          </footer>
-        </div>
-      );
+  const [restaurantes] = useState([
+    {
+      id:1,
+      nome:"SNOOP LANCHE",
+      url:"https://mydiapp.shop/",
+      img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+      tipo:"LANCHES",
+      promo:true
+    },
+    {
+      id:2,
+      nome:"KINGS BURGER",
+      url:"https://loja.mydiapp.shop/",
+      img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+      tipo:"LANCHES",
+      promo:false
     }
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
+  ]);
+
+  const abrir = (url)=> window.location.assign(url);
+
+  return(
+    <div className="max-w-md mx-auto">
+
+      <header className="bg-red-600 text-white text-center p-4 font-bold text-xl">
+        MYDI DELIVERY
+      </header>
+
+      <div className="p-4 space-y-4">
+        {restaurantes.map(r=>(
+          <div key={r.id} onClick={()=>abrir(r.url)}
+            className="card bg-white rounded-xl shadow cursor-pointer overflow-hidden">
+
+            <img src={r.img} className="w-full h-40 object-cover"/>
+
+            <div className="p-3 flex justify-between">
+              <div>
+                <h2 className="font-bold">{r.nome}</h2>
+                <p className="text-xs text-gray-400">{r.tipo}</p>
+              </div>
+
+              {r.promo && (
+                <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
+                  PROMO
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <footer className="text-center p-4 text-xs text-gray-400">
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </footer>
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
 </body>
 </html>
