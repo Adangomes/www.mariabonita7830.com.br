@@ -1,5 +1,5 @@
 // Nome do cache
-const CACHE_NAME = 'mydi-cache-v4';
+const CACHE_NAME = 'mydi-cache-v1';
 
 // Arquivos essenciais para cache inicial
 const urlsToCache = [
