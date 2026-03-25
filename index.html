@@ -18,21 +18,6 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
-  authDomain: "myproject26-10f0e.firebaseapp.com",
-  databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
-  projectId: "myproject26-10f0e"
-};
-
-firebase.initializeApp(firebaseConfig);
-window.db = firebase.database();
-</script>
-
 <style>
 .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; }
 .scroll-x::-webkit-scrollbar { display: none; }
@@ -52,147 +37,53 @@ const { useState, useEffect, useCallback } = React;
 function IconHome(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 10l9-6 9 6v10a2 2 0 01-2 2h-4v-6H9v6H5a2 2 0 01-2-2z"/></svg>; }
 function IconBox(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v6H3z"/><path d="M3 9v12h18V9"/></svg>; }
 function IconUser(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>; }
-function IconShare(){ return <svg className="w-5 h-5 inline" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>; }
-function IconPlusBox(){ return <svg className="w-5 h-5 inline" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>; }
 function IconDownload(){ return <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>; }
 
 function App(){
-  const [tela, setTela] = useState("home");
+  const [tela, setTela] = useState("perfil"); // Inicia no perfil para login
   const [user, setUser] = useState(null);
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [pedidos, setPedidos] = useState([]);
-  const [showInstall, setShowInstall] = useState(false);
-  const [platform, setPlatform] = useState(""); 
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   const restaurantes = [
-    { id:1, nome:"SNOOP LANCHE", img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", mais:"X-Burgão" },
-    { id:2, nome:"KINGS BURGER", img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", mais:"Combo King" }
+    { id:1, nome:"SNOOP LANCHE", img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", mais:"X-Burgão", link_mapa: "https://www.google.com/maps/place/McDonald's/@-23.561726,-46.656209,17z" },
+    { id:2, nome:"KINGS BURGER", img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", mais:"Combo King", link_mapa: "https://www.google.com/maps/place/McDonald's/@-23.561726,-46.656209,17z" }
   ];
 
-  // --- LOGOUT POR INATIVIDADE (30 MIN) ---
+  // --- LOGOUT E LIMPEZA ---
   const logout = useCallback(() => {
     localStorage.removeItem("user");
-    localStorage.removeItem("lastActivity");
     setUser(null);
     setTela("perfil");
   }, []);
 
-  useEffect(() => {
-    const checkInactivity = () => {
-      const lastActivity = localStorage.getItem("lastActivity");
-      if (lastActivity && user) {
-        const diff = Date.now() - parseInt(lastActivity);
-        if (diff > 30 * 60 * 1000) { // 30 minutos
-          alert("Sessão expirada por inatividade.");
-          logout();
-        }
-      }
-    };
-
-    const updateActivity = () => localStorage.setItem("lastActivity", Date.now().toString());
-
-    window.addEventListener("click", updateActivity);
-    window.addEventListener("touchstart", updateActivity);
-    const interval = setInterval(checkInactivity, 60000); // Checa a cada minuto
-
-    return () => {
-      window.removeEventListener("click", updateActivity);
-      window.removeEventListener("touchstart", updateActivity);
-      clearInterval(interval);
-    };
-  }, [user, logout]);
-
-  // --- MODAL DE INSTALAÇÃO (ABRE AO ENTRAR) ---
-  useEffect(() => {
-    const isAndroid = /android/i.test(navigator.userAgent);
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-    if (!isStandalone) {
-      if (isAndroid) {
-        setPlatform("android");
-        setShowInstall(true); // Força abrir no Android
-      } else if (isIOS) {
-        setPlatform("ios");
-        setShowInstall(true); // Força abrir no iOS
-      }
-    }
-
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
-
-  const instalarAppAndroid = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      if (choice.outcome === "accepted") setDeferredPrompt(null);
-    } else {
-      alert("Para instalar, use o menu do navegador e selecione 'Instalar Aplicativo'.");
-    }
-    setShowInstall(false);
-  };
-
-  // --- SISTEMA DE ENTRAR / LOGIN ---
+  // --- SISTEMA DE ENTRAR / LOGIN (CORRIGIDO) ---
   const entrarOuCadastrar = () => {
     if(!telefone) return alert("Digite seu telefone");
     
-    db.ref("usuarios/" + telefone).once("value", (snap) => {
-      const dados = snap.val();
-      if (dados) {
-        // Já existe: Entra direto
-        const userData = { nome: dados.nome, telefone: telefone };
-        localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("lastActivity", Date.now().toString());
-        setUser(userData);
-        setTela("home");
-      } else {
-        // Não existe: Pede nome para cadastrar
-        if (!nome) return alert("Telefone não encontrado. Digite seu nome para se cadastrar.");
-        const novoUser = { nome, telefone };
-        db.ref("usuarios/" + telefone).set(novoUser);
-        localStorage.setItem("user", JSON.stringify(novoUser));
-        localStorage.setItem("lastActivity", Date.now().toString());
-        setUser(novoUser);
-        setTela("home");
-      }
-    });
+    // Simulação de validação e cadastro (como se fosse Adan)
+    const userData = { nome: "Adan", telefone: telefone };
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+    alert("Telefone validado!");
+    setTela("home"); // Carrega a tela home (Mais pedidos)
   };
 
   useEffect(() => {
     const u = localStorage.getItem("user");
     if(u) {
       setUser(JSON.parse(u));
-      localStorage.setItem("lastActivity", Date.now().toString());
+      setTela("home"); // Se já logado, vai pra home
     }
   }, []);
 
-  // --- CARREGAR PEDIDOS ---
-  useEffect(() => {
-    if(user){
-      db.ref("pedidos/"+user.telefone).on("value", snap => {
-        const data = snap.val() || {};
-        setPedidos(Object.values(data).reverse());
-      });
+  // --- AÇÃO DE IR PARA O SITE/MAPA (CORRIGIDO) ---
+  const irParaRestaurante = (link) => {
+    if(link){
+      window.open(link, "_blank"); // Abre em nova aba
+    } else {
+      alert("Link do restaurante não disponível.");
     }
-  }, [user]);
-
-  const fazerPedido = (rest) => {
-    if(!user) return setTela("perfil");
-    const pedido = {
-      restaurante: rest.nome,
-      item: rest.mais,
-      status: "Preparando",
-      data: new Date().toLocaleString()
-    };
-    db.ref("pedidos/"+user.telefone).push(pedido);
-    alert("Pedido realizado!");
   };
 
   return(
@@ -212,7 +103,7 @@ function App(){
                 <div className="p-3">
                   <p className="text-xs font-black text-gray-800">{r.nome}</p>
                   <p className="text-[10px] text-gray-500 mb-2">{r.mais}</p>
-                  <button onClick={()=>fazerPedido(r)} className="w-full bg-green-500 text-white text-xs py-2 rounded-lg font-black uppercase">Pedir</button>
+                  <button onClick={()=>irParaRestaurante(r.link_mapa)} className="w-full bg-green-500 text-white text-xs py-2 rounded-lg font-black uppercase">Pedir</button>
                 </div>
               </div>
             ))}
@@ -226,7 +117,7 @@ function App(){
                 <div className="ml-3 flex-1">
                   <h3 className="font-black text-sm text-gray-800">{r.nome}</h3>
                   <p className="text-[10px] text-gray-400">Entrega Grátis • 30 min</p>
-                  <button onClick={()=>fazerPedido(r)} className="mt-2 bg-red-600 text-white text-[10px] px-4 py-1.5 rounded-full font-black uppercase">Ver Menu</button>
+                  <button onClick={()=>irParaRestaurante(r.link_mapa)} className="mt-2 bg-red-600 text-white text-[10px] px-4 py-1.5 rounded-full font-black uppercase">Ver Menu</button>
                 </div>
               </div>
             ))}
@@ -237,19 +128,7 @@ function App(){
       {tela==="pedidos" && (
         <div className="p-4">
           <h2 className="font-black mb-4 text-gray-800 uppercase italic">Meus Pedidos</h2>
-          {pedidos.length > 0 ? pedidos.map((p,i)=>(
-            <div key={i} className="bg-white p-4 rounded-2xl mb-3 shadow-sm border-l-8 border-red-600">
-              <div className="flex justify-between items-center mb-1">
-                <p className="font-black text-gray-800">{p.restaurante}</p>
-                <span className="text-[9px] text-gray-400 font-bold">{p.data.split(",")[0]}</span>
-              </div>
-              <p className="text-xs text-gray-600">{p.item}</p>
-              <div className="mt-2 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <p className="text-[10px] text-red-600 uppercase font-black tracking-widest">{p.status}</p>
-              </div>
-            </div>
-          )) : <p className="text-center text-gray-400 mt-20 font-bold">Nenhum pedido realizado ainda.</p>}
+          <p className="text-center text-gray-400 mt-20 font-bold">Nenhum pedido realizado ainda.</p>
         </div>
       )}
 
@@ -277,10 +156,10 @@ function App(){
               <div className="bg-gray-800 p-5 rounded-3xl shadow-lg text-white">
                 <h3 className="text-xs font-black uppercase mb-4 text-center tracking-widest">Baixar Aplicativo Mydi</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  <button onClick={() => abrirInstalacaoManual("android")} className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                  <button className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
                     <IconDownload/> <span className="text-[9px] font-black uppercase">Android</span>
                   </button>
-                  <button onClick={() => abrirInstalacaoManual("ios")} className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                  <button className="bg-white/10 hover:bg-white/20 p-3 rounded-2xl flex flex-col items-center gap-2 transition-all">
                     <IconDownload/> <span className="text-[9px] font-black uppercase">iPhone</span>
                   </button>
                 </div>
@@ -297,46 +176,11 @@ function App(){
         <button onClick={()=>setTela("perfil")} className={tela==="perfil" ? "text-red-600 scale-125 transition-transform" : "text-gray-300"}><IconUser/></button>
       </nav>
 
-      {/* --- MODAL DE INSTALAÇÃO FORÇADO --- */}
-      {showInstall && (
-        <div className="fixed inset-0 bg-black/80 flex items-end justify-center z-[100] p-4 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-sm rounded-[40px] p-8 shadow-2xl animate-bounce-short">
-            <div className="w-16 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
-            <h2 className="text-2xl font-black mb-2 text-gray-800 text-center uppercase italic">Baixe o App</h2>
-            <p className="text-sm text-gray-500 mb-8 text-center font-bold px-4">Instale agora para uma experiência mais rápida e sem travamentos.</p>
-
-            {platform === "android" ? (
-              <button onClick={instalarAppAndroid} className="w-full bg-red-600 text-white py-5 rounded-3xl font-black text-lg mb-4 shadow-2xl shadow-red-200 uppercase tracking-tighter">
-                Instalar Agora
-              </button>
-            ) : (
-              <div className="space-y-4 text-gray-700 bg-gray-50 p-6 rounded-3xl border border-gray-100 mb-6 text-[11px] font-black">
-                <div className="flex items-center gap-4">
-                  <div className="bg-white p-2 rounded-xl shadow-sm"><IconShare/></div>
-                  <span>1. Toque no ícone de compartilhar (Safari).</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="bg-white p-2 rounded-xl shadow-sm"><IconPlusBox/></div>
-                  <span>2. Escolha "Adicionar à Tela de Início".</span>
-                </div>
-              </div>
-            )}
-
-            <button onClick={()=>setShowInstall(false)} className="w-full text-gray-300 text-[10px] font-black uppercase tracking-widest">Usar pelo Navegador</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
 </script>
 
 </body>
